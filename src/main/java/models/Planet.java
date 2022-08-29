@@ -11,5 +11,28 @@ public class Planet {
         this.height = height;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Planet(String command) {
+        String[] commandArray = command.split("x");
+
+        this.width = Integer.parseInt(commandArray[0]);
+        this.height = Integer.parseInt(commandArray[1]);
+    }
+
+    @Override
+    public String toString() {
+        return "Planet{" +
+                "width=" + width +
+                ", height=" + height +
+                '}';
+    }
+
 
 }
