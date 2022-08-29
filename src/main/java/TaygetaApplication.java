@@ -1,13 +1,8 @@
-import java.util.Scanner;
+import command.Terminal;
 
 public class TaygetaApplication {
     public static void main(String... args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Digite um texto: ");
-        while(sc.hasNext()) {
-            System.out.println("String: " + sc.next());
-        }
-        sc.close();
+        Terminal terminal = new Terminal();
+        terminal.init();
     }
 }
