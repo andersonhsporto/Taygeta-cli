@@ -2,6 +2,8 @@ package command;
 
 import models.Planet;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -9,14 +11,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TerminalTest {
 
-    @org.junit.jupiter.api.Test
-    void planetHasValidSize() {
-        String command = "5x5";
-        InputStream in = new ByteArrayInputStream(command.getBytes());
-        System.setIn(in);
-        Planet test = Terminal.initPlanet();
+    @Test
+    @DisplayName("Planet has invalid size")
+    void isValidPlanetSize() {
+        String command = "5xteste";
+        assertFalse(Terminal.isValidPlanetSize(command));
+    }
 
-        assertEquals(5, test.getWidth());
-        assertEquals(5, test.getHeight());
+    @Test
+    @DisplayName("Planet has valid size")
+    void isValidPlanetSize2() {
+        String command = "50x50";
+        assertTrue(Terminal.isValidPlanetSize(command));
     }
 }

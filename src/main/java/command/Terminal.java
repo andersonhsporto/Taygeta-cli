@@ -49,7 +49,7 @@ public class Terminal {
         String command = sc.next();
 
         if (isValidPlanetSize(command)) {
-            planet = new Planet(command);
+            planet = new Planet(1, 2, 2);
         } else {
             System.out.println("Invalid planet size");
             initPlanet( );
