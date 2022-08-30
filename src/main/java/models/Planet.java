@@ -1,10 +1,44 @@
 package models;
 
-public record Planet (int id, int width, int height) {
+import java.util.ArrayList;
+import java.util.Collection;
 
+public class Planet {
+    private int id;
+
+    private int width;
+
+    private int height;
+
+    private Collection<Probe> probes;
+
+    public Planet(int id, String command) {
+        var commandArray = command.split("x");
+
+        this.id = id;
+        this.width = Integer.parseInt(commandArray[0]);
+        this.height = Integer.parseInt(commandArray[1]);
+        this.probes = new ArrayList<>();
+    }
 
     public int getArea() {
         return width * height;
     }
 
+    public void addProbe(Probe probe) {
+        probes.add(probe);
+    }
+
+    public Collection<Probe> getProbes() {
+        return probes;
+    }
+
+    @Override
+    public String toString() {
+        return " Planet {" +
+                " id = " + id +
+                ", width = " + width +
+                ", height = " + height +
+                '}';
+    }
 }

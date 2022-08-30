@@ -10,22 +10,36 @@ public class Terminal {
     private static Planet planet;
 
     public void init () {
-        Scanner sc = new Scanner(System.in);
+        Scanner        sc = new Scanner(System.in);
+        MissionControl missionControl = new MissionControl();
 
         System.out.println("Welcome to Taygeta! CLI version");
         while(sc.hasNext()) {
-            System.out.println("String: " + sc.next());
             if (Objects.equals(sc.next(), "addp"))
             {
-                planet = initPlanet( );
-                System.out.println(planet.toString());
+                addPlanet( missionControl );
             }
         }
         sc.close( );
     }
 
+    private void addProbe(MissionControl missionControl) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter planet id number: > ");
+        while(sc.hasNext()) {
+            int planetId = sc.nextInt();
+            if (planetId >= 0 && planetId < missionControl.planets.size()) {
+                planet = missionControl.planets.get(planetId);
+                break;
+            }
+            System.out.println("Invalid planet id");
+            System.out.print("Enter planet id number: > ");
+        }
+    }
+
     public static boolean isValidPlanetSize(String command) {
-        String[] commandArray = command.split("x");
+        var commandArray = command.split("x");
 
         if (commandArray.length != 2) {
             return false;
@@ -43,17 +57,16 @@ public class Terminal {
         return true;
     }
 
-    public static Planet initPlanet() {
-        System.out.println("Enter planet area width and height: (example: 5x5)");
+    public static void addPlanet(MissionControl missionControl) {
+        System.out.print("Enter planet area width and height: (example: 5x5) > ");
         Scanner sc = new Scanner(System.in);
         String command = sc.next();
 
         if (isValidPlanetSize(command)) {
-            planet = new Planet(1, 2, 2);
+            missionControl.addPlanet(command);
         } else {
             System.out.println("Invalid planet size");
-            initPlanet( );
+            addPlanet(missionControl);
         }
-        return planet;
     }
 }
