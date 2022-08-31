@@ -22,11 +22,13 @@ public class MissionControl {
     System.out.println("Adding probe to planet " + planetId);
     for (Planet planet : planets) {
       if (planet.getId() == planetId) {
+        probe.setId(planet.getProbesCount());
         planet.addProbe(probe);
         System.out.println(planet);
       }
     }
   }
+
 
   public void addPlanet(String command) {
     Planet planet = new Planet(planets.size(), command);
