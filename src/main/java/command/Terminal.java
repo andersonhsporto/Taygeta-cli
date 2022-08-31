@@ -61,8 +61,7 @@ public class Terminal {
   }
 
   private void makeProbe(MissionControl missionControl) {
-    if (missionControl.getPlanets().isEmpty()) {
-      System.out.println(Colors.red("Error there is no planets to add probes"));
+    if (!planetExists(missionControl)) {
       return;
     }
     Scanner scanner = new Scanner(System.in);
@@ -70,7 +69,7 @@ public class Terminal {
     while (true) {
       String command = scanner.next();
       if (planetExistsById(command, missionControl)) {
-        makeProbe(command, missionControl);
+        addProbe(command, missionControl);
         break;
       }
       System.out.println(Colors.red("Error planet with id " + command + " does not exist"));
@@ -78,7 +77,17 @@ public class Terminal {
     }
   }
 
-  private void makeProbe(String command, MissionControl missionControl) {
+  private boolean planetExists(MissionControl missionControl) {
+    if (missionControl.getPlanets().isEmpty()) {
+      System.out.println(Colors.red("Error there is no planets to add probes"));
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  private void addProbe(String command, MissionControl missionControl) {
     Scanner scanner = new Scanner(System.in);
     System.out.print("Enter probe x coordinate: > ");
     int x = scanner.nextInt();
