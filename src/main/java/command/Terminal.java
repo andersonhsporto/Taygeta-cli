@@ -13,11 +13,10 @@ public class Terminal {
         MissionControl missionControl = new MissionControl();
 
         System.out.println("Welcome to Taygeta! CLI version");
-        while(true) {
+        while (true) {
             System.out.println("Commands add-planet, add-probe");
             invokeCommand(scanner.next(), missionControl);
         }
-//        scanner.close( );
     }
 
     private void invokeCommand(String command, MissionControl missionControl) {
@@ -28,9 +27,8 @@ public class Terminal {
     }
 
     private void makeProbe(MissionControl missionControl) {
-        if (missionControl.getPlanets().isEmpty())
-        {
-            System.out.println(Colors.ANSI_RED + "Error there is no planets to add probes" + Colors.ANSI_RESET);
+        if (missionControl.getPlanets().isEmpty()) {
+            System.out.println(Colors.red("Error there is no planets to add probes"));
             return;
         }
         Scanner scanner = new Scanner(System.in);
@@ -41,8 +39,7 @@ public class Terminal {
                 makeProbe( command, missionControl);
                 break;
             }
-            System.out.println("Invalid planet id");
-            System.out.println(missionControl.getPlanets().size());
+            System.out.println(Colors.red("Error planet with id " + command + " does not exist"));
             break;
         }
     }
