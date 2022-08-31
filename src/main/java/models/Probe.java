@@ -2,19 +2,30 @@ package models;
 
 public class Probe {
 
-  private final int id;
+  private int id;
 
-  private final int x;
+  private int x;
 
-  private final int y;
+  private int y;
 
-  private final int direction;
+  private CompassRose.Compass direction;
 
-  public Probe(int id, int x, int y, int direction) {
+  public Probe(int id, int x, int y, CompassRose.Compass direction) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.direction = direction;
+  }
+
+  public Probe(int x, int y, CompassRose.Compass direction) {
+    this.id = -1;
+    this.x = x;
+    this.y = y;
+    this.direction = direction;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   @Override
