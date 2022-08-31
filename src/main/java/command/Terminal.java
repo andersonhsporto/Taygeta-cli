@@ -33,11 +33,11 @@ public class Terminal {
     String command = scanner.next();
 
     if (isValidPlanetSize(command)) {
-      missionControl.addPlanet(command);
       System.out.println("Plane added ID: " + (missionControl.getPlanets().size() - 1));
+      missionControl.addPlanet(command);
     } else {
-      makePlanet(missionControl);
       System.out.println("Invalid planet size");
+      makePlanet(missionControl);
     }
   }
 
