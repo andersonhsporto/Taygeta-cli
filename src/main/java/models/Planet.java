@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Planet {
-  private final int id;
-
   private final int width;
-
   private final int height;
-
+  private final int id;
+  private boolean full;
   private final Collection<Probe> probes;
 
   public Planet(int id, String command) {
@@ -25,9 +23,15 @@ public class Planet {
     return width * height;
   }
 
+  void printProbes() {
+    for (Probe probe : probes) {
+      System.out.println(probe);
+    }
+  }
+
   public void addProbe(Probe probe) {
     probes.add(probe);
-    System.out.println(probe.toString());
+    printProbes();
   }
 
   public int getId() {
@@ -45,6 +49,11 @@ public class Planet {
   public Collection<Probe> getProbes() {
     return probes;
   }
+
+  public int getProbesCount() {
+    return probes.size();
+  }
+
 
   @Override
   public String toString() {
