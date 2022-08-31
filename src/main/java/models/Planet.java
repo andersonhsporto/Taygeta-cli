@@ -27,6 +27,7 @@ public class Planet {
 
     public void addProbe(Probe probe) {
         probes.add(probe);
+        System.out.println(probe.toString());
     }
 
     public int getId() {
