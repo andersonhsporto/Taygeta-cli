@@ -14,7 +14,7 @@ public class MissionControl {
     }
 
     public MissionControl() {
-        this.planets = new ArrayList<>();;
+        this.planets = new ArrayList<>();
     }
 
     public void addPlanet(String command) {

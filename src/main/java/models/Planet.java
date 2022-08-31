@@ -29,6 +29,18 @@ public class Planet {
         probes.add(probe);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public Collection<Probe> getProbes() {
         return probes;
     }
