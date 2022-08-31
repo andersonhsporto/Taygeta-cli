@@ -1,40 +1,37 @@
 package command;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import models.Planet;
 import models.Probe;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 public class MissionControl {
 
-    private final Collection<Planet> planets;
+  private final Collection<Planet> planets;
 
-    public MissionControl() {
-        this.planets = new ArrayList<>();
+  public MissionControl() {
+    this.planets = new ArrayList<>();
+  }
+
+  public Collection<Planet> getPlanets() {
+    return planets;
+  }
+
+  public void addProbeToPlanet(Probe probe, int planetId) {
+
+    System.out.println("Adding probe to planet " + planetId);
+    for (Planet planet : planets) {
+      if (planet.getId() == planetId) {
+        planet.addProbe(probe);
+        System.out.println(planet);
+      }
     }
+  }
 
-    public Collection<Planet> getPlanets() {
-        return planets;
-    }
+  public void addPlanet(String command) {
+    Planet planet = new Planet(planets.size(), command);
 
-    public void addProbeToPlanet(Probe probe, int planetID) {
-
-        System.out.println("Adding probe to planet " + planetID);
-        for (Planet planet : planets) {
-            if (planet.getId() == planetID) {
-                planet.addProbe(probe);
-                System.out.println(planet);
-            }
-        }
-    }
-
-    public void addPlanet(String command) {
-
-        Planet planet = new Planet(planets.size(), command);
-
-        planets.add(planet);
-    }
-
+    planets.add(planet);
+  }
 
 }
