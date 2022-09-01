@@ -2,9 +2,9 @@ package command;
 
 import exceptions.UndoCommandException;
 import java.util.Scanner;
-import models.CompassRose;
 import models.Probe;
 import services.MissionControlService;
+import services.ParseService;
 import services.ValidationService;
 
 public class Terminal {
@@ -30,6 +30,7 @@ public class Terminal {
     switch (command) {
       case "add-planet" -> makePlanet(missionControlService);
       case "add-probe" -> makeProbe(missionControlService);
+      case "exit" -> System.exit(0);
       default -> System.out.println(ColorWrapper.red("Invalid command"));
     }
   }
@@ -75,70 +76,14 @@ public class Terminal {
 
   private void addProbeToPlanet(
       String command, MissionControlService missionControlService) throws UndoCommandException {
-    
-    if (!missionControlService.planetIsFull(parseId(command))) {
-      Probe probe = parseProbe(missionControlService);
 
-      missionControlService.addProbeToPlanet(probe, parseId(command));
+    if (!missionControlService.planetIsFull(ParseService.parseId(command))) {
+      Probe probe = ParseService.parseProbe();
+
+      missionControlService.addProbeToPlanet(probe, ParseService.parseId(command));
     } else {
       System.out.println(ColorWrapper.red("Error planet with id " + command + " is full"));
     }
   }
-
-  private Probe parseProbe(MissionControlService missionControlService) throws UndoCommandException {
-
-    var x = addProbeParameter("x coordinate");
-    var y = addProbeParameter("y coordinate");
-    var direction = parseDirection();
-    var probe = Probe.createDefault(x, y, direction); //TODO: refactor add probe to mission control
-
-    return probe;
-  }
-
-  public CompassRose.Cardinal parseDirection() throws UndoCommandException {
-    Scanner scanner = new Scanner(System.in);
-    String command;
-
-    while (true) {
-      System.out.print("Enter probe direction: > ");
-      command = scanner.next();
-      if (CompassRose.isValidDirection(command)) {
-        return CompassRose.parseDirection(command);
-      } else if (command.equals("undo")) {
-        throw new UndoCommandException("Undo command add-probe");
-      } else {
-        System.out.println(ColorWrapper.red("Invalid direction"));
-      }
-    }
-  }
-
-  private int addProbeParameter(String message) throws UndoCommandException {
-    Scanner scanner = new Scanner(System.in);
-    String command;
-    int value;
-
-    while (true) {
-      System.out.print("Enter probe " + message + ": > ");
-      command = scanner.next();
-      value = parseId(command);
-      if (command.equals("undo")) {
-        throw new UndoCommandException("Undo command " + message);
-      }
-      if (value != -1) {
-        return value;
-      } else {
-        System.out.println(ColorWrapper.red("Error invalid " + message));
-      }
-    }
-  }
-
-  public int parseId(String string) { // TODO: add to a especific class
-    try {
-      return Integer.parseInt(string);
-    } catch (NumberFormatException e) {
-      return -1;
-    }
-  }
-
 
 }
