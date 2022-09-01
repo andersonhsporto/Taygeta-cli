@@ -9,8 +9,6 @@ import services.ValidationService;
 
 public class Terminal {
 
-  private static Planet planet;
-
   public void init() {
     var scanner = new Scanner(System.in);
     var missionControl = new MissionControl();
