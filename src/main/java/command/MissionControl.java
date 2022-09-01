@@ -29,10 +29,8 @@ public class MissionControl {
     }
   }
 
-
   public void addPlanet(String command) {
     Planet planet = new Planet(planets.size(), command);
-
     planets.add(planet);
   }
 

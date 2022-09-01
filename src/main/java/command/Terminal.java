@@ -1,7 +1,7 @@
 package command;
 
+import exceptions.UndoCommandException;
 import java.util.Scanner;
-
 import models.CompassRose;
 import models.Planet;
 import models.Probe;
@@ -10,26 +10,7 @@ public class Terminal {
 
   private static Planet planet;
 
-  public void init() {
-    Scanner scanner = new Scanner(System.in);
-    MissionControl missionControl = new MissionControl();
-
-    System.out.println("Welcome to Taygeta! CLI version");
-    while (true) {
-      System.out.println("Commands add-planet, add-probe");
-      invokeCommand(scanner.next(), missionControl);
-    }
-  }
-
-  private void invokeCommand(String command, MissionControl missionControl) {
-    switch (command) {
-      case "add-planet" -> makePlanet(missionControl);
-      case "add-probe" -> makeProbe(missionControl);
-      default -> System.out.println(Colors.red("Invalid command"));
-    }
-  }
-
-  public static void makePlanet(MissionControl missionControl) {
+  public static void makePlanet(MissionControl missionControl) throws UndoCommandException {
     System.out.print("Enter planet area width and height: (example: 5x5) > ");
     Scanner scanner = new Scanner(System.in);
     String command = scanner.next();
@@ -37,26 +18,11 @@ public class Terminal {
     if (isValidPlanetSize(command)) {
       System.out.println("Plane added ID: " + (missionControl.getPlanets().size() - 1));
       missionControl.addPlanet(command);
+    } else if (command.equals("undo")) {
+      throw new UndoCommandException("Undo command add-planet");
     } else {
       System.out.println("Invalid planet size");
       makePlanet(missionControl);
-    }
-  }
-
-  private void makeProbe(MissionControl missionControl) {
-    if (!planetExists(missionControl)) {
-      return;
-    }
-    Scanner scanner = new Scanner(System.in);
-    System.out.print("Enter planet id number: > ");
-    while (true) {
-      String command = scanner.next();
-      if (planetExistsById(command, missionControl)) {
-        addProbe(command, missionControl);
-        break;
-      }
-      System.out.println(Colors.red("Error planet with id " + command + " does not exist"));
-      break;
     }
   }
 
@@ -79,59 +45,104 @@ public class Terminal {
     return true;
   }
 
+  public void init() {
+    Scanner scanner = new Scanner(System.in);
+    MissionControl missionControl = new MissionControl();
+
+    System.out.println("Welcome to Taygeta! CLI version");
+    while (true) {
+      System.out.println("Commands add-planet, add-probe");
+      try {
+        invokeCommand(scanner.next(), missionControl);
+      } catch (UndoCommandException e) {
+        continue;
+      }
+    }
+  }
+
+  private void invokeCommand(String command, MissionControl missionControl)
+      throws UndoCommandException {
+    switch (command) {
+      case "add-planet" -> makePlanet(missionControl);
+      case "add-probe" -> makeProbe(missionControl);
+      default -> System.out.println(Colors.red("Invalid command"));
+    }
+  }
+
+  private void makeProbe(MissionControl missionControl) throws UndoCommandException {
+    if (!planetExists(missionControl)) {
+      return;
+    }
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Enter planet id number: > ");
+    while (true) {
+      String command = scanner.next();
+      if (planetExistsById(command, missionControl)) {
+        addProbe(command, missionControl);
+        break;
+      } else if (command.equals("undo")) {
+        throw new UndoCommandException("Undo command add-probe");
+      } else {
+        System.out.println("Invalid planet id");
+      }
+      System.out.println(Colors.red("Error planet with id " + command + " does not exist"));
+      break;
+    }
+  }
+
   private boolean planetExists(MissionControl missionControl) {
     if (missionControl.getPlanets().isEmpty()) {
       System.out.println(Colors.red("Error there is no planets to add probes"));
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }
 
-  private void addProbe(String command, MissionControl missionControl) {
-    Scanner scanner = new Scanner(System.in);
-    Probe   probe;
-
-    int x = addProbeParameter("x coordinate");
-    int y = addProbeParameter("y coordinate");
-    System.out.print("Enter probe direction: > ");
-    CompassRose.Compass direction = parseDirection();
-    probe = new Probe(x, y, direction);
+  private void addProbe(String command, MissionControl missionControl) throws UndoCommandException {
+    var x = addProbeParameter("x coordinate");
+    var y = addProbeParameter("y coordinate");
+    var direction = parseDirection();
+    var probe = new Probe(x, y, direction);
 
     missionControl.addProbeToPlanet(probe, parseId(command));
   }
 
-  CompassRose.Compass parseDirection() {
+  CompassRose.Compass parseDirection() throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
-    String  command;
+    String command;
 
     while (true) {
+      System.out.print("Enter probe direction: > ");
       command = scanner.next();
       if (CompassRose.isValidDirection(command)) {
         return CompassRose.parseDirection(command);
-      }
-      else {
+      } else if (command.equals("undo")) {
+        throw new UndoCommandException("Undo command add-probe");
+      } else {
         System.out.println(Colors.red("Invalid direction"));
-        System.out.print("Enter probe direction: > ");
       }
     }
   }
 
-  private int addProbeParameter(String message) {
+  private int addProbeParameter(String message) throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
-    String  command;
-    int     value;
+    String command;
+    int value;
 
     while (true) {
       System.out.print("Enter probe " + message + ": > ");
       command = scanner.next();
       value = parseId(command);
-    if (value != -1) {
-      return value;
-    } else {
-      System.out.println(Colors.red("Error invalid " + message));
-    }}
+      if (command.equals("undo")) {
+        throw new UndoCommandException("Undo command " + message);
+      }
+      if (value != -1) {
+        return value;
+      } else {
+        System.out.println(Colors.red("Error invalid " + message));
+      }
+    }
   }
 
   private int parseId(String string) {
