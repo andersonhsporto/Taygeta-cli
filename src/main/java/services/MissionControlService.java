@@ -79,8 +79,6 @@ public class MissionControlService {
     System.out.println("Planet added ID: " + (getPlanets().size()));
   }
 
-
-
   private int getPlantsListSize() {
     return this.planets.size();
   }

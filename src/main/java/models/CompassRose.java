@@ -10,9 +10,9 @@ public class CompassRose {
   }
 
   public static boolean isValidDirection(String command) {
-    String undercaseCommand = command.toLowerCase();
+    String underscoreCommand = command.toLowerCase();
 
-    switch (undercaseCommand) {
+    switch (underscoreCommand) {
       case "north", "norte", "n", "south", "sul", "s" -> {
         return true;
       }

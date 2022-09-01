@@ -67,7 +67,7 @@ public class Terminal {
       } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
       } else {
-        System.out.println("Invalid planet id");
+        System.out.println(ColorWrapper.red("Invalid planet id"));
       }
       System.out.println(ColorWrapper.red("Error planet with id " + command + " does not exist"));
       break;

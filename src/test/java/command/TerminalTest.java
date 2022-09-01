@@ -9,6 +9,7 @@ import models.CompassRose.Cardinal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import services.ParseService;
 
 class TerminalTest {
 
@@ -36,7 +37,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      var compass = terminal.parseDirection();
+      var compass = ParseService.parseDirection();
       assertEquals(Cardinal.NORTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -53,7 +54,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = terminal.parseDirection();
+      Cardinal compass = ParseService.parseDirection();
       assertEquals(Cardinal.SOUTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -69,7 +70,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = terminal.parseDirection();
+      Cardinal compass = ParseService.parseDirection();
       assertEquals(Cardinal.EAST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -85,7 +86,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = terminal.parseDirection();
+      Cardinal compass = ParseService.parseDirection();
       assertEquals(Cardinal.WEST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -101,7 +102,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = terminal.parseDirection();
+      Cardinal compass = ParseService.parseDirection();
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
@@ -112,7 +113,7 @@ class TerminalTest {
   void parseStringToInt() throws UndoCommandException {
     Terminal terminal = new Terminal();
     String command = "5";
-    int number = terminal.parseId(command);
+    int number = ParseService.parseId(command);
 
     Assertions.assertEquals(5, number);
   }
@@ -123,7 +124,7 @@ class TerminalTest {
     Terminal terminal = new Terminal();
     String command = "111Invalid2";
 
-    Assertions.assertEquals(-1, terminal.parseId(command));
+    Assertions.assertEquals(-1, ParseService.parseId(command));
   }
 
   @Test
@@ -132,6 +133,6 @@ class TerminalTest {
     Terminal terminal = new Terminal();
     String command = "12a";
 
-    Assertions.assertEquals(-1, terminal.parseId(command));
+    Assertions.assertEquals(-1, ParseService.parseId(command));
   }
 }
