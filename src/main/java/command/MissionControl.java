@@ -73,14 +73,12 @@ public class MissionControl {
 
   public void addPlanet(String command) {
     Planet planet = new Planet(planets.size(), command);
+
     planets.add(planet);
+    System.out.println("Planet added ID: " + (getPlanets().size()));
   }
 
-  public boolean planetExistsById(String command) {
-    int planetId = parseId(command);
 
-    return planetId >= 0 && planetId < getPlantsListSize();
-  }
 
   private int getPlantsListSize() {
     return this.planets.size();
