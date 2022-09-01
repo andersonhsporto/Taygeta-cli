@@ -35,7 +35,7 @@ public class CompassRose {
       case "south", "sul", "s" -> {
         return Compass.SOUTH;
       }
-      case "east", "leste", "e" -> {
+      case "east", "leste", "e", "l" -> {
         return Compass.EAST;
       }
       case "west", "oeste", "w", "o" -> {
