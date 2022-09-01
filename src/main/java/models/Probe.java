@@ -24,6 +24,14 @@ public class Probe {
     this.direction = direction;
   }
 
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
   public void setId(int id) {
     this.id = id;
   }
@@ -31,10 +39,10 @@ public class Probe {
   @Override
   public String toString() {
     return "Probe {" +
-            " id= " + id +
-            ", x= " + x +
-            ", y= " + y +
-            ", direction= " + direction +
-            '}';
+        " id= " + id +
+        ", x= " + x +
+        ", y= " + y +
+        ", direction= " + direction +
+        '}';
   }
 }
