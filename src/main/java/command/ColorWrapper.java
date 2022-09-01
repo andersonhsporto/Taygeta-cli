@@ -7,10 +7,20 @@ public class ColorWrapper {
   public static final String ANSI_GREEN = "\u001B[32m";
 
   public static String red(String string) {
-    return ANSI_RED + string + ANSI_RESET;
+    StringBuilder sb = new StringBuilder();
+
+    sb.append(ANSI_RED);
+    sb.append(string);
+    sb.append(ANSI_RESET);
+    return sb.toString();
   }
 
   public static String green(String string) {
-    return ANSI_GREEN + string + ANSI_RESET;
+    StringBuilder sb = new StringBuilder();
+
+    sb.append(ANSI_GREEN);
+    sb.append(string);
+    sb.append(ANSI_RESET);
+    return sb.toString();
   }
 }
