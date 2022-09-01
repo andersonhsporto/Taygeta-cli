@@ -108,7 +108,7 @@ public class Terminal {
     missionControl.addProbeToPlanet(probe, parseId(command));
   }
 
-  CompassRose.Compass parseDirection() throws UndoCommandException {
+  public CompassRose.Compass parseDirection() throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
     String command;
 
