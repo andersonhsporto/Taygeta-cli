@@ -7,6 +7,7 @@ public class Planet {
   private final int width;
   private final int height;
   private final int id;
+
   private boolean full;
   private final Collection<Probe> probes;
 
@@ -16,6 +17,7 @@ public class Planet {
     this.id = id;
     this.width = Integer.parseInt(commandArray[0]);
     this.height = Integer.parseInt(commandArray[1]);
+    this.full = false;
     this.probes = new ArrayList<>();
   }
 
@@ -54,6 +56,9 @@ public class Planet {
     return probes.size();
   }
 
+  public boolean isFull() {
+    return full;
+  }
 
   @Override
   public String toString() {
