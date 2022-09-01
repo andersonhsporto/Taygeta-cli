@@ -1,16 +1,17 @@
-package command;
+package services;
 
+import command.ColorWrapper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import models.Planet;
 import models.Probe;
 
-public class MissionControl {
+public class MissionControlService {
 
   private final Collection<Planet> planets;
 
-  public MissionControl() {
+  public MissionControlService() {
     this.planets = new ArrayList<>();
   }
 

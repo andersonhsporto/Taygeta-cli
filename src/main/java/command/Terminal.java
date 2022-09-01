@@ -3,15 +3,15 @@ package command;
 import exceptions.UndoCommandException;
 import java.util.Scanner;
 import models.CompassRose;
-import models.Planet;
 import models.Probe;
+import services.MissionControlService;
 import services.ValidationService;
 
 public class Terminal {
 
   public void init() {
     var scanner = new Scanner(System.in);
-    var missionControl = new MissionControl();
+    var missionControl = new MissionControlService();
 
     System.out.println("Welcome to Taygeta! CLI version");
     while (true) {
@@ -25,32 +25,32 @@ public class Terminal {
   }
 
   private void invokeCommand(
-      String command, MissionControl missionControl) throws UndoCommandException {
+      String command, MissionControlService missionControlService) throws UndoCommandException {
 
     switch (command) {
-      case "add-planet" -> makePlanet(missionControl);
-      case "add-probe" -> makeProbe(missionControl);
+      case "add-planet" -> makePlanet(missionControlService);
+      case "add-probe" -> makeProbe(missionControlService);
       default -> System.out.println(ColorWrapper.red("Invalid command"));
     }
   }
 
-  public static void makePlanet(MissionControl missionControl) throws UndoCommandException {
+  public static void makePlanet(MissionControlService missionControlService) throws UndoCommandException {
     System.out.print("Enter planet area width and height: (example: 5x5) > ");
     Scanner scanner = new Scanner(System.in);
     String command = scanner.next();
 
     if (ValidationService.commandIsValidPlanetSize(command)) {
-      missionControl.addPlanet(command);
+      missionControlService.addPlanet(command);
     } else if (command.equals("undo")) {
       throw new UndoCommandException("Undo command add-planet");
     } else {
       System.out.println(ColorWrapper.red("Invalid planet area"));
-      makePlanet(missionControl);
+      makePlanet(missionControlService);
     }
   }
 
-  private void makeProbe(MissionControl missionControl) throws UndoCommandException {
-    if (!ValidationService.planetExists(missionControl)) return;
+  private void makeProbe(MissionControlService missionControlService) throws UndoCommandException {
+    if (!ValidationService.planetExists(missionControlService)) return;
 
     Scanner scanner = new Scanner(System.in);
     String  command;
@@ -58,8 +58,8 @@ public class Terminal {
     System.out.print("Enter planet id number: > ");
     while (true) {
       command = scanner.next();
-      if (ValidationService.planetExistsById(command, missionControl)) {
-        addProbeToPlanet(command, missionControl);
+      if (ValidationService.planetExistsById(command, missionControlService)) {
+        addProbeToPlanet(command, missionControlService);
         break;
       } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
@@ -71,17 +71,17 @@ public class Terminal {
     }
   }
 
-  private void addProbeToPlanet(String command, MissionControl missionControl) throws UndoCommandException {
-    Probe probe = parseProbe(command, missionControl);
+  private void addProbeToPlanet(String command, MissionControlService missionControlService) throws UndoCommandException {
+    Probe probe = parseProbe(command, missionControlService);
 
-    if (!missionControl.planetIsFull(parseId(command))) {
-      missionControl.addProbeToPlanet(probe, parseId(command));
+    if (!missionControlService.planetIsFull(parseId(command))) {
+      missionControlService.addProbeToPlanet(probe, parseId(command));
     } else {
       System.out.println(ColorWrapper.red("Error planet with id " + command + " is full"));
     }
   }
 
-  private Probe parseProbe(String command, MissionControl missionControl) throws UndoCommandException {
+  private Probe parseProbe(String command, MissionControlService missionControlService) throws UndoCommandException {
     var x = addProbeParameter("x coordinate");
     var y = addProbeParameter("y coordinate");
     var direction = parseDirection();

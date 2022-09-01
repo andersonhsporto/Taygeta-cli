@@ -1,7 +1,6 @@
 package services;
 
 import command.ColorWrapper;
-import command.MissionControl;
 import java.util.Collection;
 import models.Planet;
 
@@ -26,15 +25,15 @@ public class ValidationService {
     return true;
   }
 
-  public static boolean planetExistsById(String command, MissionControl missionControl) {
-    int planetId = missionControl.parseId(command);
-    Collection<Planet> planets = missionControl.getPlanets();
+  public static boolean planetExistsById(String command, MissionControlService missionControlService) {
+    int planetId = missionControlService.parseId(command);
+    Collection<Planet> planets = missionControlService.getPlanets();
 
     return planetId >= 0 && planetId < planets.size();
   }
 
-  public static boolean planetExists(MissionControl missionControl) {
-    if (missionControl.getPlanets().isEmpty()) {
+  public static boolean planetExists(MissionControlService missionControlService) {
+    if (missionControlService.getPlanets().isEmpty()) {
       System.out.println(ColorWrapper.red("Error there is no planets to add probes"));
       return false;
     } else {
