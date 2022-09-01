@@ -10,41 +10,6 @@ public class Terminal {
 
   private static Planet planet;
 
-  public static void makePlanet(MissionControl missionControl) throws UndoCommandException {
-    System.out.print("Enter planet area width and height: (example: 5x5) > ");
-    Scanner scanner = new Scanner(System.in);
-    String command = scanner.next();
-
-    if (isValidPlanetSize(command)) {
-      System.out.println("Plane added ID: " + (missionControl.getPlanets().size() - 1));
-      missionControl.addPlanet(command);
-    } else if (command.equals("undo")) {
-      throw new UndoCommandException("Undo command add-planet");
-    } else {
-      System.out.println("Invalid planet size");
-      makePlanet(missionControl);
-    }
-  }
-
-  public static boolean isValidPlanetSize(String command) {
-    var commandArray = command.split("x");
-
-    if (commandArray.length != 2) {
-      return false;
-    }
-    try {
-      int width = Integer.parseInt(commandArray[0]);
-      int height = Integer.parseInt(commandArray[1]);
-
-      if (width < 0 || height < 0) {
-        return false;
-      }
-    } catch (NumberFormatException e) {
-      return false;
-    }
-    return true;
-  }
-
   public void init() {
     Scanner scanner = new Scanner(System.in);
     MissionControl missionControl = new MissionControl();
@@ -69,6 +34,22 @@ public class Terminal {
     }
   }
 
+  public static void makePlanet(MissionControl missionControl) throws UndoCommandException {
+    System.out.print("Enter planet area width and height: (example: 5x5) > ");
+    Scanner scanner = new Scanner(System.in);
+    String command = scanner.next();
+
+    if (isValidPlanetSize(command)) {
+      System.out.println("Plane added ID: " + (missionControl.getPlanets().size() - 1));
+      missionControl.addPlanet(command);
+    } else if (command.equals("undo")) {
+      throw new UndoCommandException("Undo command add-planet");
+    } else {
+      System.out.println("Invalid planet size");
+      makePlanet(missionControl);
+    }
+  }
+
   private void makeProbe(MissionControl missionControl) throws UndoCommandException {
     if (!planetExists(missionControl)) {
       return;
@@ -77,8 +58,8 @@ public class Terminal {
     System.out.print("Enter planet id number: > ");
     while (true) {
       String command = scanner.next();
-      if (planetExistsById(command, missionControl)) {
-        addProbe(command, missionControl);
+      if (missionControl.planetExistsById(command)) {
+        parseProbe(command, missionControl);
         break;
       } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
@@ -90,6 +71,25 @@ public class Terminal {
     }
   }
 
+  public static boolean isValidPlanetSize(String command) {
+    var commandArray = command.split("x");
+
+    if (commandArray.length != 2) {
+      return false;
+    }
+    try {
+      int width = Integer.parseInt(commandArray[0]);
+      int height = Integer.parseInt(commandArray[1]);
+
+      if (width < 0 || height < 0) {
+        return false;
+      }
+    } catch (NumberFormatException e) {
+      return false;
+    }
+    return true;
+  }
+
   private boolean planetExists(MissionControl missionControl) {
     if (missionControl.getPlanets().isEmpty()) {
       System.out.println(Colors.red("Error there is no planets to add probes"));
@@ -99,11 +99,11 @@ public class Terminal {
     }
   }
 
-  private void addProbe(String command, MissionControl missionControl) throws UndoCommandException {
+  private void parseProbe(String command, MissionControl missionControl) throws UndoCommandException {
     var x = addProbeParameter("x coordinate");
     var y = addProbeParameter("y coordinate");
     var direction = parseDirection();
-    var probe = new Probe(x, y, direction);
+    var probe = new Probe(x, y, direction); //TODO: refactor add probe to mission control
 
     missionControl.addProbeToPlanet(probe, parseId(command));
   }
@@ -145,7 +145,7 @@ public class Terminal {
     }
   }
 
-  private int parseId(String string) {
+  public int parseId(String string) { // TODO: add to a especific class
     try {
       return Integer.parseInt(string);
     } catch (NumberFormatException e) {
@@ -153,9 +153,5 @@ public class Terminal {
     }
   }
 
-  private boolean planetExistsById(String command, MissionControl missionControl) {
-    int planetId = parseId(command);
 
-    return planetId >= 0 && planetId < missionControl.getPlanets().size();
-  }
 }

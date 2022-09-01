@@ -34,4 +34,22 @@ public class MissionControl {
     planets.add(planet);
   }
 
+  public boolean planetExistsById(String command) {
+    int planetId = parseId(command);
+
+    return planetId >= 0 && planetId < getPlantsListSize();
+  }
+
+  private int getPlantsListSize() {
+    return this.planets.size();
+  }
+
+  public int parseId(String string) { // TODO: add to a especific class
+    try {
+      return Integer.parseInt(string);
+    } catch (NumberFormatException e) {
+      return -1;
+    }
+  }
+
 }
