@@ -8,6 +8,7 @@ import models.CompassRose.Compass;
 import models.Probe;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import services.ValidationService;
 
 class MissionControlTest {
 
@@ -33,7 +34,7 @@ class MissionControlTest {
   void truePlaneExistByid() {
     MissionControl missionControl = new MissionControl();
     missionControl.addPlanet("10x10");
-    assertTrue(missionControl.planetExistsById("0"));
+    assertTrue(ValidationService.planetExistsById("0", missionControl));
   }
 
   @Test
@@ -41,7 +42,7 @@ class MissionControlTest {
   void falsePlaneExistByid() {
     MissionControl missionControl = new MissionControl();
     missionControl.addPlanet("55x10");
-    assertFalse(missionControl.planetExistsById("1"));
+    assertFalse(ValidationService.planetExistsById("1", missionControl));
   }
 
   @Test
@@ -50,7 +51,7 @@ class MissionControlTest {
     MissionControl missionControl = new MissionControl();
     missionControl.addPlanet("55x10");
     missionControl.addPlanet("1x1");
-    assertTrue(missionControl.planetExistsById("1"));
+    assertTrue(ValidationService.planetExistsById("1", missionControl));
   }
 
   @Test
@@ -59,7 +60,7 @@ class MissionControlTest {
     MissionControl missionControl = new MissionControl();
     missionControl.addPlanet("55x10");
     missionControl.addPlanet("1x1");
-    assertFalse(missionControl.planetExistsById("2"));
+    assertFalse(ValidationService.planetExistsById("2", missionControl));
   }
 
   @Test
@@ -68,7 +69,7 @@ class MissionControlTest {
     MissionControl missionControl = new MissionControl();
     missionControl.addPlanet("55x10");
     missionControl.addPlanet("1x1");
-    assertFalse(missionControl.planetExistsById("-1"));
+    assertFalse(ValidationService.planetExistsById("-1", missionControl));
   }
 
   @Test
