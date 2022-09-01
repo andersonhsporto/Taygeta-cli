@@ -6,14 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ColorsTest {
+class ColorWrapperTest {
 
   @Test
   @DisplayName("red() should return red string")
   void red() {
     String string = "red";
 
-    assertEquals("\u001B[31mred\u001B[0m", Colors.red(string));
+    assertEquals("\u001B[31mred\u001B[0m", ColorWrapper.red(string));
   }
 
   @Test
@@ -21,7 +21,7 @@ class ColorsTest {
   void green() {
     String string = "green";
 
-    assertEquals("\u001B[32mgreen\u001B[0m", Colors.green(string));
+    assertEquals("\u001B[32mgreen\u001B[0m", ColorWrapper.green(string));
   }
 
   @Test
@@ -29,7 +29,7 @@ class ColorsTest {
   void redNotGreen() {
     String string = "red";
 
-    assertNotEquals("\u001B[32mgreen\u001B[0m", Colors.red(string));
+    assertNotEquals("\u001B[32mgreen\u001B[0m", ColorWrapper.red(string));
   }
 
   @Test
@@ -37,6 +37,6 @@ class ColorsTest {
   void greenNotRed() {
     String string = "green";
 
-    assertNotEquals("\u001B[31mred\u001B[0m", Colors.green(string));
+    assertNotEquals("\u001B[31mred\u001B[0m", ColorWrapper.green(string));
   }
 }
