@@ -53,10 +53,10 @@ public class MissionControlService {
     var planetWidth = planet.get().getWidth();
     var planetHeight = planet.get().getHeight();
 
-    if (probe.getX() < 0 || probe.getX() >= planetWidth) {
+    if (probe.getPoint().getX() < 0 || probe.getPoint().getX() > planetWidth) {
       return true;
     }
-    if (probe.getY() < 0 || probe.getY() >= planetHeight) {
+    if (probe.getPoint().getY() < 0 || probe.getPoint().getY() > planetHeight) {
       return true;
     }
     return false;
@@ -65,7 +65,7 @@ public class MissionControlService {
     var planet = getPlanetById(planetId);
 
     for (Probe probeInPlanet : planet.get().getProbes()) {
-      if (probeInPlanet.getX() == probe.getX() && probeInPlanet.getY() == probe.getY()) {
+      if (probeInPlanet.getPoint().equals(probe.getPoint())) {
         return true;
       }
     }
