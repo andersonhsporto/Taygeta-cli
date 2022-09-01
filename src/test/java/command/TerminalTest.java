@@ -25,6 +25,7 @@ class TerminalTest {
   @DisplayName("Planet has valid size")
   void isValidPlanetSize2() {
     String command = "50x50";
+
     assertTrue(Terminal.isValidPlanetSize(command));
   }
 
@@ -34,6 +35,7 @@ class TerminalTest {
     Terminal terminal = new Terminal();
     String command = "N";
     InputStream inputStream = new ByteArrayInputStream(command.getBytes());
+
     System.setIn(inputStream);
     try {
       Compass compass = terminal.parseDirection();
@@ -50,6 +52,7 @@ class TerminalTest {
     Terminal terminal = new Terminal();
     String command = "Sul";
     InputStream inputStream = new ByteArrayInputStream(command.getBytes());
+
     System.setIn(inputStream);
     try {
       Compass compass = terminal.parseDirection();
@@ -65,6 +68,7 @@ class TerminalTest {
     Terminal terminal = new Terminal();
     String command = "leste";
     InputStream inputStream = new ByteArrayInputStream(command.getBytes());
+
     System.setIn(inputStream);
     try {
       Compass compass = terminal.parseDirection();
@@ -80,6 +84,7 @@ class TerminalTest {
     Terminal terminal = new Terminal();
     String command = "W";
     InputStream inputStream = new ByteArrayInputStream(command.getBytes());
+
     System.setIn(inputStream);
     try {
       Compass compass = terminal.parseDirection();
@@ -95,6 +100,7 @@ class TerminalTest {
     Terminal terminal = new Terminal();
     String command = "undo";
     InputStream inputStream = new ByteArrayInputStream(command.getBytes());
+
     System.setIn(inputStream);
     try {
       Compass compass = terminal.parseDirection();
@@ -109,6 +115,7 @@ class TerminalTest {
     Terminal terminal = new Terminal();
     String command = "5";
     int number = terminal.parseId(command);
+
     Assertions.assertEquals(5, number);
   }
 
