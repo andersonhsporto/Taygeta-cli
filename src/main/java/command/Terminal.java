@@ -85,7 +85,7 @@ public class Terminal {
     var x = addProbeParameter("x coordinate");
     var y = addProbeParameter("y coordinate");
     var direction = parseDirection();
-    var probe = new Probe(x, y, direction); //TODO: refactor add probe to mission control
+    var probe = Probe.createDefault(x, y, direction); //TODO: refactor add probe to mission control
 
     return probe;
   }

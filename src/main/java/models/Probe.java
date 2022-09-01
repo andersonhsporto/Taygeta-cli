@@ -17,12 +17,10 @@ public class Probe {
     this.direction = direction;
   }
 
-  public Probe(int x, int y, CompassRose.Compass direction) {
-    this.id = -1;
-    this.x = x;
-    this.y = y;
-    this.direction = direction;
+  public static Probe createDefault(int x, int y, CompassRose.Compass direction) {
+    return new Probe(-1, x, y, direction);
   }
+
 
   public int getX() {
     return x;

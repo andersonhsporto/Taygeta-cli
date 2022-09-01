@@ -4,21 +4,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Planet {
-  private final int width;
-  private final int height;
   private final int id;
+  private int width;
+  private int height;
 
   private boolean full;
   private final Collection<Probe> probes;
 
-  public Planet(int id, String command) {
-    var commandArray = command.split("x");
-
+  public Planet(int id, int width, int height) {
     this.id = id;
-    this.width = Integer.parseInt(commandArray[0]);
-    this.height = Integer.parseInt(commandArray[1]);
+    this.width = width;
+    this.height = height;
     this.full = false;
     this.probes = new ArrayList<>();
+  }
+
+  public static Planet createDefault(int id, String command) {
+    var commandArray = command.split("x");
+    var width = Integer.parseInt(commandArray[0]);
+    var height = Integer.parseInt(commandArray[1]);
+
+    return new Planet(id, width, height);
   }
 
   public int getArea() {

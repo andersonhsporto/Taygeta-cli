@@ -73,7 +73,7 @@ public class MissionControlService {
   }
 
   public void addPlanet(String command) {
-    Planet planet = new Planet(planets.size(), command);
+    Planet planet = Planet.createDefault(planets.size(), command);
 
     planets.add(planet);
     System.out.println("Planet added ID: " + (getPlanets().size()));
