@@ -26,9 +26,9 @@ public class CompassRose {
   }
 
   public static Cardinal parseDirection(String command) {
-    String undercaseCommand = command.toLowerCase();
+    String underscoreCommand = command.toLowerCase();
 
-    switch (undercaseCommand) {
+    switch (underscoreCommand) {
       case "north", "norte", "n" -> {
         return Cardinal.NORTH;
       }

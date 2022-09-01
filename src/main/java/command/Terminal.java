@@ -34,7 +34,9 @@ public class Terminal {
     }
   }
 
-  public static void makePlanet(MissionControlService missionControlService) throws UndoCommandException {
+  public static void makePlanet(
+      MissionControlService missionControlService) throws UndoCommandException {
+
     System.out.print("Enter planet area width and height: (example: 5x5) > ");
     Scanner scanner = new Scanner(System.in);
     String command = scanner.next();
@@ -71,17 +73,20 @@ public class Terminal {
     }
   }
 
-  private void addProbeToPlanet(String command, MissionControlService missionControlService) throws UndoCommandException {
-    Probe probe = parseProbe(command, missionControlService);
-
+  private void addProbeToPlanet(
+      String command, MissionControlService missionControlService) throws UndoCommandException {
+    
     if (!missionControlService.planetIsFull(parseId(command))) {
+      Probe probe = parseProbe(missionControlService);
+
       missionControlService.addProbeToPlanet(probe, parseId(command));
     } else {
       System.out.println(ColorWrapper.red("Error planet with id " + command + " is full"));
     }
   }
 
-  private Probe parseProbe(String command, MissionControlService missionControlService) throws UndoCommandException {
+  private Probe parseProbe(MissionControlService missionControlService) throws UndoCommandException {
+
     var x = addProbeParameter("x coordinate");
     var y = addProbeParameter("y coordinate");
     var direction = parseDirection();
