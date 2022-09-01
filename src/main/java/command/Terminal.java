@@ -25,12 +25,13 @@ public class Terminal {
     }
   }
 
-  private void invokeCommand(String command, MissionControl missionControl)
-      throws UndoCommandException {
+  private void invokeCommand(
+      String command, MissionControl missionControl) throws UndoCommandException {
+
     switch (command) {
       case "add-planet" -> makePlanet(missionControl);
       case "add-probe" -> makeProbe(missionControl);
-      default -> System.out.println(Colors.red("Invalid command"));
+      default -> System.out.println(ColorWrapper.red("Invalid command"));
     }
   }
 
@@ -59,14 +60,15 @@ public class Terminal {
     while (true) {
       String command = scanner.next();
       if (missionControl.planetExistsById(command)) {
-        parseProbe(command, missionControl);
+        if (!missionControl.planetIsFull(parseId(command)))
+          parseProbe(command, missionControl);
         break;
       } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
       } else {
         System.out.println("Invalid planet id");
       }
-      System.out.println(Colors.red("Error planet with id " + command + " does not exist"));
+      System.out.println(ColorWrapper.red("Error planet with id " + command + " does not exist"));
       break;
     }
   }
@@ -92,7 +94,7 @@ public class Terminal {
 
   private boolean planetExists(MissionControl missionControl) {
     if (missionControl.getPlanets().isEmpty()) {
-      System.out.println(Colors.red("Error there is no planets to add probes"));
+      System.out.println(ColorWrapper.red("Error there is no planets to add probes"));
       return false;
     } else {
       return true;
@@ -120,7 +122,7 @@ public class Terminal {
       } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
       } else {
-        System.out.println(Colors.red("Invalid direction"));
+        System.out.println(ColorWrapper.red("Invalid direction"));
       }
     }
   }
@@ -140,7 +142,7 @@ public class Terminal {
       if (value != -1) {
         return value;
       } else {
-        System.out.println(Colors.red("Error invalid " + message));
+        System.out.println(ColorWrapper.red("Error invalid " + message));
       }
     }
   }
