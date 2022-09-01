@@ -52,4 +52,10 @@ public class MissionControl {
     }
   }
 
+  public void listPlanets() {
+    for (Planet planet : planets) {
+      System.out.println(planet);
+    }
+  }
+
 }
