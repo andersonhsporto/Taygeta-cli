@@ -8,19 +8,18 @@ public class Probe {
 
   private int y;
 
-  private CompassRose.Compass direction;
+  private CompassRose.Cardinal direction;
 
-  public Probe(int id, int x, int y, CompassRose.Compass direction) {
+  public Probe(int id, int x, int y, CompassRose.Cardinal direction) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.direction = direction;
   }
 
-  public static Probe createDefault(int x, int y, CompassRose.Compass direction) {
+  public static Probe createDefault(int x, int y, CompassRose.Cardinal direction) {
     return new Probe(-1, x, y, direction);
   }
-
 
   public int getX() {
     return x;

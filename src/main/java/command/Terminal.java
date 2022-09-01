@@ -90,7 +90,7 @@ public class Terminal {
     return probe;
   }
 
-  public CompassRose.Compass parseDirection() throws UndoCommandException {
+  public CompassRose.Cardinal parseDirection() throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
     String command;
 

@@ -1,17 +1,14 @@
 package command;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import exceptions.UndoCommandException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import models.CompassRose.Compass;
+import models.CompassRose.Cardinal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import services.ValidationService;
 
 class TerminalTest {
 
@@ -39,8 +36,8 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Compass compass = terminal.parseDirection();
-      assertEquals(Compass.NORTH, compass);
+      var compass = terminal.parseDirection();
+      assertEquals(Cardinal.NORTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
 
@@ -56,8 +53,8 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Compass compass = terminal.parseDirection();
-      assertEquals(Compass.SOUTH, compass);
+      Cardinal compass = terminal.parseDirection();
+      assertEquals(Cardinal.SOUTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
@@ -72,8 +69,8 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Compass compass = terminal.parseDirection();
-      assertEquals(Compass.EAST, compass);
+      Cardinal compass = terminal.parseDirection();
+      assertEquals(Cardinal.EAST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
@@ -88,8 +85,8 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Compass compass = terminal.parseDirection();
-      assertEquals(Compass.WEST, compass);
+      Cardinal compass = terminal.parseDirection();
+      assertEquals(Cardinal.WEST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
@@ -104,7 +101,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Compass compass = terminal.parseDirection();
+      Cardinal compass = terminal.parseDirection();
     } catch (UndoCommandException e) {
       assertTrue(true);
     }

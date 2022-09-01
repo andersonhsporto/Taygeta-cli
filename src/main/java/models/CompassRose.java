@@ -2,7 +2,7 @@ package models;
 
 public class CompassRose {
 
-  public enum Compass {
+  public enum Cardinal {
     NORTH,
     SOUTH,
     EAST,
@@ -25,21 +25,21 @@ public class CompassRose {
     }
   }
 
-  public static Compass parseDirection(String command) {
+  public static Cardinal parseDirection(String command) {
     String undercaseCommand = command.toLowerCase();
 
     switch (undercaseCommand) {
       case "north", "norte", "n" -> {
-        return Compass.NORTH;
+        return Cardinal.NORTH;
       }
       case "south", "sul", "s" -> {
-        return Compass.SOUTH;
+        return Cardinal.SOUTH;
       }
       case "east", "leste", "e", "l" -> {
-        return Compass.EAST;
+        return Cardinal.EAST;
       }
       case "west", "oeste", "w", "o" -> {
-        return Compass.WEST;
+        return Cardinal.WEST;
       }
       default -> {
         return null;

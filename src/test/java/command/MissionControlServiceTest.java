@@ -1,10 +1,7 @@
 package command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import models.CompassRose.Compass;
+import models.CompassRose.Cardinal;
 import models.Probe;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +22,7 @@ class MissionControlServiceTest {
   void addOneProbeToPlanet() {
     MissionControlService missionControlService = new MissionControlService();
     missionControlService.addPlanet("10x10");
-    missionControlService.addProbeToPlanet(new Probe(1, 0, 0, Compass.NORTH), 0);
+    missionControlService.addProbeToPlanet(new Probe(1, 0, 0, Cardinal.NORTH), 0);
     assertEquals(1, missionControlService.getPlanets().size());
   }
   @Test

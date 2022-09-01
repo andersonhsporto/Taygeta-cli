@@ -7,7 +7,6 @@ public class Planet {
   private final int id;
   private int width;
   private int height;
-
   private boolean full;
   private final Collection<Probe> probes;
 
