@@ -1,6 +1,6 @@
 package services;
 
-import command.ColorWrapper;
+import command.Message;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -11,8 +11,11 @@ public class MissionControlService {
 
   private final Collection<Planet> planets;
 
-  public MissionControlService() {
+  final Message message;
+
+  public MissionControlService(Message message) {
     this.planets = new ArrayList<>();
+    this.message = message;
   }
 
   public Collection<Planet> getPlanets() {
@@ -22,14 +25,14 @@ public class MissionControlService {
   public void addProbeToPlanet(Probe probe, int planetId) {
 
     if (existProbeInCoordinates(probe, planetId)) {
-      System.out.println(ColorWrapper.red("Probe already exists in this coordinates, the probe is not added"));
+      message.error("Probe already exists in this coordinates, the probe is not added");
       return;
     }
     if (coordinatesIsInvalid(probe, planetId)) {
-      System.out.println(ColorWrapper.red("Invalid coordinates, the probe is not added"));
+      message.error("Invalid coordinates, the probe is not added");
       return;
     }
-    System.out.println(ColorWrapper.green("Probe added to planet " + planetId));
+    message.success("Probe added to planet " + planetId);
     for (Planet planet : planets) {
       if (planet.getId() == planetId) {
         probe.setId(planet.getProbesCount());
@@ -76,7 +79,7 @@ public class MissionControlService {
     Planet planet = Planet.createDefault(planets.size(), command);
 
     planets.add(planet);
-    System.out.println("Planet added ID: " + (getPlanets().size()));
+    message.success("Planet ID " + (getPlanets().size() - 1) + " created");
   }
 
   private int getPlantsListSize() {
