@@ -1,27 +1,27 @@
 package models;
 
+import java.awt.Point;
+
 public class Probe {
 
   private int id;
 
-  private int x;
+  private Point point;
 
-  private int y;
+  private CompassRose.Cardinal direction;
 
-  private CompassRose.Compass direction;
-
-  public Probe(int id, int x, int y, CompassRose.Compass direction) {
+  public Probe(int id, int x, int y, CompassRose.Cardinal direction) {
     this.id = id;
-    this.x = x;
-    this.y = y;
+    this.point = new Point(x, y);
     this.direction = direction;
   }
 
-  public Probe(int x, int y, CompassRose.Compass direction) {
-    this.id = -1;
-    this.x = x;
-    this.y = y;
-    this.direction = direction;
+  public static Probe createDefault(int x, int y, CompassRose.Cardinal direction) {
+    return new Probe(-1, x, y, direction);
+  }
+
+  public Point getPoint() {
+    return point;
   }
 
   public void setId(int id) {
@@ -30,11 +30,10 @@ public class Probe {
 
   @Override
   public String toString() {
-    return "Probe {" +
-            " id= " + id +
-            ", x= " + x +
-            ", y= " + y +
-            ", direction= " + direction +
-            '}';
+    return "Probe{" +
+        "id=" + id +
+        ", point=" + point +
+        ", direction=" + direction +
+        '}';
   }
 }
