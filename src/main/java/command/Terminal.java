@@ -9,13 +9,19 @@ import services.ValidationService;
 
 public class Terminal {
 
+  final Message message;
+
+  public Terminal() {
+    this.message = new Message();
+  }
+
   public void init() {
     var scanner = new Scanner(System.in);
-    var missionControl = new MissionControlService();
+    var missionControl = new MissionControlService(message);
 
-    Message.greetings();
+    message.greetings();
     while (true) {
-      System.out.println("Commands add-planet, add-probe");
+      System.out.println("Commands add-planet, add-probe and exit");
       try {
         invokeCommand(scanner.next(), missionControl);
       } catch (UndoCommandException e) {
@@ -31,14 +37,14 @@ public class Terminal {
       case "add-planet" -> makePlanet(missionControlService);
       case "add-probe" -> makeProbe(missionControlService);
       case "exit" -> System.exit(0);
-      default -> System.out.println(ColorWrapper.red("Invalid command"));
+      default -> message.error("Invalid command");
     }
   }
 
-  public static void makePlanet(
+  public void makePlanet(
       MissionControlService missionControlService) throws UndoCommandException {
 
-    System.out.print("Enter planet area width and height: (example: 5x5) > ");
+    message.defaultMessage("Enter planet area width and height: (example: 5x5) > ");
     Scanner scanner = new Scanner(System.in);
     String command = scanner.next();
 
@@ -47,7 +53,7 @@ public class Terminal {
     } else if (command.equals("undo")) {
       throw new UndoCommandException("Undo command add-planet");
     } else {
-      System.out.println(ColorWrapper.red("Invalid planet area"));
+      message.error("Invalid planet area");
       makePlanet(missionControlService);
     }
   }
@@ -58,7 +64,7 @@ public class Terminal {
     Scanner scanner = new Scanner(System.in);
     String  command;
 
-    System.out.print("Enter planet id number: > ");
+    message.defaultMessage("Enter planet id number: > ");
     while (true) {
       command = scanner.next();
       if (ValidationService.planetExistsById(command, missionControlService)) {
@@ -67,9 +73,9 @@ public class Terminal {
       } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
       } else {
-        System.out.println(ColorWrapper.red("Invalid planet id"));
+        message.error("Invalid planet id");
       }
-      System.out.println(ColorWrapper.red("Error planet with id " + command + " does not exist"));
+      message.error("Error planet with id " + command + " does not exist");
       break;
     }
   }
@@ -82,7 +88,7 @@ public class Terminal {
 
       missionControlService.addProbeToPlanet(probe, ParseService.parseId(command));
     } else {
-      System.out.println(ColorWrapper.red("Error planet with id " + command + " is full"));
+      message.error("Error planet with id " + command + " is full");
     }
   }
 
