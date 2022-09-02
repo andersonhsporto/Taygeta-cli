@@ -16,7 +16,7 @@ public class ValidationService {
       int width = Integer.parseInt(commandArray[0]);
       int height = Integer.parseInt(commandArray[1]);
 
-      if (width < 0 || height < 0) {
+      if (width < 1 || height < 1) {
         return false;
       }
     } catch (NumberFormatException e) {
