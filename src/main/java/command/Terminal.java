@@ -13,7 +13,7 @@ public class Terminal {
     var scanner = new Scanner(System.in);
     var missionControl = new MissionControlService();
 
-    System.out.println("Welcome to Taygeta! CLI version");
+    Message.greetings();
     while (true) {
       System.out.println("Commands add-planet, add-probe");
       try {

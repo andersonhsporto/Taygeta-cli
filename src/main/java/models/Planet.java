@@ -8,7 +8,7 @@ public class Planet {
   private int width;
   private int height;
   private boolean full;
-  private final Collection<Probe> probes;
+  private Collection<Probe> probes;
 
   public Planet(int id, int width, int height) {
     this.id = id;
