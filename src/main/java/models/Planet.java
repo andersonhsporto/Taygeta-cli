@@ -26,8 +26,8 @@ public class Planet {
     return new Planet(id, width, height);
   }
 
-  public int getArea() {
-    return width * height;
+  public Long getArea() {
+    return (long) width * height;
   }
 
   void printProbes() {
@@ -38,6 +38,9 @@ public class Planet {
 
   public void addProbe(Probe probe) {
     probes.add(probe);
+    if (probes.size() == getArea()) {
+      full = true;
+    }
     printProbes();
   }
 
