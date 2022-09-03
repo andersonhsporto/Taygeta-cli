@@ -1,11 +1,11 @@
-package command;
+package services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import models.CompassRose.Cardinal;
 import models.Probe;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import services.MissionControlService;
 
 class MissionControlServiceTest {
 
@@ -25,6 +25,7 @@ class MissionControlServiceTest {
     missionControlService.addProbeToPlanet(new Probe(1, 0, 0, Cardinal.NORTH), 0);
     assertEquals(1, missionControlService.getPlanets().size());
   }
+
   @Test
   @DisplayName("Size of planets list is 5")
   void sizeOfPlanetsListIs5() {
