@@ -17,7 +17,7 @@ public class Terminal {
 
   public void init() {
     var scanner = new Scanner(System.in);
-    var missionControl = new MissionControlService(message);
+    var missionControl = new MissionControlService();
 
     message.greetings();
     while (true) {

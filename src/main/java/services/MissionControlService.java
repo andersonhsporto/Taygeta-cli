@@ -13,9 +13,9 @@ public class MissionControlService {
 
   final Message message;
 
-  public MissionControlService(Message message) {
+  public MissionControlService() {
     this.planets = new ArrayList<>();
-    this.message = message;
+    this.message = new Message();
   }
 
   public Collection<Planet> getPlanets() {
