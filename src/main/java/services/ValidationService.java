@@ -57,4 +57,8 @@ public class ValidationService {
 
     return planet.filter(value -> probeId >= 0 && probeId < value.getProbes().size()).isPresent();
   }
+
+  public boolean isValidSequence(String command) {
+    return command.matches("^[MLR]+$");
+  }
 }
