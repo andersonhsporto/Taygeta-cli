@@ -100,7 +100,7 @@ public class MissionControlService {
     }
   }
 
-  public boolean planetIsFull(int planetId) {
+  public boolean planetByIdIsFull(int planetId) {
     var planet = getPlanetById(planetId);
 
     return planet.get().isFull();
