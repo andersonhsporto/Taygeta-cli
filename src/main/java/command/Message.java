@@ -15,7 +15,7 @@ public class Message {
   }
 
   public void defaultMessage(String message) {
-    System.out.println(ColorWrapper.cyan(message));
+    System.out.print(ColorWrapper.cyan(message));
   }
 
 }
