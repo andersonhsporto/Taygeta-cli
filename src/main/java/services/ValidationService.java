@@ -2,6 +2,7 @@ package services;
 
 import command.ColorWrapper;
 import java.util.Collection;
+import java.util.Optional;
 import models.Planet;
 
 public class ValidationService {
@@ -25,13 +26,6 @@ public class ValidationService {
     return true;
   }
 
-  public static boolean planetExistsById(String command, MissionControlService missionControlService) {
-    int planetId = missionControlService.parseId(command);
-    Collection<Planet> planets = missionControlService.getPlanets();
-
-    return planetId >= 0 && planetId < planets.size();
-  }
-
   public static boolean planetExists(MissionControlService missionControlService) {
     if (missionControlService.getPlanets().isEmpty()) {
       System.out.println(ColorWrapper.red("Error there is no planets to add probes"));
@@ -39,5 +33,28 @@ public class ValidationService {
     } else {
       return true;
     }
+  }
+
+  public static boolean planetIsValid(String command, MissionControlService missionControlService) {
+    if (planetExistsById(command, missionControlService)) {
+      return !missionControlService.planetByIdIsFull(missionControlService.parseId(command));
+    } else {
+      System.out.println(ColorWrapper.red("Error planet id: " + command + " does not exist"));
+      return false;
+    }
+  }
+
+  public static boolean planetExistsById(String command, MissionControlService missionControlService) {
+    int planetId = missionControlService.parseId(command);
+    Collection<Planet> planets = missionControlService.getPlanets();
+
+    return planetId >= 0 && planetId < planets.size();
+  }
+
+  public static boolean probeExists(Integer planetId, int probeId, MissionControlService missionControlService) {
+
+    Optional<Planet> planet = missionControlService.getPlanetById(planetId);
+
+    return planet.filter(value -> probeId >= 0 && probeId < value.getProbes().size()).isPresent();
   }
 }
