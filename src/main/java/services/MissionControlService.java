@@ -28,7 +28,7 @@ public class MissionControlService {
       message.error("Probe already exists in this coordinates, the probe is not added");
       return;
     }
-    if (coordinatesIsInvalid(probe, planetId)) {
+    if (!coordinatesIsValid(probe, planetId)) {
       message.error("Invalid coordinates, the probe is not added");
       return;
     }
@@ -51,18 +51,18 @@ public class MissionControlService {
     return Optional.empty();
   }
 
-  public boolean coordinatesIsInvalid(Probe probe, int planetId) {
+  public boolean coordinatesIsValid(Probe probe, int planetId) {
     var planet = getPlanetById(planetId);
     var planetWidth = planet.get().getWidth();
     var planetHeight = planet.get().getHeight();
 
-    if (probe.getPoint().getX() < 0 || probe.getPoint().getX() > planetWidth) {
-      return true;
+    if (probe.getPoint().getX() < 1 || probe.getPoint().getX() > planetWidth) {
+      return false;
     }
-    if (probe.getPoint().getY() < 0 || probe.getPoint().getY() > planetHeight) {
-      return true;
+    if (probe.getPoint().getY() < 1 || probe.getPoint().getY() > planetHeight) {
+      return false;
     }
-    return false;
+    return true;
   }
   public boolean existProbeInCoordinates(Probe probe, int planetId) {
     var planet = getPlanetById(planetId);
@@ -82,7 +82,7 @@ public class MissionControlService {
     message.success("Planet ID " + (getPlanets().size() - 1) + " created");
   }
 
-  private int getPlantsListSize() {
+  private int getPlanetsListSize() {
     return this.planets.size();
   }
 
