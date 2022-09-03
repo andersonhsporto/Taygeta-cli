@@ -107,4 +107,28 @@ class ValidationServiceTest {
     assertFalse(validationService.isValidSequence("mlr"));
   }
 
+  @Test
+  @DisplayName("String with space is invalid")
+  void stringWithSpace() {
+    ValidationService validationService = new ValidationService();
+
+    assertFalse(validationService.isValidSequence("M L R"));
+  }
+
+  @Test
+  @DisplayName("String with tab is invalid")
+  void stringWithTab() {
+    ValidationService validationService = new ValidationService();
+
+    assertFalse(validationService.isValidSequence("M\tL\tR"));
+  }
+
+  @Test
+  @DisplayName("String with new line is invalid")
+  void stringWithNewLine() {
+    ValidationService validationService = new ValidationService();
+
+    assertFalse(validationService.isValidSequence("M \n L \n R"));
+  }
+
 }

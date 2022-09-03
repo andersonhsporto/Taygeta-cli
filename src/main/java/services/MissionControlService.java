@@ -3,13 +3,15 @@ package services;
 import command.Message;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
+import models.CompassRose.Cardinal;
 import models.Planet;
 import models.Probe;
 
 public class MissionControlService {
 
-  private final Collection<Planet> planets;
+  private Collection<Planet> planets;
 
   final Message message;
 
@@ -67,7 +69,7 @@ public class MissionControlService {
   public boolean existProbeInCoordinates(Probe probe, int planetId) {
     var planet = getPlanetById(planetId);
 
-    for (Probe probeInPlanet : planet.get().getProbes()) {
+    for (Probe probeInPlanet : planet.get().getProbes().values()) {
       if (probeInPlanet.getPoint().equals(probe.getPoint())) {
         return true;
       }
@@ -104,6 +106,18 @@ public class MissionControlService {
     var planet = getPlanetById(planetId);
 
     return planet.get().isFull();
+  }
+
+  public void moveProbe(Integer planeId, Integer probeId, String sequence) {
+    Probe dummy = new Probe(0, 2, 3 , Cardinal.NORTH);
+
+    for (Planet planet : planets) {
+      if (Objects.equals(planet.getId(), planeId)) {
+        planet.putProbe(probeId, dummy);
+        System.out.println(planet.getProbes().get(probeId));
+      }
+    }
+
   }
 
 }

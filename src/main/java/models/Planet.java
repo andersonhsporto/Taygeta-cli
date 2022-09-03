@@ -1,21 +1,21 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Planet {
   private final int id;
   private int width;
   private int height;
   private boolean full;
-  private Collection<Probe> probes;
+  private Map<Integer, Probe> probes;
 
   public Planet(int id, int width, int height) {
     this.id = id;
     this.width = width;
     this.height = height;
     this.full = false;
-    this.probes = new ArrayList<>();
+    this.probes = new HashMap<Integer, Probe>();
   }
 
   public static Planet createDefault(int id, String command) {
@@ -31,20 +31,21 @@ public class Planet {
   }
 
   void printProbes() {
-    for (Probe probe : probes) {
-      System.out.println(probe);
+    for (Map.Entry<Integer, Probe> entry : probes.entrySet()) {
+      System.out.println(entry.getValue());
     }
   }
 
   public void addProbe(Probe probe) {
-    probes.add(probe);
+    probes.put(probes.size(), probe);
     if (probes.size() == getArea()) {
       full = true;
     }
     printProbes();
   }
 
-  public int getId() {
+
+  public Integer getId() {
     return id;
   }
 
@@ -56,8 +57,12 @@ public class Planet {
     return height;
   }
 
-  public Collection<Probe> getProbes() {
+  public Map<Integer, Probe> getProbes() {
     return probes;
+  }
+
+  public Probe getProbeById(int id) {
+    return probes.get(id);
   }
 
   public int getProbesCount() {
@@ -66,6 +71,10 @@ public class Planet {
 
   public boolean isFull() {
     return full;
+  }
+
+  public void putProbe(Integer id, Probe probe) {
+    this.probes.put(id, probe);
   }
 
   @Override

@@ -47,7 +47,7 @@ public class Terminal {
     if (ValidationService.planetExists(missionControlService)) {
       switch (command) {
         case "add-probe" -> makeProbe(missionControlService);
-        case "move-probe" -> makeProbe(missionControlService);
+        case "move-probe" -> moveProbe(missionControlService);
         default -> message.error("Invalid command");
       }
     }
@@ -58,6 +58,8 @@ public class Terminal {
 
     if (planetId.isPresent()) {
       int probeId = parseService.parseProbeId(planetId.get(), missionControlService);
+      String sequenceCommands = parseService.parseSequenceCommands();
+      missionControlService.moveProbe(planetId.get(), probeId, sequenceCommands);
     }
   }
 

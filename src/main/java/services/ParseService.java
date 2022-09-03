@@ -44,6 +44,24 @@ public class ParseService {
     return probe;
   }
 
+  public String parseSequenceCommands() throws UndoCommandException {
+    Scanner scanner = new Scanner(System.in);
+    String command;
+
+    message.defaultMessage("Enter sequence of commands: > ");
+    command = scanner.next();
+    if ("undo".equals(command)) {
+      throw new UndoCommandException("Undo command add-probe");
+    }
+    if (ValidationService.isValidSequence(command)) {
+      return command;
+    } else {
+      message.error("Invalid sequence of commands");
+      return parseSequenceCommands();
+    }
+  }
+
+
 
   public static CompassRose.Cardinal parseDirection() throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
