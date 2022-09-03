@@ -1,12 +1,37 @@
 package services;
 
 import command.ColorWrapper;
+import command.Message;
 import exceptions.UndoCommandException;
+import java.util.Optional;
 import java.util.Scanner;
 import models.CompassRose;
 import models.Probe;
 
 public class ParseService {
+
+  private final Message message;
+    public ParseService() {
+    this.message = new Message();
+  }
+  public Optional<Integer> parsePlanetID(MissionControlService missionControlService)
+      throws UndoCommandException {
+
+    Scanner scanner = new Scanner(System.in);
+    String command;
+
+    message.defaultMessage("Enter planet id number: > ");
+    command = scanner.next();
+    if ("undo".equals(command)) {
+      throw new UndoCommandException("Undo command add-probe");
+    }
+    if (ValidationService.planetIsValid(command, missionControlService)) {
+      return Optional.of(Integer.parseInt(command));
+    } else {
+      message.error("Invalid planet id");
+      return Optional.empty();
+    }
+  }
 
   public static Probe parseProbe()
       throws UndoCommandException {
@@ -65,5 +90,15 @@ public class ParseService {
     }
   }
 
+  public int parseProbeId(Integer planetId, MissionControlService missionControlService) throws UndoCommandException {
+    int probeId = addProbeParameter("id");
+
+    if (ValidationService.probeExists(planetId, probeId, missionControlService)) {
+      return probeId;
+    } else {
+      message.error("Invalid probe id");
+      throw new UndoCommandException("Undo command move-probe");
+    }
+  }
 
 }
