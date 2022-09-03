@@ -14,11 +14,13 @@ class MessageTest {
   private final PrintStream standardOut = System.out;
   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
+  // Reassigns standard output stream to a new stream with ByteArrayOutputStream
   @BeforeEach
   public void setUp() {
     System.setOut(new PrintStream(outputStreamCaptor));
   }
 
+  // Restore initial standard output stream
   @AfterEach
   public void tearDown() {
     System.setOut(standardOut);
@@ -45,7 +47,7 @@ class MessageTest {
   }
 
   @Test
-  @DisplayName("Test Green sucess message")
+  @DisplayName("Test Green success message")
   void success() {
     Message message = new Message();
     String defaultGreenSuccess = "[32mProbe successfully added\u001B[0m";
