@@ -2,7 +2,6 @@ package command;
 
 import exceptions.UndoCommandException;
 import java.util.Scanner;
-import models.Probe;
 import services.MissionControlService;
 import services.ParseService;
 import services.ValidationService;
@@ -10,9 +9,11 @@ import services.ValidationService;
 public class Terminal {
 
   final Message message;
+  final ParseService parseService;
 
   public Terminal() {
     this.message = new Message();
+    this.parseService = new ParseService();
   }
 
   public void init() {
@@ -23,25 +24,45 @@ public class Terminal {
     while (true) {
       System.out.println("Commands add-planet, add-probe and exit");
       try {
-        invokeCommand(scanner.next(), missionControl);
+        receiveCommand(scanner.next(), missionControl);
       } catch (UndoCommandException e) {
-        continue;
       }
     }
   }
 
-  private void invokeCommand(
+  private void receiveCommand(
       String command, MissionControlService missionControlService) throws UndoCommandException {
 
     switch (command) {
       case "add-planet" -> makePlanet(missionControlService);
-      case "add-probe" -> makeProbe(missionControlService);
+      case "add-probe", "move-probe" -> planetExists(command, missionControlService);
       case "exit" -> System.exit(0);
       default -> message.error("Invalid command");
     }
   }
 
-  public void makePlanet(
+  private void planetExists(
+      String command, MissionControlService missionControlService) throws UndoCommandException {
+
+    if (ValidationService.planetExists(missionControlService)) {
+      switch (command) {
+        case "add-probe" -> makeProbe(missionControlService);
+        case "move-probe" -> makeProbe(missionControlService);
+        default -> message.error("Invalid command");
+      }
+    }
+  }
+
+  public void moveProbe(MissionControlService missionControlService) throws UndoCommandException {
+    var planetId = parseService.parsePlanetID(missionControlService);
+
+    if (planetId.isPresent()) {
+      int probeId = parseService.parseProbeId(planetId.get(), missionControlService);
+    }
+  }
+
+
+  private void makePlanet(
       MissionControlService missionControlService) throws UndoCommandException {
 
     message.defaultMessage("Enter planet area width and height: (example: 5x5) > ");
@@ -59,37 +80,18 @@ public class Terminal {
   }
 
   private void makeProbe(MissionControlService missionControlService) throws UndoCommandException {
-    if (!ValidationService.planetExists(missionControlService)) return;
+      var command = parseService.parsePlanetID(missionControlService);
 
-    Scanner scanner = new Scanner(System.in);
-    String  command;
-
-    message.defaultMessage("Enter planet id number: > ");
-    while (true) {
-      command = scanner.next();
-      if (ValidationService.planetExistsById(command, missionControlService)) {
-        addProbeToPlanet(command, missionControlService);
-        break;
-      } else if (command.equals("undo")) {
-        throw new UndoCommandException("Undo command add-probe");
-      } else {
-        message.error("Invalid planet id");
-      }
-      message.error("Error planet with id " + command + " does not exist");
-      break;
-    }
+      if (command.isPresent())
+        addProbeToPlanet(command.get(), missionControlService);
   }
 
   private void addProbeToPlanet(
-      String command, MissionControlService missionControlService) throws UndoCommandException {
+      Integer planetId, MissionControlService missionControlService) throws UndoCommandException {
 
-    if (!missionControlService.planetIsFull(ParseService.parseId(command))) {
-      Probe probe = ParseService.parseProbe();
+      var probe = ParseService.parseProbe();
 
-      missionControlService.addProbeToPlanet(probe, ParseService.parseId(command));
-    } else {
-      message.error("Error planet with id " + command + " is full");
-    }
+      missionControlService.addProbeToPlanet(probe, planetId);
   }
 
 }
