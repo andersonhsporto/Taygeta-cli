@@ -118,14 +118,19 @@ public class MissionControlService {
     for (Planet planet : planets) {
       if (Objects.equals(planet.getId(), planeId)) {
         probeCopy = cloneUpdateProbe(probe, planet, sequence);
+        if (collision(probeCopy, planet)) {
+          messageService.error("Collision detected, probe is not moved");
+          return;
+        }
         planet.putProbe(probeId, probeCopy);
         System.out.println(planet.getProbes().get(probeId));
       }
     }
   }
 
-  public Probe cloneUpdateProbe(Probe probe, Planet planet, String sequence)
-      throws UndoCommandException {
+  public Probe cloneUpdateProbe(
+      Probe probe, Planet planet, String sequence) throws UndoCommandException {
+
     var newCardinal = probe.getDirection();
     var newPoint = probe.getPoint();
     Probe newProbe;
@@ -144,13 +149,13 @@ public class MissionControlService {
 
   }
 
-  public void collisonDetection(Point point, Planet planet) throws UndoCommandException {
+  public boolean collision(Probe probe, Planet planet) {
     for (Probe probeInPlanet : planet.getProbes().values()) {
-      if (probeInPlanet.getPoint().equals(point)) {
-        messageService.error("Collision detected the probe is not moved");
-        throw new UndoCommandException("Collision detected");
+      if (probeInPlanet.getPoint().equals(probe.getPoint()) && probeInPlanet.getId() != probe.getId()) {
+        return true;
       }
     }
+    return false;
   }
 
   public void moveForward(Point point, Cardinal cardinal, Planet planet)
@@ -183,7 +188,6 @@ public class MissionControlService {
         point.setLocation(planet.getWidth(), point.getY());
       }
     }
-    collisonDetection(point, planet);
   }
 
   public Cardinal rotateLeft(Cardinal cardinal) {
