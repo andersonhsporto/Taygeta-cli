@@ -18,7 +18,7 @@ class TerminalTest {
   void isValidPlanetSize() {
     String command = "5xteste";
 
-    assertFalse(ValidationService.commandIsValidPlanetSize(command));
+    assertFalse(ValidationService.commandInPlanetSizeFormat(command));
   }
 
   @Test
@@ -26,7 +26,7 @@ class TerminalTest {
   void isValidPlanetSize2() {
     String command = "50x50";
 
-    assertTrue(ValidationService.commandIsValidPlanetSize(command));
+    assertTrue(ValidationService.commandInPlanetSizeFormat(command));
   }
 
   @Test
@@ -38,7 +38,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.parseDirection();
+      Cardinal compass = ParseService.probeDirection();
     } catch (UndoCommandException e) {
       assertTrue(true);
     }

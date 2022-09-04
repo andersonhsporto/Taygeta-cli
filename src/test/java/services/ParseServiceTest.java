@@ -24,7 +24,7 @@ class ParseServiceTest {
 
     System.setIn(inputStream);
     try {
-      var compass = ParseService.parseDirection();
+      var compass = ParseService.probeDirection();
       Assertions.assertEquals(Cardinal.NORTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -41,7 +41,7 @@ class ParseServiceTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.parseDirection();
+      Cardinal compass = ParseService.probeDirection();
       Assertions.assertEquals(Cardinal.SOUTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -57,7 +57,7 @@ class ParseServiceTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.parseDirection();
+      Cardinal compass = ParseService.probeDirection();
       assertEquals(Cardinal.EAST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -73,7 +73,7 @@ class ParseServiceTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.parseDirection();
+      Cardinal compass = ParseService.probeDirection();
       assertEquals(Cardinal.WEST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -86,7 +86,7 @@ class ParseServiceTest {
   void parseStringToInt() throws UndoCommandException {
     Terminal terminal = new Terminal();
     String command = "5";
-    int number = ParseService.parseId(command);
+    int number = ParseService.id(command);
 
     Assertions.assertEquals(5, number);
   }
@@ -97,7 +97,7 @@ class ParseServiceTest {
     Terminal terminal = new Terminal();
     String command = "111Invalid2";
 
-    Assertions.assertEquals(-1, ParseService.parseId(command));
+    Assertions.assertEquals(-1, ParseService.id(command));
   }
 
   @Test
@@ -106,7 +106,7 @@ class ParseServiceTest {
     Terminal terminal = new Terminal();
     String command = "12a";
 
-    Assertions.assertEquals(-1, ParseService.parseId(command));
+    Assertions.assertEquals(-1, ParseService.id(command));
   }
 
 }
