@@ -42,7 +42,6 @@ public class Planet {
     if (probes.size() == getArea()) {
       full = true;
     }
-    printProbes();
   }
 
 
