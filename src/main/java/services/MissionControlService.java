@@ -1,5 +1,6 @@
 package services;
 
+import exceptions.UndoCommandException;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +35,6 @@ public class MissionControlService {
       messageService.error("Invalid coordinates, the probe is not added");
       return;
     }
-    messageService.success("Probe added to planet " + planetId);
     for (Planet planet : planets) {
       if (planet.getId() == planetId) {
         probe.setId(planet.getProbesCount());
@@ -42,6 +42,7 @@ public class MissionControlService {
         System.out.println(planet);
       }
     }
+    messageService.success("Probe added to planet " + planetId);
   }
 
   public Optional<Planet> getPlanetById(int planetId) {
@@ -86,14 +87,6 @@ public class MissionControlService {
     return this.planets.size();
   }
 
-  public int parseId(String string) { // TODO: add to a especific class
-    try {
-      return Integer.parseInt(string);
-    } catch (NumberFormatException e) {
-      return -1;
-    }
-  }
-
   public void listPlanets() {
     for (Planet planet : planets) {
       System.out.println(planet);
@@ -108,54 +101,43 @@ public class MissionControlService {
 
 
   //refactor
-  public void moveProbe(Integer planeId, Integer probeId, String sequence) {
+  public void moveProbe(
+      Integer planetId, Integer probeId, String sequence) throws UndoCommandException {
 
-    Probe probe = getPlanetById(planeId).get().getProbeById(probeId);
+    Probe probe = getPlanetById(planetId).get().getProbeById(probeId);
     Probe probeCopy;
 
     for (Planet planet : planets) {
-      if (Objects.equals(planet.getId(), planeId)) {
+      if (Objects.equals(planet.getId(), planetId)) {
         probeCopy = cloneUpdateProbe(probe, planet, sequence);
-        if (collision(probeCopy, planet)) {
-          messageService.error("Collision detected, probe is not moved");
-          return;
-        }
         planet.putProbe(probeId, probeCopy);
         System.out.println(planet.getProbes().get(probeId));
       }
     }
   }
 
-  public Probe cloneUpdateProbe(Probe probe, Planet planet, String sequence) {
+  public Probe cloneUpdateProbe(
+      Probe probe, Planet planet, String sequence) throws UndoCommandException {
 
     var newCardinal = probe.getDirection();
     var newPoint = probe.getPoint();
+    var originPoint = probe.getPoint();
     Probe newProbe;
 
     for (int i = 0; i < sequence.length(); i++) {
       switch (sequence.charAt(i)) {
         case 'L' -> newCardinal = rotateLeft(newCardinal);
         case 'R' -> newCardinal = rotateRight(newCardinal);
-        case 'M' -> moveForward(newPoint, newCardinal, planet);
+        case 'M' -> moveForward(newPoint, newCardinal, planet, originPoint);
       }
-      System.out.println(
-          sequence.charAt(i) + " " + newPoint.getX() + " " + newPoint.getY() + " " + newCardinal);
     }
     newProbe = new Probe(probe.getId(), newPoint, newCardinal);
     return newProbe;
   }
 
-  public boolean collision(Probe probe, Planet planet) {
-    for (Probe probeInPlanet : planet.getProbes().values()) {
-      if (probeInPlanet.getPoint().equals(probe.getPoint())
-          && probeInPlanet.getId() != probe.getId()) {
-        return true;
-      }
-    }
-    return false;
-  }
+  public void moveForward(
+      Point point, Cardinal cardinal, Planet planet, Point origin) throws UndoCommandException {
 
-  public void moveForward(Point point, Cardinal cardinal, Planet planet) {
     if (cardinal == CompassRose.Cardinal.NORTH) {
       if (point.getY() < planet.getHeight()) {
         point.translate(0, 1);
@@ -182,6 +164,18 @@ public class MissionControlService {
         point.setLocation(point.getX() - 1, point.getY());
       } else if (point.getX() == 1) {
         point.setLocation(planet.getWidth(), point.getY());
+      }
+    }
+    collision(planet, point, origin);
+  }
+
+  public void collision(
+      Planet planet, Point point, Point origin) throws UndoCommandException {
+
+    for (Probe probeInPlanet : planet.getProbes().values()) {
+      if (probeInPlanet.getPoint().equals(point) && !probeInPlanet.getPoint().equals(origin)) {
+        messageService.error("Collision detected, the probe is not moved");
+        throw new UndoCommandException("Collision detected, the probe is not moved");
       }
     }
   }
