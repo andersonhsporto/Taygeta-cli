@@ -58,18 +58,26 @@ class MissionControlServiceTest {
 
 
   @Test
-  @DisplayName("Move probe by sequence string")
-  void moveProbeBySequenceString() {
+  @DisplayName("Move probe using LMLMLMLMM sequence")
+  void moveProveUsingLMLMLMLMMSequence() {
     MissionControlService missionControlService = new MissionControlService();
-
-    Point point = new Point(1, 2);
-    CompassRose.Cardinal cardinal = Cardinal.NORTH;
+    Probe tempProbe = new Probe(0, 1, 2, Cardinal.NORTH);
     Planet planet = new Planet(0, 5, 5);
+    Probe cloneProbe = missionControlService.cloneUpdateProbe(tempProbe, planet, "LMLMLMLMM");
 
-    System.out.println("START: " + point + " " + cardinal);
-    Cardinal newenum = missionControlService.movementsSequence(point, cardinal, "LMLMLMLMM",
-        planet);
-    System.out.println(point);
-    System.out.println("FINAL: " + point + " " + newenum);
+    assertEquals(new Point(1, 3), cloneProbe.getPoint());
+    assertEquals(Cardinal.NORTH, cloneProbe.getDirection());
+  }
+
+  @Test
+  @DisplayName("Move probe using MMRMMRMRRML sequence")
+  void moveProveUsingMMRMMRMRRMLSequence() {
+    MissionControlService missionControlService = new MissionControlService();
+    Probe tempProbe = new Probe(0, 3, 3, Cardinal.EAST);
+    Planet planet = new Planet(0, 5, 5);
+    Probe cloneProbe = missionControlService.cloneUpdateProbe(tempProbe, planet, "MMRMMRMRRML");
+
+    assertEquals(new Point(5, 1), cloneProbe.getPoint());
+    assertEquals(Cardinal.NORTH, cloneProbe.getDirection());
   }
 }
