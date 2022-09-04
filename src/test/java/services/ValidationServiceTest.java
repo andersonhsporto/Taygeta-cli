@@ -9,50 +9,55 @@ import org.junit.jupiter.api.Test;
 class ValidationServiceTest {
 
   @Test
-  @DisplayName("Planet exist by id true")
+  @DisplayName("Planet exist using a valid planet id")
   void truePlaneExistByid() {
     MissionControlService missionControlService = new MissionControlService();
+
     missionControlService.addPlanet("10x10");
     assertTrue(ValidationService.planetExistsById("0", missionControlService));
   }
 
   @Test
-  @DisplayName("Planet exist by id false")
+  @DisplayName("Planet exist using id that's not in the list")
   void falsePlaneExistByid() {
     MissionControlService missionControlService = new MissionControlService();
+
     missionControlService.addPlanet("55x10");
     assertFalse(ValidationService.planetExistsById("1", missionControlService));
   }
 
   @Test
-  @DisplayName("Planet exist by id true multiple planets")
+  @DisplayName("Planet exist using valid id")
   void falsePlaneExistByidMultipleTrue() {
     MissionControlService missionControlService = new MissionControlService();
+
     missionControlService.addPlanet("55x10");
     missionControlService.addPlanet("1x1");
     assertTrue(ValidationService.planetExistsById("1", missionControlService));
   }
 
   @Test
-  @DisplayName("Planet exist by id false multiple planets")
+  @DisplayName("Planet exist using id that's not in the list")
   void falsePlaneExistByidMultipleFalse() {
     MissionControlService missionControlService = new MissionControlService();
+
     missionControlService.addPlanet("55x10");
     missionControlService.addPlanet("1x1");
     assertFalse(ValidationService.planetExistsById("2", missionControlService));
   }
 
   @Test
-  @DisplayName("Planet exist by negative id")
+  @DisplayName("Planet negative id is invalid")
   void falsePlanetExistNegativeId() {
     MissionControlService missionControlService = new MissionControlService();
+
     missionControlService.addPlanet("55x10");
     missionControlService.addPlanet("1x1");
     assertFalse(ValidationService.planetExistsById("-1", missionControlService));
   }
 
   @Test
-  @DisplayName("String MLR is valid")
+  @DisplayName("Sequence string MLR is valid")
   void trueStringOnlyContainsCharactersMLR() {
     ValidationService validationService = new ValidationService();
 
@@ -60,7 +65,7 @@ class ValidationServiceTest {
   }
 
   @Test
-  @DisplayName("String LMLMLMLMM is valid")
+  @DisplayName("Sequence string LMLMLMLMM is valid")
   void trueDefaultStringLMLMLMLMM() {
     ValidationService validationService = new ValidationService();
 
@@ -68,15 +73,16 @@ class ValidationServiceTest {
   }
 
   @Test
-  @DisplayName("Big string is valid")
+  @DisplayName("Big sequence string is valid")
   void bigStringIsValid() {
     ValidationService validationService = new ValidationService();
 
-    assertTrue(validationService.isValidSequence("LMLMLMLMMMMMMMMMMMMMM"));
+    assertTrue(validationService.isValidSequence(
+        "LMLMLMLMMMMMMMMMMMMMMLMLMLMLMMMMMMMMMMMMMMLMLMLMLMMMMMMMMMMMMMM"));
   }
 
   @Test
-  @DisplayName("Using invalid string norte")
+  @DisplayName("Using invalid sequence string norte")
   void invalidSequenceNorte() {
     ValidationService validationService = new ValidationService();
 
@@ -84,7 +90,7 @@ class ValidationServiceTest {
   }
 
   @Test
-  @DisplayName("Empty string is invalid")
+  @DisplayName("Empty sequence string is invalid")
   void emptyString() {
     ValidationService validationService = new ValidationService();
 
@@ -92,7 +98,7 @@ class ValidationServiceTest {
   }
 
   @Test
-  @DisplayName("Using invalid string 123")
+  @DisplayName("Using invalid sequence string 123")
   void invalidString123() {
     ValidationService validationService = new ValidationService();
 
@@ -100,7 +106,7 @@ class ValidationServiceTest {
   }
 
   @Test
-  @DisplayName("Lowercase string is invalid")
+  @DisplayName("Lowercase sequence string is invalid")
   void lowercaseString() {
     ValidationService validationService = new ValidationService();
 
@@ -108,7 +114,7 @@ class ValidationServiceTest {
   }
 
   @Test
-  @DisplayName("String with space is invalid")
+  @DisplayName("Sequence string with space is invalid")
   void stringWithSpace() {
     ValidationService validationService = new ValidationService();
 
@@ -116,7 +122,7 @@ class ValidationServiceTest {
   }
 
   @Test
-  @DisplayName("String with tab is invalid")
+  @DisplayName("Sequence string with tab is invalid")
   void stringWithTab() {
     ValidationService validationService = new ValidationService();
 
@@ -124,7 +130,7 @@ class ValidationServiceTest {
   }
 
   @Test
-  @DisplayName("String with new line is invalid")
+  @DisplayName("Sequence string with new line is invalid")
   void stringWithNewLine() {
     ValidationService validationService = new ValidationService();
 

@@ -64,7 +64,6 @@ public class Terminal {
     }
   }
 
-
   private void makePlanet(
       MissionControlService missionControlService) throws UndoCommandException {
 
