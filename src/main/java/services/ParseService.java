@@ -15,33 +15,32 @@ public class ParseService {
     this.messageService = new MessageService();
   }
 
-  public static Probe parseProbe() throws UndoCommandException {
-    var x = addProbeParameter("x coordinate");
-    var y = addProbeParameter("y coordinate");
-    var direction = parseDirection();
+  public static Probe probe() throws UndoCommandException {
+    var x = probeParameter("x coordinate");
+    var y = probeParameter("y coordinate");
+    var direction = probeDirection();
     var probe = Probe.createDefault(x, y, direction); //TODO: refactor add probe to mission control
 
     return probe;
   }
 
-  public static CompassRose.Cardinal parseDirection() throws UndoCommandException {
+  public static CompassRose.Cardinal probeDirection() throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
     String command;
 
-    while (true) {
-      System.out.print("Enter probe direction: > ");
-      command = scanner.next();
-      if (CompassRose.isValidDirection(command)) {
+    System.out.print("Enter probe direction: > ");
+    command = scanner.next();
+    if (CompassRose.isValidDirection(command)) {
         return CompassRose.parseDirection(command);
-      } else if (command.equals("undo")) {
+    } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
-      } else {
+    } else {
         System.out.println(ColorWrapper.red("Invalid direction"));
-      }
+        return probeDirection();
     }
   }
 
-  private static int addProbeParameter(String message) throws UndoCommandException {
+  private static int probeParameter(String message) throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
     String command;
     int value;
@@ -49,7 +48,7 @@ public class ParseService {
     while (true) {
       System.out.print("Enter probe " + message + ": > ");
       command = scanner.next();
-      value = parseId(command);
+      value = id(command);
       if (command.equals("undo")) {
         throw new UndoCommandException("Undo command " + message);
       }
@@ -61,7 +60,7 @@ public class ParseService {
     }
   }
 
-  public static int parseId(String string) {
+  public static int id(String string) {
     try {
       return Integer.parseInt(string);
     } catch (NumberFormatException e) {
@@ -69,7 +68,7 @@ public class ParseService {
     }
   }
 
-  public Optional<Integer> parsePlanetID(
+  public Optional<Integer> planetID(
       MissionControlService missionControlService) throws UndoCommandException {
 
     Scanner scanner = new Scanner(System.in);
@@ -108,7 +107,7 @@ public class ParseService {
   public int parseProbeId(
       Integer planetId, MissionControlService missionControlService) throws UndoCommandException {
 
-    int probeId = addProbeParameter("id");
+    int probeId = probeParameter("id");
 
     if (ValidationService.probeExists(planetId, probeId, missionControlService)) {
       return probeId;
