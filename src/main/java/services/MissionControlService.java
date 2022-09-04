@@ -1,6 +1,5 @@
 package services;
 
-import exceptions.UndoCommandException;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -109,8 +108,7 @@ public class MissionControlService {
 
 
   //refactor
-  public void moveProbe(Integer planeId, Integer probeId, String sequence)
-      throws UndoCommandException {
+  public void moveProbe(Integer planeId, Integer probeId, String sequence) {
 
     Probe probe = getPlanetById(planeId).get().getProbeById(probeId);
     Probe probeCopy;
@@ -128,8 +126,7 @@ public class MissionControlService {
     }
   }
 
-  public Probe cloneUpdateProbe(
-      Probe probe, Planet planet, String sequence) throws UndoCommandException {
+  public Probe cloneUpdateProbe(Probe probe, Planet planet, String sequence) {
 
     var newCardinal = probe.getDirection();
     var newPoint = probe.getPoint();
@@ -146,20 +143,19 @@ public class MissionControlService {
     }
     newProbe = new Probe(probe.getId(), newPoint, newCardinal);
     return newProbe;
-
   }
 
   public boolean collision(Probe probe, Planet planet) {
     for (Probe probeInPlanet : planet.getProbes().values()) {
-      if (probeInPlanet.getPoint().equals(probe.getPoint()) && probeInPlanet.getId() != probe.getId()) {
+      if (probeInPlanet.getPoint().equals(probe.getPoint())
+          && probeInPlanet.getId() != probe.getId()) {
         return true;
       }
     }
     return false;
   }
 
-  public void moveForward(Point point, Cardinal cardinal, Planet planet)
-      throws UndoCommandException {
+  public void moveForward(Point point, Cardinal cardinal, Planet planet) {
     if (cardinal == CompassRose.Cardinal.NORTH) {
       if (point.getY() < planet.getHeight()) {
         point.translate(0, 1);

@@ -2,13 +2,6 @@ package models;
 
 public class CompassRose {
 
-  public enum Cardinal {
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST
-  }
-
   public static boolean isValidDirection(String command) {
     String underscoreCommand = command.toLowerCase();
 
@@ -29,6 +22,13 @@ public class CompassRose {
       case "west", "oeste", "w", "o" -> Cardinal.WEST;
       default -> throw new IllegalArgumentException("Invalid direction");
     };
+  }
+
+  public enum Cardinal {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
   }
 
 }

@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Planet {
+
   private final int id;
-  private int width;
-  private int height;
+  private final int width;
+  private final int height;
   private boolean full;
-  private Map<Integer, Probe> probes;
+  private final Map<Integer, Probe> probes;
 
   public Planet(int id, int width, int height) {
     this.id = id;

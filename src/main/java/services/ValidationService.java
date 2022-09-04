@@ -44,14 +44,16 @@ public class ValidationService {
     }
   }
 
-  public static boolean planetExistsById(String command, MissionControlService missionControlService) {
+  public static boolean planetExistsById(String command,
+      MissionControlService missionControlService) {
     int planetId = missionControlService.parseId(command);
     Collection<Planet> planets = missionControlService.getPlanets();
 
     return planetId >= 0 && planetId < planets.size();
   }
 
-  public static boolean probeExists(Integer planetId, int probeId, MissionControlService missionControlService) {
+  public static boolean probeExists(
+      Integer planetId, int probeId, MissionControlService missionControlService) {
 
     Optional<Planet> planet = missionControlService.getPlanetById(planetId);
 
