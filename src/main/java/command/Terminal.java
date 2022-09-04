@@ -2,17 +2,18 @@ package command;
 
 import exceptions.UndoCommandException;
 import java.util.Scanner;
+import services.MessageService;
 import services.MissionControlService;
 import services.ParseService;
 import services.ValidationService;
 
 public class Terminal {
 
-  final Message message;
+  final MessageService messageService;
   final ParseService parseService;
 
   public Terminal() {
-    this.message = new Message();
+    this.messageService = new MessageService();
     this.parseService = new ParseService();
   }
 
@@ -20,7 +21,7 @@ public class Terminal {
     var scanner = new Scanner(System.in);
     var missionControl = new MissionControlService();
 
-    message.greetings();
+    messageService.greetings();
     while (true) {
       System.out.println("Commands add-planet, add-probe and exit");
       try {
@@ -37,7 +38,7 @@ public class Terminal {
       case "add-planet" -> makePlanet(missionControlService);
       case "add-probe", "move-probe" -> planetExists(command, missionControlService);
       case "exit" -> System.exit(0);
-      default -> message.error("Invalid command");
+      default -> messageService.error("Invalid command");
     }
   }
 
@@ -48,7 +49,7 @@ public class Terminal {
       switch (command) {
         case "add-probe" -> makeProbe(missionControlService);
         case "move-probe" -> moveProbe(missionControlService);
-        default -> message.error("Invalid command");
+        default -> messageService.error("Invalid command");
       }
     }
   }
@@ -67,7 +68,7 @@ public class Terminal {
   private void makePlanet(
       MissionControlService missionControlService) throws UndoCommandException {
 
-    message.defaultMessage("Enter planet area width and height: (example: 5x5) > ");
+    messageService.defaultMessage("Enter planet area width and height: (example: 5x5) > ");
     Scanner scanner = new Scanner(System.in);
     String command = scanner.next();
 
@@ -76,7 +77,7 @@ public class Terminal {
     } else if (command.equals("undo")) {
       throw new UndoCommandException("Undo command add-planet");
     } else {
-      message.error("Invalid planet area");
+      messageService.error("Invalid planet area");
       makePlanet(missionControlService);
     }
   }

@@ -8,8 +8,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import services.MessageService;
 
-class MessageTest {
+class MessageServiceTest {
 
   private final PrintStream standardOut = System.out;
   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -29,40 +30,40 @@ class MessageTest {
   @Test
   @DisplayName("Test greetings message")
   void testGreetingMessageIsCyanWelcomeToTaygeta() {
-    Message message = new Message();
+    MessageService messageService = new MessageService();
     String defaultCyanGreetings = "[36mWelcome to Taygeta! CLI version\u001B[0m";
 
-    message.greetings();
+    messageService.greetings();
     assertEquals(defaultCyanGreetings, outputStreamCaptor.toString().trim());
   }
 
   @Test
   @DisplayName("Test Red error message")
   void TestIfErrorIsRedMessage() {
-    Message message = new Message();
+    MessageService messageService = new MessageService();
     String defaultRedError = "[31mInvalid planet area\u001B[0m";
 
-    message.error("Invalid planet area");
+    messageService.error("Invalid planet area");
     assertEquals(defaultRedError, outputStreamCaptor.toString().trim());
   }
 
   @Test
   @DisplayName("Test Green success message")
   void success() {
-    Message message = new Message();
+    MessageService messageService = new MessageService();
     String defaultGreenSuccess = "[32mProbe successfully added\u001B[0m";
 
-    message.success("Probe successfully added");
+    messageService.success("Probe successfully added");
     assertEquals(defaultGreenSuccess, outputStreamCaptor.toString().trim());
   }
 
   @Test
   @DisplayName("Test Cyan default message")
   void defaultMessage() {
-    Message message = new Message();
+    MessageService messageService = new MessageService();
     String defaultCyanMessage = "[36mEnter planet area width and height: (example: 5x5) > \u001B[0m";
 
-    message.defaultMessage("Enter planet area width and height: (example: 5x5) > ");
+    messageService.defaultMessage("Enter planet area width and height: (example: 5x5) > ");
     assertEquals(defaultCyanMessage, outputStreamCaptor.toString().trim());
   }
 }

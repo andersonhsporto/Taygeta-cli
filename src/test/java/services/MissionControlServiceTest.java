@@ -2,7 +2,10 @@ package services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.awt.Point;
+import models.CompassRose;
 import models.CompassRose.Cardinal;
+import models.Planet;
 import models.Probe;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,4 +57,19 @@ class MissionControlServiceTest {
   }
 
 
+  @Test
+  @DisplayName("Move probe by sequence string")
+  void moveProbeBySequenceString() {
+    MissionControlService missionControlService = new MissionControlService();
+
+    Point point = new Point(1, 2);
+    CompassRose.Cardinal cardinal = Cardinal.NORTH;
+    Planet planet = new Planet(0, 5, 5);
+
+    System.out.println("START: " + point + " " + cardinal);
+    Cardinal newenum = missionControlService.movementsSequence(point, cardinal, "LMLMLMLMM",
+        planet);
+    System.out.println(point);
+    System.out.println("FINAL: " + point + " " + newenum);
+  }
 }

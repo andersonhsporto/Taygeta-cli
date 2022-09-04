@@ -1,7 +1,6 @@
 package services;
 
 import command.ColorWrapper;
-import command.Message;
 import exceptions.UndoCommandException;
 import java.util.Optional;
 import java.util.Scanner;
@@ -10,9 +9,9 @@ import models.Probe;
 
 public class ParseService {
 
-  private final Message message;
+  private final MessageService messageService;
     public ParseService() {
-    this.message = new Message();
+    this.messageService = new MessageService();
   }
   public Optional<Integer> parsePlanetID(MissionControlService missionControlService)
       throws UndoCommandException {
@@ -20,7 +19,7 @@ public class ParseService {
     Scanner scanner = new Scanner(System.in);
     String command;
 
-    message.defaultMessage("Enter planet id number: > ");
+    messageService.defaultMessage("Enter planet id number: > ");
     command = scanner.next();
     if ("undo".equals(command)) {
       throw new UndoCommandException("Undo command add-probe");
@@ -28,7 +27,7 @@ public class ParseService {
     if (ValidationService.planetIsValid(command, missionControlService)) {
       return Optional.of(Integer.parseInt(command));
     } else {
-      message.error("Invalid planet id");
+      messageService.error("Invalid planet id");
       return Optional.empty();
     }
   }
@@ -48,7 +47,7 @@ public class ParseService {
     Scanner scanner = new Scanner(System.in);
     String command;
 
-    message.defaultMessage("Enter sequence of commands: > ");
+    messageService.defaultMessage("Enter sequence of commands: > ");
     command = scanner.next();
     if ("undo".equals(command)) {
       throw new UndoCommandException("Undo command add-probe");
@@ -56,7 +55,7 @@ public class ParseService {
     if (ValidationService.isValidSequence(command)) {
       return command;
     } else {
-      message.error("Invalid sequence of commands");
+      messageService.error("Invalid sequence of commands");
       return parseSequenceCommands();
     }
   }
@@ -114,7 +113,7 @@ public class ParseService {
     if (ValidationService.probeExists(planetId, probeId, missionControlService)) {
       return probeId;
     } else {
-      message.error("Invalid probe id");
+      messageService.error("Invalid probe id");
       throw new UndoCommandException("Undo command move-probe");
     }
   }

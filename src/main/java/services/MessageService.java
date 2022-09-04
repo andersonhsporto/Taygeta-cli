@@ -1,6 +1,8 @@
-package command;
+package services;
 
-public class Message {
+import command.ColorWrapper;
+
+public class MessageService {
 
   public void greetings() {
     System.out.println(ColorWrapper.cyan("Welcome to Taygeta! CLI version"));
