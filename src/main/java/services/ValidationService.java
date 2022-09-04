@@ -7,7 +7,7 @@ import models.Planet;
 
 public class ValidationService {
 
-  public static boolean commandIsValidPlanetSize(String command) {
+  public static boolean commandInPlanetSizeFormat(String command) {
     var commandArray = command.split("x");
 
     if (commandArray.length != 2) {
@@ -37,7 +37,7 @@ public class ValidationService {
 
   public static boolean planetIsValid(String command, MissionControlService missionControlService) {
     if (planetExistsById(command, missionControlService)) {
-      return !missionControlService.planetByIdIsFull(missionControlService.parseId(command));
+      return !missionControlService.planetByIdIsFull(ParseService.id(command));
     } else {
       System.out.println(ColorWrapper.red("Error planet id: " + command + " does not exist"));
       return false;
@@ -46,7 +46,7 @@ public class ValidationService {
 
   public static boolean planetExistsById(String command,
       MissionControlService missionControlService) {
-    int planetId = missionControlService.parseId(command);
+    int planetId = ParseService.id(command);
     Collection<Planet> planets = missionControlService.getPlanets();
 
     return planetId >= 0 && planetId < planets.size();

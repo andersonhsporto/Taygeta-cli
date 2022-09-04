@@ -26,7 +26,7 @@ public class Terminal {
       System.out.println("Commands add-planet, add-probe and exit");
       try {
         receiveCommand(scanner.next(), missionControl);
-      } catch (UndoCommandException e) {
+      } catch (UndoCommandException ignored) {
       }
     }
   }
@@ -55,7 +55,7 @@ public class Terminal {
   }
 
   public void moveProbe(MissionControlService missionControlService) throws UndoCommandException {
-    var planetId = parseService.parsePlanetID(missionControlService);
+    var planetId = parseService.planetID(missionControlService);
 
     if (planetId.isPresent()) {
       int probeId = parseService.parseProbeId(planetId.get(), missionControlService);
@@ -72,7 +72,7 @@ public class Terminal {
     Scanner scanner = new Scanner(System.in);
     String command = scanner.next();
 
-    if (ValidationService.commandIsValidPlanetSize(command)) {
+    if (ValidationService.commandInPlanetSizeFormat(command)) {
       missionControlService.addPlanet(command);
     } else if (command.equals("undo")) {
       throw new UndoCommandException("Undo command add-planet");
@@ -83,7 +83,7 @@ public class Terminal {
   }
 
   private void makeProbe(MissionControlService missionControlService) throws UndoCommandException {
-      var command = parseService.parsePlanetID(missionControlService);
+      var command = parseService.planetID(missionControlService);
 
       if (command.isPresent())
         addProbeToPlanet(command.get(), missionControlService);
@@ -92,7 +92,7 @@ public class Terminal {
   private void addProbeToPlanet(
       Integer planetId, MissionControlService missionControlService) throws UndoCommandException {
 
-      var probe = ParseService.parseProbe();
+      var probe = ParseService.probe();
 
       missionControlService.addProbeToPlanet(probe, planetId);
   }
