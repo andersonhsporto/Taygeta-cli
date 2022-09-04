@@ -30,8 +30,8 @@ public class ParseService {
 
     System.out.print("Enter probe direction: > ");
     command = scanner.next();
-    if (CompassRose.isValidDirection(command)) {
-        return CompassRose.parseDirection(command);
+    if (CompassRose.isValidCardinal(command)) {
+        return CompassRose.parseCardinal(command);
     } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
     } else {

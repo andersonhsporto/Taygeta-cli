@@ -10,18 +10,18 @@ public class Probe {
 
   private final Point point;
 
-  private final CompassRose.Cardinal direction;
+  private final CompassRose.Cardinal cardinal;
 
-  public Probe(int id, int x, int y, CompassRose.Cardinal direction) {
+  public Probe(int id, int x, int y, CompassRose.Cardinal cardinal) {
     this.id = id;
     this.point = new Point(x, y);
-    this.direction = direction;
+    this.cardinal = cardinal;
   }
 
-  public Probe(int id, Point point, Cardinal direction) {
+  public Probe(int id, Point point, Cardinal cardinal) {
     this.id = id;
     this.point = point;
-    this.direction = direction;
+    this.cardinal = cardinal;
   }
 
 
@@ -41,8 +41,8 @@ public class Probe {
     return point;
   }
 
-  public Cardinal getDirection() {
-    return direction;
+  public Cardinal getCardinal() {
+    return cardinal;
   }
 
   @Override
@@ -55,12 +55,12 @@ public class Probe {
     }
     Probe probe = (Probe) o;
     return id == probe.id && Objects.equals(point, probe.point)
-        && direction == probe.direction;
+        && cardinal == probe.cardinal;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, point, direction);
+    return Objects.hash(id, point, cardinal);
   }
 
   @Override
@@ -68,7 +68,7 @@ public class Probe {
     return "Probe {" +
         "id=" + id +
         ", point=" + point +
-        ", direction=" + direction +
+        ", direction=" + cardinal +
         '}';
   }
 }

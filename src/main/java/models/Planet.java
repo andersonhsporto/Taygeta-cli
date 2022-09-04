@@ -44,7 +44,6 @@ public class Planet {
     }
   }
 
-
   public Integer getId() {
     return id;
   }

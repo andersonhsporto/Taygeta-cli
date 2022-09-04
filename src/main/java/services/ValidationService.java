@@ -44,8 +44,9 @@ public class ValidationService {
     }
   }
 
-  public static boolean planetExistsById(String command,
-      MissionControlService missionControlService) {
+  public static boolean planetExistsById(
+      String command, MissionControlService missionControlService) {
+
     int planetId = ParseService.id(command);
     Collection<Planet> planets = missionControlService.getPlanets();
 
