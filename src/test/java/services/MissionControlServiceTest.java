@@ -66,7 +66,7 @@ class MissionControlServiceTest {
     Probe cloneProbe = missionControlService.cloneUpdateProbe(tempProbe, planet, "LMLMLMLMM");
 
     assertEquals(new Point(1, 3), cloneProbe.getPoint());
-    assertEquals(Cardinal.NORTH, cloneProbe.getDirection());
+    assertEquals(Cardinal.NORTH, cloneProbe.getCardinal());
   }
 
   @Test
@@ -78,7 +78,7 @@ class MissionControlServiceTest {
     Probe cloneProbe = missionControlService.cloneUpdateProbe(tempProbe, planet, "MMRMMRMRRML");
 
     assertEquals(new Point(5, 1), cloneProbe.getPoint());
-    assertEquals(Cardinal.NORTH, cloneProbe.getDirection());
+    assertEquals(Cardinal.NORTH, cloneProbe.getCardinal());
   }
 
   @Test

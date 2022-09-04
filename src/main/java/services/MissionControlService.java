@@ -119,7 +119,7 @@ public class MissionControlService {
   public Probe cloneUpdateProbe(
       Probe probe, Planet planet, String sequence) throws UndoCommandException {
 
-    var newCardinal = probe.getDirection();
+    var newCardinal = probe.getCardinal();
     var newPoint = probe.getPoint();
     var originPoint = probe.getPoint();
     Probe newProbe;
