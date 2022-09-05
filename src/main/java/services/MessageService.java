@@ -9,7 +9,7 @@ public class MessageService {
   }
 
   public void error(String message) {
-    System.out.println(ColorWrapper.red(message));
+    System.out.println(ColorWrapper.red("Error:\t" + message));
   }
 
   public void success(String message) {
