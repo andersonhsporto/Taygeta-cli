@@ -28,7 +28,7 @@ public class ParseService {
     Scanner scanner = new Scanner(System.in);
     String command;
 
-    System.out.print("Enter probe direction: > ");
+    System.out.print("Enter probe initial direction: > ");
     command = scanner.next();
     if (CompassRose.isValidCardinal(command)) {
         return CompassRose.parseCardinal(command);
