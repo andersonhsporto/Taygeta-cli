@@ -25,7 +25,7 @@ public class Terminal {
     while (true) {
       System.out.println("Commands add-planet, add-probe and exit");
       try {
-        receiveCommand(scanner.next(), missionControl);
+        receiveCommand(scanner.nextLine(), missionControl);
       } catch (UndoCommandException ignored) {
       }
     }
@@ -34,12 +34,52 @@ public class Terminal {
   private void receiveCommand(
       String command, MissionControlService missionControlService) throws UndoCommandException {
 
-    switch (command) {
+    String firstWord = getFirstWord(command);
+
+    switch (firstWord) {
       case "add-planet" -> makePlanet(missionControlService);
       case "add-probe", "move-probe" -> planetExists(command, missionControlService);
+      case "list" -> list(command, missionControlService);
       case "exit" -> System.exit(0);
       default -> messageService.error("Invalid command");
     }
+  }
+
+  private String getFirstWord(String command) {
+    int index = command.indexOf(" ");
+
+    if (index == -1) {
+      return command;
+    } else {
+      return command.substring(0, index).trim();
+    }
+  }
+
+  private void list(String command, MissionControlService missionControlService) {
+    String[] commandArray;
+
+    if (validateListCommand(command)) {
+      commandArray = command.split(" ");
+
+      switch (commandArray[1]) {
+        case "planets", "planet" -> missionControlService.listPlanets();
+        case "probes", "probe" -> missionControlService.listProbes();
+      }
+    } else {
+      messageService.error("Invalid command");
+    }
+  }
+
+  private boolean validateListCommand(String command) {
+    String[] commandArray = command.split(" ");
+
+    if (commandArray.length != 2) {
+      return false;
+    }
+    return switch (commandArray[1]) {
+      case "planets", "planet", "probes", "probe" -> true;
+      default -> false;
+    };
   }
 
   private void planetExists(
@@ -51,6 +91,8 @@ public class Terminal {
         case "move-probe" -> moveProbe(missionControlService);
         default -> messageService.error("Invalid command");
       }
+    } else {
+      messageService.error("There is no planets to add probes");
     }
   }
 
