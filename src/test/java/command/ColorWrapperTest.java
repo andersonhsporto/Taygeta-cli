@@ -55,4 +55,20 @@ class ColorWrapperTest {
 
     assertNotEquals("\u001B[31mred\u001B[0m", ColorWrapper.cyan(string));
   }
+
+  @Test
+  @DisplayName("blue() should return blue string")
+  void blue() {
+    String string = "blue";
+
+    assertEquals("\u001B[34mblue\u001B[0m", ColorWrapper.blue(string));
+  }
+
+  @Test
+  @DisplayName("blue() should not return red string")
+  void blueNotRed() {
+    String string = "blue";
+
+    assertNotEquals("\u001B[31mred\u001B[0m", ColorWrapper.blue(string));
+  }
 }
