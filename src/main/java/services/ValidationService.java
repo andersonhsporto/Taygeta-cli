@@ -27,12 +27,7 @@ public class ValidationService {
   }
 
   public static boolean planetExists(MissionControlService missionControlService) {
-    if (missionControlService.getPlanets().isEmpty()) {
-      System.out.println(ColorWrapper.red("Error there is no planets to add probes"));
-      return false;
-    } else {
-      return true;
-    }
+    return !missionControlService.getPlanets().isEmpty();
   }
 
   public static boolean planetIsValid(String command, MissionControlService missionControlService) {
