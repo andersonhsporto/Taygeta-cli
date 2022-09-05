@@ -31,8 +31,9 @@ public class Planet {
     return (long) width * height;
   }
 
-  void printProbes() {
+  public void printProbes() {
     for (Map.Entry<Integer, Probe> entry : probes.entrySet()) {
+      System.out.print("Planet id: " + id + ", ");
       System.out.println(entry.getValue());
     }
   }
@@ -78,6 +79,6 @@ public class Planet {
 
   @Override
   public String toString() {
-    return " Planet {" + " id = " + id + ", width = " + width + ", height = " + height + '}';
+    return " Planet id: " + id + " [ Width = " + width + ", Height = " + height + ", Probes = " + probes.size() + "]";
   }
 }
