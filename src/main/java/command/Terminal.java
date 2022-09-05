@@ -92,7 +92,7 @@ public class Terminal {
         default -> messageService.error("Invalid command");
       }
     } else {
-      messageService.error("There is no planets to add probes");
+      messageService.error("There is no planets in the system");
     }
   }
 
@@ -102,6 +102,7 @@ public class Terminal {
     if (planetId.isPresent()) {
       int probeId = parseService.parseProbeId(planetId.get(), missionControlService);
       String sequenceCommands = parseService.parseSequenceCommands();
+
       missionControlService.moveProbe(planetId.get(), probeId, sequenceCommands);
     }
   }
