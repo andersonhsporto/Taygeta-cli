@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
-import models.CompassRose;
 import models.CompassRose.Cardinal;
 import models.Planet;
 import models.Probe;
@@ -88,8 +87,22 @@ public class MissionControlService {
   }
 
   public void listPlanets() {
+    if (getPlanetsListSize() == 0) {
+      messageService.error("No planets created");
+      return;
+    }
     for (Planet planet : planets) {
       System.out.println(planet);
+    }
+  }
+
+  public void listProbes() {
+    if (getPlanetsListSize() == 0) {
+      messageService.error("No planets created");
+      return;
+    }
+    for (Planet planet : planets) {
+      planet.printProbes();
     }
   }
 
@@ -138,46 +151,45 @@ public class MissionControlService {
   public void moveForward(
       Point point, Cardinal cardinal, Planet planet, Point origin) throws UndoCommandException {
 
-    if (cardinal == CompassRose.Cardinal.NORTH) {
+    switch (cardinal) {
+      case NORTH -> moveNorth(point, planet);
+      case SOUTH -> moveSouth(point, planet);
+      case EAST -> moveEast(point, planet);
+      case WEST -> moveWest(point, planet);
+    }
+    collision(planet, point, origin);
+  }
+
+  public void moveNorth(Point point, Planet planet) {
       if (point.getY() < planet.getHeight()) {
         point.translate(0, 1);
       } else if (point.getY() == planet.getHeight()) {
         point.setLocation(point.getX(), 1);
       }
-    }
-    if (cardinal == CompassRose.Cardinal.SOUTH) {
+  }
+
+  public void moveSouth(Point point, Planet planet) {
       if (point.getY() > 1) {
         point.translate(0, -1);
       } else if (point.getY() == 1) {
         point.setLocation(point.getX(), planet.getHeight());
       }
-    }
-    if (cardinal == CompassRose.Cardinal.EAST) {
+  }
+
+  public void moveEast(Point point, Planet planet) {
       if (point.getX() < planet.getWidth()) {
         point.setLocation(point.getX() + 1, point.getY());
       } else if (point.getX() == planet.getWidth()) {
         point.setLocation(1, point.getY());
       }
-    }
-    if (cardinal == CompassRose.Cardinal.WEST) {
+  }
+
+  public void moveWest(Point point, Planet planet) {
       if (point.getX() > 1) {
         point.setLocation(point.getX() - 1, point.getY());
       } else if (point.getX() == 1) {
         point.setLocation(planet.getWidth(), point.getY());
       }
-    }
-    collision(planet, point, origin);
-  }
-
-  public void collision(
-      Planet planet, Point point, Point origin) throws UndoCommandException {
-
-    for (Probe probeInPlanet : planet.getProbes().values()) {
-      if (probeInPlanet.getPoint().equals(point) && !probeInPlanet.getPoint().equals(origin)) {
-        messageService.error("Collision detected, the probe is not moved");
-        throw new UndoCommandException("Collision detected, the probe is not moved");
-      }
-    }
   }
 
   public Cardinal rotateLeft(Cardinal cardinal) {
@@ -197,6 +209,18 @@ public class MissionControlService {
       case WEST -> Cardinal.NORTH;
     };
   }
+
+  public void collision(
+      Planet planet, Point point, Point origin) throws UndoCommandException {
+
+    for (Probe probeInPlanet : planet.getProbes().values()) {
+      if (probeInPlanet.getPoint().equals(point) && !probeInPlanet.getPoint().equals(origin)) {
+        messageService.error("Collision detected, the probe is not moved");
+        throw new UndoCommandException("Collision detected");
+      }
+    }
+  }
+
 
 
 }
