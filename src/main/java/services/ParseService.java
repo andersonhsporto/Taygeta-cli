@@ -15,20 +15,19 @@ public class ParseService {
     this.messageService = new MessageService();
   }
 
-  public static Probe probe() throws UndoCommandException {
+  public Probe probe() throws UndoCommandException {
     var x = probeParameter("x coordinate");
     var y = probeParameter("y coordinate");
     var direction = probeDirection();
-    var probe = Probe.createDefault(x, y, direction); //TODO: refactor add probe to mission control
 
-    return probe;
+    return Probe.createDefault(x, y, direction);
   }
 
-  public static CompassRose.Cardinal probeDirection() throws UndoCommandException {
+  public CompassRose.Cardinal probeDirection() throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
     String command;
 
-    System.out.print("Enter probe initial direction: > ");
+    messageService.defaultMessage("Enter probe initial direction: > ");
     command = scanner.next();
     if (CompassRose.isValidCardinal(command)) {
         return CompassRose.parseCardinal(command);

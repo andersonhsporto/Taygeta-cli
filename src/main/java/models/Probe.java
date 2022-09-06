@@ -24,7 +24,6 @@ public class Probe {
     this.cardinal = cardinal;
   }
 
-
   public static Probe createDefault(int x, int y, CompassRose.Cardinal direction) {
     return new Probe(-1, x, y, direction);
   }
@@ -57,7 +56,6 @@ public class Probe {
     return id == probe.id && Objects.equals(point, probe.point)
         && cardinal == probe.cardinal;
   }
-
   @Override
   public int hashCode() {
     return Objects.hash(id, point, cardinal);
