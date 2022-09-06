@@ -12,7 +12,7 @@ import models.Probe;
 
 public class MissionControlService {
 
-  final MessageService messageService;
+  private final MessageService messageService;
   private final Collection<Planet> planets;
 
   public MissionControlService() {

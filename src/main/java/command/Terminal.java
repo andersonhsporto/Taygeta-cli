@@ -9,8 +9,8 @@ import services.ValidationService;
 
 public class Terminal {
 
-  final MessageService messageService;
-  final ParseService parseService;
+  private final MessageService messageService;
+  private final ParseService parseService;
 
   public Terminal() {
     this.messageService = new MessageService();
@@ -125,18 +125,17 @@ public class Terminal {
   }
 
   private void makeProbe(MissionControlService missionControlService) throws UndoCommandException {
-      var command = parseService.planetID(missionControlService);
+    var command = parseService.planetID(missionControlService);
 
-      if (command.isPresent())
-        addProbeToPlanet(command.get(), missionControlService);
+    command.ifPresent(integer -> addProbeToPlanet(integer, missionControlService));
   }
 
   private void addProbeToPlanet(
       Integer planetId, MissionControlService missionControlService) throws UndoCommandException {
 
-      var probe = ParseService.probe();
+    var probe = parseService.probe();
 
-      missionControlService.addProbeToPlanet(probe, planetId);
+    missionControlService.addProbeToPlanet(probe, planetId);
   }
 
 }
