@@ -4,8 +4,8 @@ import command.ColorWrapper;
 import exceptions.UndoCommandException;
 import java.util.Optional;
 import java.util.Scanner;
-import models.CompassRose;
 import models.Probe;
+import services.MissionControlService.Cardinal;
 
 public class ParseService {
 
@@ -23,14 +23,14 @@ public class ParseService {
     return Probe.createDefault(x, y, direction);
   }
 
-  public CompassRose.Cardinal probeDirection() throws UndoCommandException {
+  public MissionControlService.Cardinal probeDirection() throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
     String command;
 
     messageService.defaultMessage("Enter probe initial direction: > ");
     command = scanner.next();
-    if (CompassRose.isValidCardinal(command)) {
-        return CompassRose.parseCardinal(command);
+    if (ValidationService.isValidCardinal(command)) {
+        return cardinal(command);
     } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
     } else {
@@ -114,6 +114,18 @@ public class ParseService {
       messageService.error("Invalid probe id");
       throw new UndoCommandException("Undo command move-probe");
     }
+  }
+
+  public static MissionControlService.Cardinal cardinal(String command) {
+    String lowerCaseCommand = command.toLowerCase();
+
+    return switch (lowerCaseCommand) {
+      case "north", "norte", "n" -> Cardinal.NORTH;
+      case "south", "sul", "s" -> Cardinal.SOUTH;
+      case "east", "leste", "e", "l" -> Cardinal.EAST;
+      case "west", "oeste", "w", "o" -> Cardinal.WEST;
+      default -> throw new IllegalArgumentException("Invalid direction");
+    };
   }
 
 }

@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import exceptions.UndoCommandException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import models.CompassRose.Cardinal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import services.MissionControlService;
 import services.ParseService;
 import services.ValidationService;
 
@@ -40,7 +40,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = parseService.probeDirection();
+      MissionControlService.Cardinal compass = parseService.probeDirection();
     } catch (UndoCommandException e) {
       assertTrue(true);
     }

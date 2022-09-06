@@ -59,4 +59,14 @@ public class ValidationService {
   public static boolean isValidSequence(String command) {
     return command.matches("^[MLR]+$");
   }
+
+  public static boolean isValidCardinal(String command) {
+    String lowerCaseCommand = command.toLowerCase();
+
+    return switch (lowerCaseCommand) {
+      case "north", "south", "east", "west", "norte", "sul", "leste", "oeste" -> true;
+      case "n", "s", "e", "l", "w", "o" -> true;
+      default -> false;
+    };
+  }
 }

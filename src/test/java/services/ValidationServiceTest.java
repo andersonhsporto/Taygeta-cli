@@ -2,12 +2,11 @@ package services;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import models.CompassRose.Cardinal;
 import models.Probe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import services.MissionControlService.Cardinal;
 
 class ValidationServiceTest {
 

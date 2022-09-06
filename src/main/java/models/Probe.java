@@ -2,7 +2,7 @@ package models;
 
 import java.awt.Point;
 import java.util.Objects;
-import models.CompassRose.Cardinal;
+import services.MissionControlService;
 
 public class Probe {
 
@@ -10,21 +10,21 @@ public class Probe {
 
   private final Point point;
 
-  private final CompassRose.Cardinal cardinal;
+  private final MissionControlService.Cardinal cardinal;
 
-  public Probe(int id, int x, int y, CompassRose.Cardinal cardinal) {
+  public Probe(int id, int x, int y, MissionControlService.Cardinal cardinal) {
     this.id = id;
     this.point = new Point(x, y);
     this.cardinal = cardinal;
   }
 
-  public Probe(int id, Point point, Cardinal cardinal) {
+  public Probe(int id, Point point, MissionControlService.Cardinal cardinal) {
     this.id = id;
     this.point = point;
     this.cardinal = cardinal;
   }
 
-  public static Probe createDefault(int x, int y, CompassRose.Cardinal direction) {
+  public static Probe createDefault(int x, int y, MissionControlService.Cardinal direction) {
     return new Probe(-1, x, y, direction);
   }
 
@@ -40,7 +40,7 @@ public class Probe {
     return point;
   }
 
-  public Cardinal getCardinal() {
+  public MissionControlService.Cardinal getCardinal() {
     return cardinal;
   }
 

@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import exceptions.UndoCommandException;
 import java.awt.Point;
-import models.CompassRose.Cardinal;
 import models.Planet;
 import models.Probe;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import services.MissionControlService.Cardinal;
 
 class MissionControlServiceTest {
 

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
-import models.CompassRose.Cardinal;
 import models.Planet;
 import models.Probe;
 
@@ -14,6 +13,13 @@ public class MissionControlService {
 
   private final MessageService messageService;
   private final Collection<Planet> planets;
+
+  public enum Cardinal {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+  }
 
   public MissionControlService() {
     this.planets = new ArrayList<>();
@@ -132,7 +138,7 @@ public class MissionControlService {
   public Probe cloneUpdateProbe(
       Probe probe, Planet planet, String sequence) throws UndoCommandException {
 
-    var newCardinal = probe.getCardinal();
+    Cardinal newCardinal = probe.getCardinal();
     var newPoint = probe.getPoint();
     var originPoint = probe.getPoint();
     Probe newProbe;
