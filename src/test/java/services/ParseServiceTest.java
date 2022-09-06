@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class ParseServiceTest {
 
-
+  private final ParseService parseService = new ParseService();
   @Test
   @DisplayName("Parse North Direction Test")
   void parseNorthDirection() throws UndoCommandException {
@@ -24,7 +24,7 @@ class ParseServiceTest {
 
     System.setIn(inputStream);
     try {
-      var compass = ParseService.probeDirection();
+      var compass = parseService.probeDirection();
       Assertions.assertEquals(Cardinal.NORTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -41,7 +41,7 @@ class ParseServiceTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.probeDirection();
+      Cardinal compass = parseService.probeDirection();
       Assertions.assertEquals(Cardinal.SOUTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -57,7 +57,7 @@ class ParseServiceTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.probeDirection();
+      Cardinal compass = parseService.probeDirection();
       assertEquals(Cardinal.EAST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
@@ -73,7 +73,7 @@ class ParseServiceTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.probeDirection();
+      Cardinal compass = parseService.probeDirection();
       assertEquals(Cardinal.WEST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);

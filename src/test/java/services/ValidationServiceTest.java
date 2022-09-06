@@ -3,10 +3,95 @@ package services;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import models.CompassRose.Cardinal;
+import models.Probe;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ValidationServiceTest {
+
+  @Test
+  @DisplayName("commandInPlanetSizeFormat with valid command")
+  void commandInPlanetSizeFormat_validCommand() {
+    assertTrue(ValidationService.commandInPlanetSizeFormat("5x5"));
+  }
+
+  @Test
+  @DisplayName("commandInPlanetSizeFormat with invalid command")
+  void commandInPlanetSizeFormat_invalidCommand() {
+    assertFalse(ValidationService.commandInPlanetSizeFormat("5x"));
+  }
+
+  @Test
+  @DisplayName("commandInPlanetSizeFormat with invalid command")
+  void commandInPlanetSizeFormat_invalidCommand2() {
+    assertFalse(ValidationService.commandInPlanetSizeFormat("5x5x5"));
+  }
+
+  @Test
+  @DisplayName("commandInPlanetSizeFormat with invalid command")
+  void commandInPlanetSizeFormat_invalidCommand3() {
+    assertFalse(ValidationService.commandInPlanetSizeFormat("-5x5"));
+  }
+
+  @Test
+  @DisplayName("commandInPlanetSizeFormat with invalid command")
+  void commandInPlanetSizeFormat_invalidCommand4() {
+    assertFalse(ValidationService.commandInPlanetSizeFormat("5x-5"));
+  }
+
+  @Test
+  @DisplayName("commandInPlanetSizeFormat with invalid command")
+  void commandInPlanetSizeFormat_invalidCommand5() {
+    assertFalse(ValidationService.commandInPlanetSizeFormat("ax5"));
+  }
+
+  @Test
+  @DisplayName("Planet exists")
+  void planetExists() {
+    MissionControlService missionControlService = new MissionControlService();
+    missionControlService.addPlanet("5x5");
+    assertTrue(ValidationService.planetExists(missionControlService));
+  }
+
+  @Test
+  @DisplayName("Planet does not exist")
+  void planetDoesNotExist() {
+    MissionControlService missionControlService = new MissionControlService();
+    assertFalse(ValidationService.planetExists(missionControlService));
+  }
+
+  @Test
+  @DisplayName("Planet is valid")
+  void planetIsValid() {
+    MissionControlService missionControlService = new MissionControlService();
+    missionControlService.addPlanet("5x5");
+
+    assertTrue(ValidationService.planetIsValid("0", missionControlService));
+  }
+
+  @Test
+  @DisplayName("Planet is not valid")
+  void planetIsNotValid() {
+    MissionControlService missionControlService = new MissionControlService();
+    missionControlService.addPlanet("5x5");
+
+    assertFalse(ValidationService.planetIsValid("1", missionControlService));
+  }
+
+  @Test
+  @DisplayName("Planet is full")
+  void planetIsFull() {
+    MissionControlService missionControlService = new MissionControlService();
+    Probe probe = Probe.createDefault(1, 1, Cardinal.NORTH);
+    missionControlService.addPlanet("1x1");
+    missionControlService.addProbeToPlanet(probe, 0);
+    missionControlService.addProbeToPlanet(probe, 0);
+
+    assertFalse(ValidationService.planetIsValid("0", missionControlService));
+    Assertions.assertEquals(1, missionControlService.getPlanets().size());
+  }
 
   @Test
   @DisplayName("Planet exist using a valid planet id")
@@ -16,6 +101,7 @@ class ValidationServiceTest {
     missionControlService.addPlanet("10x10");
     assertTrue(ValidationService.planetExistsById("0", missionControlService));
   }
+
 
   @Test
   @DisplayName("Planet exist using id that's not in the list")
@@ -54,6 +140,28 @@ class ValidationServiceTest {
     missionControlService.addPlanet("55x10");
     missionControlService.addPlanet("1x1");
     assertFalse(ValidationService.planetExistsById("-1", missionControlService));
+  }
+
+  @Test
+  @DisplayName("Probe exists")
+  void probeExists() {
+    MissionControlService missionControlService = new MissionControlService();
+    Probe probe = Probe.createDefault(1, 1, Cardinal.NORTH);
+    missionControlService.addPlanet("1x1");
+    missionControlService.addProbeToPlanet(probe, 0);
+
+    assertTrue(ValidationService.probeExists(0, 0, missionControlService));
+  }
+
+  @Test
+  @DisplayName("Probe does not exist")
+  void probeDoesNotExist() {
+    MissionControlService missionControlService = new MissionControlService();
+    Probe probe = Probe.createDefault(1, 1, Cardinal.NORTH);
+    missionControlService.addPlanet("1x1");
+    missionControlService.addProbeToPlanet(probe, 0);
+
+    assertFalse(ValidationService.probeExists(0, 1, missionControlService));
   }
 
   @Test

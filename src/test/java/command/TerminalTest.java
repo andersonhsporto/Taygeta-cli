@@ -13,6 +13,8 @@ import services.ValidationService;
 
 class TerminalTest {
 
+  private final ParseService parseService = new ParseService();
+
   @Test
   @DisplayName("Command is a invalid planet size")
   void isValidPlanetSize() {
@@ -38,7 +40,7 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.probeDirection();
+      Cardinal compass = parseService.probeDirection();
     } catch (UndoCommandException e) {
       assertTrue(true);
     }

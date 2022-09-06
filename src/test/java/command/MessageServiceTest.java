@@ -41,7 +41,7 @@ class MessageServiceTest {
   @DisplayName("Test Red error message")
   void TestIfErrorIsRedMessage() {
     MessageService messageService = new MessageService();
-    String defaultRedError = "[31mInvalid planet area\u001B[0m";
+    String defaultRedError = "[31mError:\tInvalid planet area\u001B[0m";
 
     messageService.error("Invalid planet area");
     assertEquals(defaultRedError, outputStreamCaptor.toString().trim());
