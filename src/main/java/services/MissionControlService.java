@@ -11,15 +11,15 @@ import models.Probe;
 
 public class MissionControlService {
 
-  private final MessageService messageService;
-  private final Collection<Planet> planets;
-
   public enum Cardinal {
     NORTH,
     SOUTH,
     EAST,
     WEST
   }
+
+  private final MessageService messageService;
+  private final Collection<Planet> planets;
 
   public MissionControlService() {
     this.planets = new ArrayList<>();
@@ -94,22 +94,27 @@ public class MissionControlService {
 
   public void listPlanets() {
     if (getPlanetsListSize() == 0) {
-      messageService.error("No planets created");
+      messageService.error("Planets not found");
       return;
     }
     for (Planet planet : planets) {
-      System.out.println(planet);
+      messageService.blueMessage(planet.toString());
     }
   }
 
   public void listProbes() {
     if (getPlanetsListSize() == 0) {
-      messageService.error("No planets created");
+      messageService.error("Planets not found, no probes to list");
       return;
     }
     for (Planet planet : planets) {
       planet.printProbes();
     }
+  }
+
+  public void listAll() {
+    listPlanets();
+    listProbes();
   }
 
   public boolean planetByIdIsFull(int planetId) {
@@ -125,12 +130,14 @@ public class MissionControlService {
 
     Probe probe = getPlanetById(planetId).get().getProbeById(probeId);
     Probe probeCopy;
+    String stringProbe;
 
     for (Planet planet : planets) {
       if (Objects.equals(planet.getId(), planetId)) {
         probeCopy = cloneUpdateProbe(probe, planet, sequence);
         planet.putProbe(probeId, probeCopy);
-        System.out.println(planet.getProbes().get(probeId));
+        stringProbe = planet.getProbeById(probeId).toString();
+        messageService.blueMessage(stringProbe);
       }
     }
   }
