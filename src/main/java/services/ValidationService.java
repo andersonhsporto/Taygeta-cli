@@ -1,6 +1,5 @@
 package services;
 
-import command.ColorWrapper;
 import java.util.Collection;
 import java.util.Optional;
 import models.Planet;
@@ -34,7 +33,6 @@ public class ValidationService {
     if (planetExistsById(command, missionControlService)) {
       return !missionControlService.planetByIdIsFull(ParseService.id(command));
     } else {
-      System.out.println(ColorWrapper.red("Error planet id: " + command + " does not exist"));
       return false;
     }
   }
@@ -45,7 +43,12 @@ public class ValidationService {
     int planetId = ParseService.id(command);
     Collection<Planet> planets = missionControlService.getPlanets();
 
-    return planetId >= 0 && planetId < planets.size();
+    if (planetId >= 0 && planetId < planets.size()) {
+      return true;
+    } else {
+      System.out.println(MessageService.red("planet id: " + command + " does not exist"));
+      return false;
+    }
   }
 
   public static boolean probeExists(

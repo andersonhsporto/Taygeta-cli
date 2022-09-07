@@ -50,6 +50,7 @@ class ValidationServiceTest {
   @DisplayName("Planet exists")
   void planetExists() {
     MissionControlService missionControlService = new MissionControlService();
+
     missionControlService.addPlanet("5x5");
     assertTrue(ValidationService.planetExists(missionControlService));
   }
@@ -58,6 +59,7 @@ class ValidationServiceTest {
   @DisplayName("Planet does not exist")
   void planetDoesNotExist() {
     MissionControlService missionControlService = new MissionControlService();
+
     assertFalse(ValidationService.planetExists(missionControlService));
   }
 
@@ -65,8 +67,8 @@ class ValidationServiceTest {
   @DisplayName("Planet is valid")
   void planetIsValid() {
     MissionControlService missionControlService = new MissionControlService();
-    missionControlService.addPlanet("5x5");
 
+    missionControlService.addPlanet("5x5");
     assertTrue(ValidationService.planetIsValid("0", missionControlService));
   }
 
@@ -74,8 +76,8 @@ class ValidationServiceTest {
   @DisplayName("Planet is not valid")
   void planetIsNotValid() {
     MissionControlService missionControlService = new MissionControlService();
-    missionControlService.addPlanet("5x5");
 
+    missionControlService.addPlanet("5x5");
     assertFalse(ValidationService.planetIsValid("1", missionControlService));
   }
 
@@ -84,10 +86,10 @@ class ValidationServiceTest {
   void planetIsFull() {
     MissionControlService missionControlService = new MissionControlService();
     Probe probe = Probe.createDefault(1, 1, Cardinal.NORTH);
+
     missionControlService.addPlanet("1x1");
     missionControlService.addProbeToPlanet(probe, 0);
     missionControlService.addProbeToPlanet(probe, 0);
-
     assertFalse(ValidationService.planetIsValid("0", missionControlService));
     Assertions.assertEquals(1, missionControlService.getPlanets().size());
   }
@@ -146,9 +148,9 @@ class ValidationServiceTest {
   void probeExists() {
     MissionControlService missionControlService = new MissionControlService();
     Probe probe = Probe.createDefault(1, 1, Cardinal.NORTH);
+
     missionControlService.addPlanet("1x1");
     missionControlService.addProbeToPlanet(probe, 0);
-
     assertTrue(ValidationService.probeExists(0, 0, missionControlService));
   }
 
@@ -157,9 +159,9 @@ class ValidationServiceTest {
   void probeDoesNotExist() {
     MissionControlService missionControlService = new MissionControlService();
     Probe probe = Probe.createDefault(1, 1, Cardinal.NORTH);
+
     missionControlService.addPlanet("1x1");
     missionControlService.addProbeToPlanet(probe, 0);
-
     assertFalse(ValidationService.probeExists(0, 1, missionControlService));
   }
 

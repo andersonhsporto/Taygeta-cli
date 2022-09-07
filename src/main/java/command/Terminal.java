@@ -23,7 +23,7 @@ public class Terminal {
 
     messageService.greetings();
     while (true) {
-      System.out.println("Commands add-planet, add-probe and exit");
+      messageService.defaultMessage("Enter command: > ");
       try {
         receiveCommand(scanner.nextLine(), missionControl);
       } catch (UndoCommandException ignored) {
@@ -41,7 +41,8 @@ public class Terminal {
       case "add-probe", "move-probe" -> planetExists(command, missionControlService);
       case "list" -> list(command, missionControlService);
       case "exit" -> System.exit(0);
-      default -> messageService.error("Invalid command");
+      case "help", "?" -> messageService.displayHelp();
+      default -> messageService.error("Invalid command (type help or ? to see the commands)");
     }
   }
 
@@ -64,9 +65,10 @@ public class Terminal {
       switch (commandArray[1]) {
         case "planets", "planet" -> missionControlService.listPlanets();
         case "probes", "probe" -> missionControlService.listProbes();
+        case "all", "total" -> missionControlService.listAll();
       }
     } else {
-      messageService.error("Invalid command");
+      messageService.error("Invalid command (type help or ? to see the commands)");
     }
   }
 
@@ -77,7 +79,7 @@ public class Terminal {
       return false;
     }
     return switch (commandArray[1]) {
-      case "planets", "planet", "probes", "probe" -> true;
+      case "planets", "planet", "probes", "probe", "all", "total" -> true;
       default -> false;
     };
   }
