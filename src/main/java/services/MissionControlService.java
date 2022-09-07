@@ -113,6 +113,10 @@ public class MissionControlService {
   }
 
   public void listAll() {
+    if (getPlanetsListSize() == 0) {
+      messageService.error("Planets not found");
+      return;
+    }
     listPlanets();
     listProbes();
   }

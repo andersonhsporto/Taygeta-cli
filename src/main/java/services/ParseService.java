@@ -14,6 +14,26 @@ public class ParseService {
     this.messageService = new MessageService();
   }
 
+  public static int id(String string) {
+    try {
+      return Integer.parseInt(string);
+    } catch (NumberFormatException e) {
+      return -1;
+    }
+  }
+
+  public static MissionControlService.Cardinal cardinal(String command) {
+    String lowerCaseCommand = command.toLowerCase();
+
+    return switch (lowerCaseCommand) {
+      case "north", "norte", "n" -> Cardinal.NORTH;
+      case "south", "sul", "s" -> Cardinal.SOUTH;
+      case "east", "leste", "e", "l" -> Cardinal.EAST;
+      case "west", "oeste", "w", "o" -> Cardinal.WEST;
+      default -> throw new UndoCommandException("Invalid direction");
+    };
+  }
+
   public Probe probe() throws UndoCommandException {
     var x = probeParameter("x coordinate");
     var y = probeParameter("y coordinate");
@@ -27,14 +47,14 @@ public class ParseService {
     String command;
 
     messageService.defaultMessage("Enter probe initial direction: > ");
-    command = scanner.next();
+    command = scanner.nextLine();
     if (ValidationService.isValidCardinal(command)) {
-        return cardinal(command);
+      return cardinal(command);
     } else if (command.equals("undo")) {
-        throw new UndoCommandException("Undo command add-probe");
+      throw new UndoCommandException("Undo command add-probe");
     } else {
-        messageService.error("Invalid direction");
-        return probeDirection();
+      messageService.error("Invalid direction");
+      return probeDirection();
     }
   }
 
@@ -43,26 +63,17 @@ public class ParseService {
     String command;
     int value;
 
-    while (true) {
-      messageService.defaultMessage("Enter probe " + message + ": > ");
-      command = scanner.next();
-      value = id(command);
-      if (command.equals("undo")) {
-        throw new UndoCommandException("Undo command " + message);
-      }
-      if (value != -1) {
-        return value;
-      } else {
-        messageService.error("invalid " + message);
-      }
+    messageService.defaultMessage("Enter probe " + message + ": > ");
+    command = scanner.next();
+    value = id(command);
+    if (command.equals("undo")) {
+      throw new UndoCommandException("Undo command " + message);
     }
-  }
-
-  public static int id(String string) {
-    try {
-      return Integer.parseInt(string);
-    } catch (NumberFormatException e) {
-      return -1;
+    if (value != -1) {
+      return value;
+    } else {
+      messageService.error("invalid " + message);
+      return probeParameter(message);
     }
   }
 
@@ -97,7 +108,7 @@ public class ParseService {
     if (ValidationService.isValidSequence(command)) {
       return command;
     } else {
-      messageService.error("Invalid sequence of commands");
+      messageService.error("Invalid movement sequence");
       return parseSequenceCommands();
     }
   }
@@ -113,18 +124,6 @@ public class ParseService {
       messageService.error("Invalid probe id");
       throw new UndoCommandException("Undo command move-probe");
     }
-  }
-
-  public static MissionControlService.Cardinal cardinal(String command) {
-    String lowerCaseCommand = command.toLowerCase();
-
-    return switch (lowerCaseCommand) {
-      case "north", "norte", "n" -> Cardinal.NORTH;
-      case "south", "sul", "s" -> Cardinal.SOUTH;
-      case "east", "leste", "e", "l" -> Cardinal.EAST;
-      case "west", "oeste", "w", "o" -> Cardinal.WEST;
-      default -> throw new UndoCommandException("Invalid direction");
-    };
   }
 
 }

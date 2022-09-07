@@ -64,6 +64,7 @@ public class MessageService {
   }
 
   public void displayHelp() {
+
     System.out.println(blue("The available commands are:"));
     System.out.println(blue("\tadd-planet: add a planet to the system"));
     System.out.println(blue("\tadd-probe: add a probe to the system"));
@@ -71,6 +72,7 @@ public class MessageService {
     System.out.println(blue("\tlist: list all planets and probes"));
     System.out.println(blue("\tlist planets: list all planets"));
     System.out.println(blue("\tlist probes: list all probes"));
+    System.out.println(blue("\tundo: undo the last command"));
     System.out.println(blue("\texit: exit the program"));
   }
 
