@@ -15,7 +15,73 @@ class MessageServiceTest {
   private final PrintStream standardOut = System.out;
   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
+  private final MessageService messageService = new MessageService();
+
   // Reassigns standard output stream to a new stream with ByteArrayOutputStream
+
+  @Test
+  @DisplayName("red() should return red string")
+  void printRedString() {
+    String string = "red";
+
+    assertEquals("\u001B[31mred\u001B[0m", messageService.red(string));
+  }
+
+  @Test
+  @DisplayName("green() should return green string")
+  void printGreenString() {
+    String string = "green";
+
+    assertEquals("\u001B[32mgreen\u001B[0m", messageService.green(string));
+  }
+
+  @Test
+  @DisplayName("red() should not return green string")
+  void redNotGreen() {
+    String string = "red";
+
+    assertNotEquals("\u001B[32mgreen\u001B[0m", messageService.red(string));
+  }
+
+  @Test
+  @DisplayName("green() should not return red string")
+  void greenNotRed() {
+    String string = "green";
+
+    assertNotEquals("\u001B[31mred\u001B[0m", messageService.green(string));
+  }
+
+  @Test
+  @DisplayName("cyan() should return cyan string")
+  void cyan() {
+    String string = "cyan";
+
+    assertEquals("\u001B[36mcyan\u001B[0m", messageService.cyan(string));
+  }
+
+  @Test
+  @DisplayName("cyan() should not return red string")
+  void cyanNotRed() {
+    String string = "cyan";
+
+    assertNotEquals("\u001B[31mred\u001B[0m", messageService.cyan(string));
+  }
+
+  @Test
+  @DisplayName("blue() should return blue string")
+  void blue() {
+    String string = "blue";
+
+    assertEquals("\u001B[34mblue\u001B[0m", messageService.blue(string));
+  }
+
+  @Test
+  @DisplayName("blue() should not return red string")
+  void blueNotRed() {
+    String string = "blue";
+
+    assertNotEquals("\u001B[31mred\u001B[0m", messageService.blue(string));
+  }
   @BeforeEach
   public void setUp() {
     System.setOut(new PrintStream(outputStreamCaptor));
