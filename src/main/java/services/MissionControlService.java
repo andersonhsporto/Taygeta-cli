@@ -1,21 +1,29 @@
 package services;
 
-import command.Message;
+import exceptions.UndoCommandException;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import models.Planet;
 import models.Probe;
 
 public class MissionControlService {
 
+  public enum Cardinal {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+  }
+
+  private final MessageService messageService;
   private final Collection<Planet> planets;
 
-  final Message message;
-
-  public MissionControlService(Message message) {
+  public MissionControlService() {
     this.planets = new ArrayList<>();
-    this.message = message;
+    this.messageService = new MessageService();
   }
 
   public Collection<Planet> getPlanets() {
@@ -25,14 +33,13 @@ public class MissionControlService {
   public void addProbeToPlanet(Probe probe, int planetId) {
 
     if (existProbeInCoordinates(probe, planetId)) {
-      message.error("Probe already exists in this coordinates, the probe is not added");
+      messageService.error("Probe already exists in this coordinates, the probe is not added");
       return;
     }
-    if (coordinatesIsInvalid(probe, planetId)) {
-      message.error("Invalid coordinates, the probe is not added");
+    if (!coordinatesIsValid(probe, planetId)) {
+      messageService.error("Invalid coordinates, the probe is not added");
       return;
     }
-    message.success("Probe added to planet " + planetId);
     for (Planet planet : planets) {
       if (planet.getId() == planetId) {
         probe.setId(planet.getProbesCount());
@@ -40,6 +47,7 @@ public class MissionControlService {
         System.out.println(planet);
       }
     }
+    messageService.success("Probe added to planet " + planetId);
   }
 
   public Optional<Planet> getPlanetById(int planetId) {
@@ -51,23 +59,21 @@ public class MissionControlService {
     return Optional.empty();
   }
 
-  public boolean coordinatesIsInvalid(Probe probe, int planetId) {
+  public boolean coordinatesIsValid(Probe probe, int planetId) {
     var planet = getPlanetById(planetId);
     var planetWidth = planet.get().getWidth();
     var planetHeight = planet.get().getHeight();
 
-    if (probe.getPoint().getX() < 0 || probe.getPoint().getX() > planetWidth) {
-      return true;
+    if (probe.getPoint().getX() < 1 || probe.getPoint().getX() > planetWidth) {
+      return false;
     }
-    if (probe.getPoint().getY() < 0 || probe.getPoint().getY() > planetHeight) {
-      return true;
-    }
-    return false;
+    return !(probe.getPoint().getY() < 1) && !(probe.getPoint().getY() > planetHeight);
   }
+
   public boolean existProbeInCoordinates(Probe probe, int planetId) {
     var planet = getPlanetById(planetId);
 
-    for (Probe probeInPlanet : planet.get().getProbes()) {
+    for (Probe probeInPlanet : planet.get().getProbes().values()) {
       if (probeInPlanet.getPoint().equals(probe.getPoint())) {
         return true;
       }
@@ -79,31 +85,156 @@ public class MissionControlService {
     Planet planet = Planet.createDefault(planets.size(), command);
 
     planets.add(planet);
-    message.success("Planet ID " + (getPlanets().size() - 1) + " created");
+    messageService.success("Planet ID " + (getPlanets().size() - 1) + " created");
   }
 
-  private int getPlantsListSize() {
+  private int getPlanetsListSize() {
     return this.planets.size();
   }
 
-  public int parseId(String string) { // TODO: add to a especific class
-    try {
-      return Integer.parseInt(string);
-    } catch (NumberFormatException e) {
-      return -1;
-    }
-  }
-
   public void listPlanets() {
+    if (getPlanetsListSize() == 0) {
+      messageService.error("Planets not found");
+      return;
+    }
     for (Planet planet : planets) {
-      System.out.println(planet);
+      messageService.blueMessage(planet.toString());
     }
   }
 
-  public boolean planetIsFull(int planetId) {
+  public void listProbes() {
+    if (getPlanetsListSize() == 0) {
+      messageService.error("Planets not found, no probes to list");
+      return;
+    }
+    for (Planet planet : planets) {
+      planet.printProbes();
+    }
+  }
+
+  public void listAll() {
+    listPlanets();
+    listProbes();
+  }
+
+  public boolean planetByIdIsFull(int planetId) {
     var planet = getPlanetById(planetId);
 
     return planet.get().isFull();
   }
 
+
+  //refactor
+  public void moveProbe(
+      Integer planetId, Integer probeId, String sequence) throws UndoCommandException {
+
+    Probe probe = getPlanetById(planetId).get().getProbeById(probeId);
+    Probe probeCopy;
+    String stringProbe;
+
+    for (Planet planet : planets) {
+      if (Objects.equals(planet.getId(), planetId)) {
+        probeCopy = cloneUpdateProbe(probe, planet, sequence);
+        planet.putProbe(probeId, probeCopy);
+        stringProbe = planet.getProbeById(probeId).toString();
+        messageService.blueMessage(stringProbe);
+      }
+    }
+  }
+
+  public Probe cloneUpdateProbe(
+      Probe probe, Planet planet, String sequence) throws UndoCommandException {
+
+    Cardinal newCardinal = probe.getCardinal();
+    var newPoint = probe.getPoint();
+    var originPoint = probe.getPoint();
+    Probe newProbe;
+
+    for (int i = 0; i < sequence.length(); i++) {
+      switch (sequence.charAt(i)) {
+        case 'L' -> newCardinal = rotateLeft(newCardinal);
+        case 'R' -> newCardinal = rotateRight(newCardinal);
+        case 'M' -> moveForward(newPoint, newCardinal, planet, originPoint);
+      }
+    }
+    newProbe = new Probe(probe.getId(), newPoint, newCardinal);
+    return newProbe;
+  }
+
+  public void moveForward(
+      Point point, Cardinal cardinal, Planet planet, Point origin) throws UndoCommandException {
+
+    switch (cardinal) {
+      case NORTH -> moveNorth(point, planet);
+      case SOUTH -> moveSouth(point, planet);
+      case EAST -> moveEast(point, planet);
+      case WEST -> moveWest(point, planet);
+    }
+    collision(planet, point, origin);
+  }
+
+  public void moveNorth(Point point, Planet planet) {
+      if (point.getY() < planet.getHeight()) {
+        point.translate(0, 1);
+      } else if (point.getY() == planet.getHeight()) {
+        point.setLocation(point.getX(), 1);
+      }
+  }
+
+  public void moveSouth(Point point, Planet planet) {
+      if (point.getY() > 1) {
+        point.translate(0, -1);
+      } else if (point.getY() == 1) {
+        point.setLocation(point.getX(), planet.getHeight());
+      }
+  }
+
+  public void moveEast(Point point, Planet planet) {
+      if (point.getX() < planet.getWidth()) {
+        point.setLocation(point.getX() + 1, point.getY());
+      } else if (point.getX() == planet.getWidth()) {
+        point.setLocation(1, point.getY());
+      }
+  }
+
+  public void moveWest(Point point, Planet planet) {
+      if (point.getX() > 1) {
+        point.setLocation(point.getX() - 1, point.getY());
+      } else if (point.getX() == 1) {
+        point.setLocation(planet.getWidth(), point.getY());
+      }
+  }
+
+  public Cardinal rotateLeft(Cardinal cardinal) {
+    return switch (cardinal) {
+      case NORTH -> Cardinal.WEST;
+      case SOUTH -> Cardinal.EAST;
+      case EAST -> Cardinal.NORTH;
+      case WEST -> Cardinal.SOUTH;
+    };
+  }
+
+  public Cardinal rotateRight(Cardinal cardinal) {
+    return switch (cardinal) {
+      case NORTH -> Cardinal.EAST;
+      case SOUTH -> Cardinal.WEST;
+      case EAST -> Cardinal.SOUTH;
+      case WEST -> Cardinal.NORTH;
+    };
+  }
+
+  public void collision(
+      Planet planet, Point point, Point origin) throws UndoCommandException {
+
+    for (Probe probeInPlanet : planet.getProbes().values()) {
+      if (probeInPlanet.getPoint().equals(point) && !probeInPlanet.getPoint().equals(origin)) {
+        messageService.error("Collision detected, the probe is not moved");
+        throw new UndoCommandException("Collision detected");
+      }
+    }
+  }
+
+
+
 }
+

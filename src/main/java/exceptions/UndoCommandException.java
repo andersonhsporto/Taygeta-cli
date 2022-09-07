@@ -1,6 +1,6 @@
 package exceptions;
 
-public class UndoCommandException extends Exception {
+public class UndoCommandException extends RuntimeException {
 
   public UndoCommandException(String message) {
     super(message);

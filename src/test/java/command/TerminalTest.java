@@ -1,96 +1,34 @@
 package command;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import exceptions.UndoCommandException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import models.CompassRose.Cardinal;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import services.MissionControlService;
 import services.ParseService;
+import services.ValidationService;
 
 class TerminalTest {
 
-//  @Test
-//  @DisplayName("Planet has invalid size")
-//  void isValidPlanetSize() {
-//    String command = "5xteste";
-//    assertFalse(ValidationService.isValidPlanetSize(command));
-//  }
-//
-//  @Test
-//  @DisplayName("Planet has valid size")
-//  void isValidPlanetSize2() {
-//    String command = "50x50";
-//
-//    assertTrue(Terminal.isValidPlanetSize(command));
-//  }
+  private final ParseService parseService = new ParseService();
 
   @Test
-  @DisplayName("Parse North Direction Test")
-  void parseNortDirection() throws UndoCommandException {
-    Terminal terminal = new Terminal();
-    String command = "N";
-    InputStream inputStream = new ByteArrayInputStream(command.getBytes());
+  @DisplayName("Command is a invalid planet size")
+  void isValidPlanetSize() {
+    String command = "5xteste";
 
-    System.setIn(inputStream);
-    try {
-      var compass = ParseService.parseDirection();
-      assertEquals(Cardinal.NORTH, compass);
-    } catch (UndoCommandException e) {
-      assertTrue(true);
-
-    }
+    assertFalse(ValidationService.commandInPlanetSizeFormat(command));
   }
 
   @Test
-  @DisplayName("Parse South Direction Test")
-  void parseSouthDirection() throws UndoCommandException {
-    Terminal terminal = new Terminal();
-    String command = "Sul";
-    InputStream inputStream = new ByteArrayInputStream(command.getBytes());
+  @DisplayName("Command 50x50 is a planet valid size")
+  void isValidPlanetSize2() {
+    String command = "50x50";
 
-    System.setIn(inputStream);
-    try {
-      Cardinal compass = ParseService.parseDirection();
-      assertEquals(Cardinal.SOUTH, compass);
-    } catch (UndoCommandException e) {
-      assertTrue(true);
-    }
-  }
-
-  @Test
-  @DisplayName("Parse East Direction Test")
-  void parseEastDirection() throws UndoCommandException {
-    Terminal terminal = new Terminal();
-    String command = "leste";
-    InputStream inputStream = new ByteArrayInputStream(command.getBytes());
-
-    System.setIn(inputStream);
-    try {
-      Cardinal compass = ParseService.parseDirection();
-      assertEquals(Cardinal.EAST, compass);
-    } catch (UndoCommandException e) {
-      assertTrue(true);
-    }
-  }
-
-  @Test
-  @DisplayName("Parse West Direction Test")
-  void parseWestDirection() throws UndoCommandException {
-    Terminal terminal = new Terminal();
-    String command = "W";
-    InputStream inputStream = new ByteArrayInputStream(command.getBytes());
-
-    System.setIn(inputStream);
-    try {
-      Cardinal compass = ParseService.parseDirection();
-      assertEquals(Cardinal.WEST, compass);
-    } catch (UndoCommandException e) {
-      assertTrue(true);
-    }
+    assertTrue(ValidationService.commandInPlanetSizeFormat(command));
   }
 
   @Test
@@ -102,37 +40,10 @@ class TerminalTest {
 
     System.setIn(inputStream);
     try {
-      Cardinal compass = ParseService.parseDirection();
+      MissionControlService.Cardinal compass = parseService.probeDirection();
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
   }
 
-  @Test
-  @DisplayName("Parse valid string to int")
-  void parseStringToInt() throws UndoCommandException {
-    Terminal terminal = new Terminal();
-    String command = "5";
-    int number = ParseService.parseId(command);
-
-    Assertions.assertEquals(5, number);
-  }
-
-  @Test
-  @DisplayName("Parse invalid string to int")
-  void parseInvalidStringToInt() throws UndoCommandException {
-    Terminal terminal = new Terminal();
-    String command = "111Invalid2";
-
-    Assertions.assertEquals(-1, ParseService.parseId(command));
-  }
-
-  @Test
-  @DisplayName("Parse invalid string to int")
-  void parseInvalidStringToInt2() throws UndoCommandException {
-    Terminal terminal = new Terminal();
-    String command = "12a";
-
-    Assertions.assertEquals(-1, ParseService.parseId(command));
-  }
 }

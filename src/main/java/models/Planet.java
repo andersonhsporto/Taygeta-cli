@@ -1,21 +1,23 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import services.MessageService;
 
 public class Planet {
+
   private final int id;
-  private int width;
-  private int height;
+  private final int width;
+  private final int height;
   private boolean full;
-  private Collection<Probe> probes;
+  private final Map<Integer, Probe> probes;
 
   public Planet(int id, int width, int height) {
     this.id = id;
     this.width = width;
     this.height = height;
     this.full = false;
-    this.probes = new ArrayList<>();
+    this.probes = new HashMap<Integer, Probe>();
   }
 
   public static Planet createDefault(int id, String command) {
@@ -26,22 +28,25 @@ public class Planet {
     return new Planet(id, width, height);
   }
 
-  public int getArea() {
-    return width * height;
+  public Long getArea() {
+    return (long) width * height;
   }
 
-  void printProbes() {
-    for (Probe probe : probes) {
-      System.out.println(probe);
+  public void printProbes() {
+    for (Map.Entry<Integer, Probe> entry : probes.entrySet()) {
+      System.out.print(MessageService.blue("Planet id: " + id + ", "));
+      System.out.println(entry.getValue());
     }
   }
 
   public void addProbe(Probe probe) {
-    probes.add(probe);
-    printProbes();
+    probes.put(probes.size(), probe);
+    if (probes.size() == getArea()) {
+      full = true;
+    }
   }
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
@@ -53,8 +58,12 @@ public class Planet {
     return height;
   }
 
-  public Collection<Probe> getProbes() {
+  public Map<Integer, Probe> getProbes() {
     return probes;
+  }
+
+  public Probe getProbeById(int id) {
+    return probes.get(id);
   }
 
   public int getProbesCount() {
@@ -65,8 +74,12 @@ public class Planet {
     return full;
   }
 
+  public void putProbe(Integer id, Probe probe) {
+    this.probes.put(id, probe);
+  }
+
   @Override
   public String toString() {
-    return " Planet {" + " id = " + id + ", width = " + width + ", height = " + height + '}';
+    return " Planet id: " + id + " [ Width = " + width + ", Height = " + height + ", Probes = " + probes.size() + "]";
   }
 }
