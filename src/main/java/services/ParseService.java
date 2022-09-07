@@ -1,6 +1,5 @@
 package services;
 
-import command.ColorWrapper;
 import exceptions.UndoCommandException;
 import java.util.Optional;
 import java.util.Scanner;
@@ -34,18 +33,18 @@ public class ParseService {
     } else if (command.equals("undo")) {
         throw new UndoCommandException("Undo command add-probe");
     } else {
-        System.out.println(ColorWrapper.red("Invalid direction"));
+        messageService.error("Invalid direction");
         return probeDirection();
     }
   }
 
-  private static int probeParameter(String message) throws UndoCommandException {
+  private int probeParameter(String message) throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
     String command;
     int value;
 
     while (true) {
-      System.out.print("Enter probe " + message + ": > ");
+      messageService.defaultMessage("Enter probe " + message + ": > ");
       command = scanner.next();
       value = id(command);
       if (command.equals("undo")) {
@@ -54,7 +53,7 @@ public class ParseService {
       if (value != -1) {
         return value;
       } else {
-        System.out.println(ColorWrapper.red("Error invalid " + message));
+        messageService.error("invalid " + message);
       }
     }
   }
@@ -124,7 +123,7 @@ public class ParseService {
       case "south", "sul", "s" -> Cardinal.SOUTH;
       case "east", "leste", "e", "l" -> Cardinal.EAST;
       case "west", "oeste", "w", "o" -> Cardinal.WEST;
-      default -> throw new IllegalArgumentException("Invalid direction");
+      default -> throw new UndoCommandException("Invalid direction");
     };
   }
 
