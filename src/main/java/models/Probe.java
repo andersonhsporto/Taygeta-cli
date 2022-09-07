@@ -63,11 +63,10 @@ public class Probe {
 
   @Override
   public String toString() {
-    return "Probe { " +
-        "id = " + id +
-        ", coordinates = " + pointToString() +
+    return "Probe: id = " + id +
+        " [ coordinates = " + pointToString() +
         ", direction = " + cardinal +
-        '}';
+        " ]";
   }
 
   private String pointToString() {

@@ -2,6 +2,7 @@ package models;
 
 import java.util.HashMap;
 import java.util.Map;
+import services.MessageService;
 
 public class Planet {
 
@@ -33,7 +34,7 @@ public class Planet {
 
   public void printProbes() {
     for (Map.Entry<Integer, Probe> entry : probes.entrySet()) {
-      System.out.print("Planet id: " + id + ", ");
+      System.out.print(MessageService.blue("Planet id: " + id + ", "));
       System.out.println(entry.getValue());
     }
   }
