@@ -8,6 +8,32 @@
     <artifactId>Taygeta-cli</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+    <!-- include below build tag to your existing pom.xml  -->
+    <build>
+        <plugins>
+            <plugin>
+
+                <!-- Building an executable jar -->
+
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>TaygetaApplication</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Created-By>Anderson Porto</Created-By>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>io.github.hakky54</groupId>
