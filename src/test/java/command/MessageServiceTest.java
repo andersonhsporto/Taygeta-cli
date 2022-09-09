@@ -14,11 +14,9 @@ class MessageServiceTest {
 
   private final PrintStream standardOut = System.out;
   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-
   private final MessageService messageService = new MessageService();
 
   // Reassigns standard output stream to a new stream with ByteArrayOutputStream
-
   @Test
   @DisplayName("red() should return red string")
   void printRedString() {
@@ -72,7 +70,7 @@ class MessageServiceTest {
   void blue() {
     String string = "blue";
 
-    assertEquals("\u001B[34mblue\u001B[0m", messageService.blue(string));
+    assertEquals("\u001B[34mblue\u001B[0m", MessageService.blue(string));
   }
 
   @Test
@@ -80,7 +78,7 @@ class MessageServiceTest {
   void blueNotRed() {
     String string = "blue";
 
-    assertNotEquals("\u001B[31mred\u001B[0m", messageService.blue(string));
+    assertNotEquals("\u001B[31mred\u001B[0m", MessageService.blue(string));
   }
   @BeforeEach
   public void setUp() {
@@ -97,7 +95,7 @@ class MessageServiceTest {
   @DisplayName("Test greetings message")
   void testGreetingMessageIsCyanWelcomeToTaygeta() {
     MessageService messageService = new MessageService();
-    String defaultCyanGreetings = "[36mWelcome to Taygeta! CLI version\u001B[0m";
+    String defaultCyanGreetings = "[34mWelcome to Taygeta! CLI version\u001B[0m";
 
     messageService.greetings();
     assertEquals(defaultCyanGreetings, outputStreamCaptor.toString().trim());

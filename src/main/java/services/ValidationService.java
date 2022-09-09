@@ -43,12 +43,7 @@ public class ValidationService {
     int planetId = ParseService.id(command);
     Collection<Planet> planets = missionControlService.getPlanets();
 
-    if (planetId >= 0 && planetId < planets.size()) {
-      return true;
-    } else {
-      System.out.println(MessageService.red("planet id: " + command + " does not exist"));
-      return false;
-    }
+    return planetId >= 0 && planetId < planets.size();
   }
 
   public static boolean probeExists(

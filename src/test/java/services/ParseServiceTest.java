@@ -1,7 +1,6 @@
 package services;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import exceptions.UndoCommandException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -13,6 +12,7 @@ import services.MissionControlService.Cardinal;
 class ParseServiceTest {
 
   private final ParseService parseService = new ParseService();
+
   @Test
   @DisplayName("Parse North Direction Test")
   void parseNorthDirection() throws UndoCommandException {
@@ -25,7 +25,6 @@ class ParseServiceTest {
       Assertions.assertEquals(Cardinal.NORTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
-
     }
   }
 
@@ -98,5 +97,28 @@ class ParseServiceTest {
     String command = "12a";
 
     Assertions.assertEquals(-1, parseService.id(command));
+  }
+
+  @Test
+  @DisplayName("Parse invalid cadinal")
+  void parseInvalidCadinal() throws UndoCommandException {
+    String command = "12a";
+
+    Assertions.assertThrows(UndoCommandException.class, () -> parseService.cardinal(command));
+  }
+
+  @Test
+  @DisplayName("undo probe direction")
+  void parseInvalidProbeDirection() throws UndoCommandException {
+    String command = "undo";
+    InputStream inputStream = new ByteArrayInputStream(command.getBytes());
+
+    System.setIn(inputStream);
+    try {
+      Cardinal compass = parseService.probeDirection();
+      Assertions.assertEquals(Cardinal.SOUTH, compass);
+    } catch (UndoCommandException e) {
+      assertTrue(true);
+    }
   }
 }

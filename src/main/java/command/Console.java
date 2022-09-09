@@ -7,12 +7,12 @@ import services.MissionControlService;
 import services.ParseService;
 import services.ValidationService;
 
-public class Terminal {
+public class Console {
 
   private final MessageService messageService;
   private final ParseService parseService;
 
-  public Terminal() {
+  public Console() {
     this.messageService = new MessageService();
     this.parseService = new ParseService();
   }
@@ -54,6 +54,29 @@ public class Terminal {
     } else {
       return command.substring(0, index).trim();
     }
+  }
+
+  private void makePlanet(
+      MissionControlService missionControlService) throws UndoCommandException {
+
+    messageService.defaultMessage("Enter planet area width and height: (example: 5x5) > ");
+    Scanner scanner = new Scanner(System.in);
+    String command = scanner.next();
+
+    if (ValidationService.commandInPlanetSizeFormat(command)) {
+      missionControlService.addPlanet(command);
+    } else if (command.equals("undo")) {
+      throw new UndoCommandException("Undo command add-planet");
+    } else {
+      messageService.error("Invalid planet area");
+      makePlanet(missionControlService);
+    }
+  }
+
+  private void makeProbe(MissionControlService missionControlService) throws UndoCommandException {
+    var command = parseService.planetID(missionControlService);
+
+    command.ifPresent(integer -> addProbeToPlanet(integer, missionControlService));
   }
 
   private void list(String command, MissionControlService missionControlService) {
@@ -107,29 +130,6 @@ public class Terminal {
 
       missionControlService.moveProbe(planetId.get(), probeId, sequenceCommands);
     }
-  }
-
-  private void makePlanet(
-      MissionControlService missionControlService) throws UndoCommandException {
-
-    messageService.defaultMessage("Enter planet area width and height: (example: 5x5) > ");
-    Scanner scanner = new Scanner(System.in);
-    String command = scanner.next();
-
-    if (ValidationService.commandInPlanetSizeFormat(command)) {
-      missionControlService.addPlanet(command);
-    } else if (command.equals("undo")) {
-      throw new UndoCommandException("Undo command add-planet");
-    } else {
-      messageService.error("Invalid planet area");
-      makePlanet(missionControlService);
-    }
-  }
-
-  private void makeProbe(MissionControlService missionControlService) throws UndoCommandException {
-    var command = parseService.planetID(missionControlService);
-
-    command.ifPresent(integer -> addProbeToPlanet(integer, missionControlService));
   }
 
   private void addProbeToPlanet(

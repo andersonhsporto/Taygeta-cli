@@ -9,8 +9,8 @@ public class Planet {
   private final int id;
   private final int width;
   private final int height;
-  private boolean full;
   private final Map<Integer, Probe> probes;
+  private boolean full;
 
   public Planet(int id, int width, int height) {
     this.id = id;
@@ -33,9 +33,10 @@ public class Planet {
   }
 
   public void printProbes() {
-    for (Map.Entry<Integer, Probe> entry : probes.entrySet()) {
-      System.out.print(MessageService.blue("Planet id: " + id + ", "));
-      System.out.println(entry.getValue());
+    for (int i = 0; i < probes.size(); i++) {
+      MessageService.blueMessage("Planet id: " + id + ", ");
+      MessageService.blueMessage("Probe id: " + i + " = ");
+      System.out.println(probes.get(i).toString());
     }
   }
 
@@ -80,6 +81,11 @@ public class Planet {
 
   @Override
   public String toString() {
-    return " Planet id: " + id + " [ Width = " + width + ", Height = " + height + ", Probes = " + probes.size() + "]";
+    return MessageService.blue(
+        " Planet id: " + id +
+            " [ Width = " + width +
+            ", Height = " + height +
+            ", Probes = " + probes.size() +
+            "]");
   }
 }
