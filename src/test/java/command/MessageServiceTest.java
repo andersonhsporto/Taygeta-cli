@@ -70,7 +70,7 @@ class MessageServiceTest {
   void blue() {
     String string = "blue";
 
-    assertEquals("\u001B[34mblue\u001B[0m", messageService.blue(string));
+    assertEquals("\u001B[34mblue\u001B[0m", MessageService.blue(string));
   }
 
   @Test
@@ -78,7 +78,7 @@ class MessageServiceTest {
   void blueNotRed() {
     String string = "blue";
 
-    assertNotEquals("\u001B[31mred\u001B[0m", messageService.blue(string));
+    assertNotEquals("\u001B[31mred\u001B[0m", MessageService.blue(string));
   }
   @BeforeEach
   public void setUp() {
