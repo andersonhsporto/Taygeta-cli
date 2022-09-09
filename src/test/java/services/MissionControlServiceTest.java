@@ -4,11 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import exceptions.UndoCommandException;
 import java.awt.Point;
-import java.io.Console;
 import java.util.Optional;
 import models.Planet;
 import models.Probe;
-import nl.altindag.console.ConsoleCaptor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +27,7 @@ class MissionControlServiceTest {
   void addOneProbeToPlanet() {
     MissionControlService missionControlService = new MissionControlService();
     missionControlService.addPlanet("10x10");
-    missionControlService.addProbeToPlanet(new Probe(1, 0, 0, Cardinal.NORTH), 0);
+    missionControlService.addProbeToPlanet(new Probe(0, 0, Cardinal.NORTH), 0);
     assertEquals(1, missionControlService.getPlanets().size());
   }
 
@@ -88,7 +86,7 @@ class MissionControlServiceTest {
   @DisplayName("Probe exists in coordinates true")
   void probeExistsInCoordinatesTrue() {
     MissionControlService missionControlService = new MissionControlService();
-    Probe probe = new Probe(1, 1, 1, Cardinal.NORTH);
+    Probe probe = new Probe(1, 1, Cardinal.NORTH);
 
     missionControlService.addPlanet("5x5");
     missionControlService.addProbeToPlanet(probe, 0);
@@ -99,7 +97,7 @@ class MissionControlServiceTest {
   @DisplayName("Probe exists in coordinates false")
   void probeExistsInCoordinatesFalse() {
     MissionControlService missionControlService = new MissionControlService();
-    Probe probe = new Probe(1, 1, 1, Cardinal.NORTH);
+    Probe probe = new Probe(1, 1, Cardinal.NORTH);
 
     missionControlService.addPlanet("5x5");
     Assertions.assertFalse(missionControlService.existProbeInCoordinates(probe, 0));
@@ -121,7 +119,7 @@ class MissionControlServiceTest {
   @DisplayName("Move probe using LMLMLMLMM sequence")
   void moveProveUsingLMLMLMLMMSequence() throws UndoCommandException {
     MissionControlService missionControlService = new MissionControlService();
-    Probe tempProbe = new Probe(0, 1, 2, Cardinal.NORTH);
+    Probe tempProbe = new Probe(1, 2, Cardinal.NORTH);
     Planet planet = new Planet(0, 5, 5);
     Probe cloneProbe = missionControlService.cloneUpdateProbe(tempProbe, planet, "LMLMLMLMM");
 
@@ -133,7 +131,7 @@ class MissionControlServiceTest {
   @DisplayName("Move probe using MMRMMRMRRML sequence")
   void moveProveUsingMMRMMRMRRMLSequence() throws UndoCommandException {
     MissionControlService missionControlService = new MissionControlService();
-    Probe tempProbe = new Probe(0, 3, 3, Cardinal.EAST);
+    Probe tempProbe = new Probe(3, 3, Cardinal.EAST);
     Planet planet = new Planet(0, 5, 5);
     Probe cloneProbe = missionControlService.cloneUpdateProbe(tempProbe, planet, "MMRMMRMRRML");
 
@@ -147,8 +145,8 @@ class MissionControlServiceTest {
     MissionControlService missionControlService = new MissionControlService();
 
     missionControlService.addPlanet("5x5");
-    missionControlService.addProbeToPlanet(new Probe(0, 1, 2, Cardinal.NORTH), 0);
-    missionControlService.addProbeToPlanet(new Probe(1, 1, 2, Cardinal.NORTH), 0);
+    missionControlService.addProbeToPlanet(new Probe(1, 2, Cardinal.NORTH), 0);
+    missionControlService.addProbeToPlanet(new Probe(1, 2, Cardinal.NORTH), 0);
     assertEquals(1, missionControlService.getPlanets().size());
   }
 
@@ -156,8 +154,8 @@ class MissionControlServiceTest {
   @DisplayName("Probe simple collision")
   void probeSimpleCollisionTheProbeIsNotAdded() throws UndoCommandException {
     MissionControlService missionControlService = new MissionControlService();
-    Probe collision = new Probe(0, 4, 3, Cardinal.NORTH);
-    Probe tempProbe = new Probe(1, 3, 3, Cardinal.EAST);
+    Probe collision = new Probe(4, 3, Cardinal.NORTH);
+    Probe tempProbe = new Probe(3, 3, Cardinal.EAST);
     Planet planet = new Planet(0, 5, 5);
 
     planet.addProbe(collision);

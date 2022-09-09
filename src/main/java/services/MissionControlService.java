@@ -11,15 +11,15 @@ import models.Probe;
 
 public class MissionControlService {
 
+  private final MessageService messageService;
+  private final Collection<Planet> planets;
+
   public enum Cardinal {
     NORTH,
     SOUTH,
     EAST,
     WEST
   }
-
-  private final MessageService messageService;
-  private final Collection<Planet> planets;
 
   public MissionControlService() {
     this.planets = new ArrayList<>();
@@ -42,12 +42,11 @@ public class MissionControlService {
     }
     for (Planet planet : planets) {
       if (planet.getId() == planetId) {
-        probe.setId(planet.getProbesCount());
         planet.addProbe(probe);
-        System.out.println(planet);
+        messageService.success(
+            "Probe id: " + planet.getProbesCount() + " added to planet " + planetId);
       }
     }
-    messageService.success("Probe added to planet " + planetId);
   }
 
   public Optional<Planet> getPlanetById(int planetId) {
@@ -85,7 +84,7 @@ public class MissionControlService {
     Planet planet = Planet.createDefault(planets.size(), command);
 
     planets.add(planet);
-    messageService.success("Planet ID " + (getPlanets().size() - 1) + " created");
+    messageService.success("Planet id: " + (getPlanets().size() - 1) + " created");
   }
 
   private int getPlanetsListSize() {
@@ -98,7 +97,7 @@ public class MissionControlService {
       return;
     }
     for (Planet planet : planets) {
-      messageService.blueMessage(planet.toString());
+      System.out.println(planet.toString());
     }
   }
 
@@ -127,21 +126,19 @@ public class MissionControlService {
     return planet.get().isFull();
   }
 
-
-  //refactor
   public void moveProbe(
       Integer planetId, Integer probeId, String sequence) throws UndoCommandException {
 
     Probe probe = getPlanetById(planetId).get().getProbeById(probeId);
     Probe probeCopy;
-    String stringProbe;
+    String stringOfProbe;
 
     for (Planet planet : planets) {
       if (Objects.equals(planet.getId(), planetId)) {
         probeCopy = cloneUpdateProbe(probe, planet, sequence);
         planet.putProbe(probeId, probeCopy);
-        stringProbe = planet.getProbeById(probeId).toString();
-        messageService.blueMessage(stringProbe);
+        stringOfProbe = planet.getProbeById(probeId).toString();
+        MessageService.blueMessage("Probe id: " + probeId + stringOfProbe + "\n");
       }
     }
   }
@@ -149,7 +146,7 @@ public class MissionControlService {
   public Probe cloneUpdateProbe(
       Probe probe, Planet planet, String sequence) throws UndoCommandException {
 
-    Cardinal newCardinal = probe.getCardinal();
+    var newCardinal = probe.getCardinal();
     var newPoint = probe.getPoint();
     var originPoint = probe.getPoint();
     Probe newProbe;
@@ -161,7 +158,7 @@ public class MissionControlService {
         case 'M' -> moveForward(newPoint, newCardinal, planet, originPoint);
       }
     }
-    newProbe = new Probe(probe.getId(), newPoint, newCardinal);
+    newProbe = new Probe(newPoint, newCardinal);
     return newProbe;
   }
 
@@ -178,35 +175,35 @@ public class MissionControlService {
   }
 
   public void moveNorth(Point point, Planet planet) {
-      if (point.getY() < planet.getHeight()) {
-        point.translate(0, 1);
-      } else if (point.getY() == planet.getHeight()) {
-        point.setLocation(point.getX(), 1);
-      }
+    if (point.getY() < planet.getHeight()) {
+      point.translate(0, 1);
+    } else if (point.getY() == planet.getHeight()) {
+      point.setLocation(point.getX(), 1);
+    }
   }
 
   public void moveSouth(Point point, Planet planet) {
-      if (point.getY() > 1) {
-        point.translate(0, -1);
-      } else if (point.getY() == 1) {
-        point.setLocation(point.getX(), planet.getHeight());
-      }
+    if (point.getY() > 1) {
+      point.translate(0, -1);
+    } else if (point.getY() == 1) {
+      point.setLocation(point.getX(), planet.getHeight());
+    }
   }
 
   public void moveEast(Point point, Planet planet) {
-      if (point.getX() < planet.getWidth()) {
-        point.setLocation(point.getX() + 1, point.getY());
-      } else if (point.getX() == planet.getWidth()) {
-        point.setLocation(1, point.getY());
-      }
+    if (point.getX() < planet.getWidth()) {
+      point.setLocation(point.getX() + 1, point.getY());
+    } else if (point.getX() == planet.getWidth()) {
+      point.setLocation(1, point.getY());
+    }
   }
 
   public void moveWest(Point point, Planet planet) {
-      if (point.getX() > 1) {
-        point.setLocation(point.getX() - 1, point.getY());
-      } else if (point.getX() == 1) {
-        point.setLocation(planet.getWidth(), point.getY());
-      }
+    if (point.getX() > 1) {
+      point.setLocation(point.getX() - 1, point.getY());
+    } else if (point.getX() == 1) {
+      point.setLocation(planet.getWidth(), point.getY());
+    }
   }
 
   public Cardinal rotateLeft(Cardinal cardinal) {
@@ -237,8 +234,6 @@ public class MissionControlService {
       }
     }
   }
-
-
 
 }
 
