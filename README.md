@@ -4,7 +4,7 @@
 </p>
 
 Taygeta é uma [interface de linha de comando](https://en.wikipedia.org/wiki/Command-line_interface) 
-capaz de criar planetas, sondas e simular a movimentação / colisão destas.
+capaz de criar planetas, sondas e simular a movimentação / colisão destas por meio de comandos.
 
 
 
@@ -19,3 +19,17 @@ capaz de criar planetas, sondas e simular a movimentação / colisão destas.
 
 ## Inicialização
 Para executar o projeto, utilize as ferramentas descritas na sessão *Ferramentas*.
+
+### Lista de Comandos
+Comando | Definição
+---|---------
+`add-planet` | Adicionar novo planeta
+`add-probe` | Adicionar sonda a um planeta existente
+`move-probe` | Mover sonda existente
+`list all` ou `list total` | Listar todos os planetas e suas respectivas sondas
+`list planets` ou `list planets` | Listar todos os planetas
+`list probes` ou `list probe` | Listar todos as sondas
+`undo` | Desfazer comando atual
+`help` ou `?` | Exibir lista de comandos
+`exit`|  Encerrar o programa
+
