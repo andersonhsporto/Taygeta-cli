@@ -1,9 +1,9 @@
-import command.Terminal;
+import command.Console;
 
 public class TaygetaApplication {
 
   public static void main(String... args) {
-    Terminal terminal = new Terminal();
-    terminal.init();
+    Console console = new Console();
+    console.init();
   }
 }
