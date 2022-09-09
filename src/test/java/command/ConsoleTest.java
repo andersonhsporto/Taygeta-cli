@@ -11,7 +11,7 @@ import services.MissionControlService;
 import services.ParseService;
 import services.ValidationService;
 
-class TerminalTest {
+class ConsoleTest {
 
   private final ParseService parseService = new ParseService();
 
@@ -34,7 +34,7 @@ class TerminalTest {
   @Test
   @DisplayName("Undo probe direction")
   void undoProbeDirection() throws UndoCommandException {
-    Terminal terminal = new Terminal();
+    Console console = new Console();
     String command = "undo";
     InputStream inputStream = new ByteArrayInputStream(command.getBytes());
 
