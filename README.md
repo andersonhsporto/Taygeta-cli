@@ -60,6 +60,6 @@ Comando | Definição
 
 #### Exemplos
 
-Para adicionar um planeta é necessario utilizar o comando `add-planet` e inserir a altura e largura 
-do retangulo que representa a area deste planeta utilizando o caractere x como delimitador. Por exemplo: `10x10`
+Para adicionar um planeta é necessário utilizar o comando `add-planet` e inserir a altura e largura
+do retângulo que representa a área deste planeta utilizando o caractere x como delimitador. (exemplo: `10x10`)
 

@@ -1,4 +1,4 @@
-package command;
+package services;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,6 +17,17 @@ class MessageServiceTest {
   private final MessageService messageService = new MessageService();
 
   // Reassigns standard output stream to a new stream with ByteArrayOutputStream
+  @BeforeEach
+  public void setUp() {
+    System.setOut(new PrintStream(outputStreamCaptor));
+  }
+
+  // Restore initial standard output stream
+  @AfterEach
+  public void tearDown() {
+    System.setOut(standardOut);
+  }
+
   @Test
   @DisplayName("red() should return red string")
   void printRedString() {
@@ -79,16 +90,6 @@ class MessageServiceTest {
     String string = "blue";
 
     assertNotEquals("\u001B[31mred\u001B[0m", MessageService.blue(string));
-  }
-  @BeforeEach
-  public void setUp() {
-    System.setOut(new PrintStream(outputStreamCaptor));
-  }
-
-  // Restore initial standard output stream
-  @AfterEach
-  public void tearDown() {
-    System.setOut(standardOut);
   }
 
   @Test

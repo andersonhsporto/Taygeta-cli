@@ -1,5 +1,6 @@
 package services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import exceptions.UndoCommandException;
 import java.io.ByteArrayInputStream;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import services.MissionControlService.Cardinal;
+
 
 class ParseServiceTest {
 
@@ -22,7 +24,7 @@ class ParseServiceTest {
     System.setIn(inputStream);
     try {
       var compass = parseService.probeDirection();
-      Assertions.assertEquals(Cardinal.NORTH, compass);
+      assertEquals(Cardinal.NORTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
@@ -37,7 +39,7 @@ class ParseServiceTest {
     System.setIn(inputStream);
     try {
       Cardinal compass = parseService.probeDirection();
-      Assertions.assertEquals(Cardinal.SOUTH, compass);
+      assertEquals(Cardinal.SOUTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
@@ -52,7 +54,7 @@ class ParseServiceTest {
     System.setIn(inputStream);
     try {
       Cardinal compass = parseService.probeDirection();
-      Assertions.assertEquals(Cardinal.EAST, compass);
+      assertEquals(Cardinal.EAST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
@@ -67,7 +69,7 @@ class ParseServiceTest {
     System.setIn(inputStream);
     try {
       Cardinal compass = parseService.probeDirection();
-      Assertions.assertEquals(Cardinal.WEST, compass);
+      assertEquals(Cardinal.WEST, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
@@ -80,7 +82,7 @@ class ParseServiceTest {
     String command = "5";
     int number = ParseService.id(command);
 
-    Assertions.assertEquals(5, number);
+    assertEquals(5, number);
   }
 
   @Test
@@ -88,7 +90,7 @@ class ParseServiceTest {
   void parseInvalidStringToInt() throws UndoCommandException {
     String command = "111Invalid2";
 
-    Assertions.assertEquals(-1, parseService.id(command));
+    assertEquals(-1, parseService.id(command));
   }
 
   @Test
@@ -96,7 +98,7 @@ class ParseServiceTest {
   void parseInvalidStringToInt2() throws UndoCommandException {
     String command = "12a";
 
-    Assertions.assertEquals(-1, parseService.id(command));
+    assertEquals(-1, parseService.id(command));
   }
 
   @Test
@@ -116,9 +118,10 @@ class ParseServiceTest {
     System.setIn(inputStream);
     try {
       Cardinal compass = parseService.probeDirection();
-      Assertions.assertEquals(Cardinal.SOUTH, compass);
+      assertEquals(Cardinal.SOUTH, compass);
     } catch (UndoCommandException e) {
       assertTrue(true);
     }
   }
 }
+

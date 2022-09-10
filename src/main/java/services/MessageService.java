@@ -5,7 +5,7 @@ public class MessageService {
   public static final String ANSI_RESET = "\u001B[0m";
   public static final String ANSI_RED = "\u001B[31m";
   public static final String ANSI_GREEN = "\u001B[32m";
-  public static final String ANSI_BLUE = "\u001B[34m";
+  public static final String ANSI_BLUE = "\u001B[94m";
   public static final String ANSI_CYAN = "\u001B[36m";
 
   public static String blue(String string) {
@@ -70,7 +70,7 @@ public class MessageService {
     System.out.println(blue("\tadd-planet: add a planet to the system"));
     System.out.println(blue("\tadd-probe: add a probe to the system"));
     System.out.println(blue("\tmove-probe: move a probe to a new planet"));
-    System.out.println(blue("\tlist: list all planets and probes"));
+    System.out.println(blue("\tlist all: list all planets and probes"));
     System.out.println(blue("\tlist planets: list all planets"));
     System.out.println(blue("\tlist probes: list all probes"));
     System.out.println(blue("\tundo: undo the last command"));
