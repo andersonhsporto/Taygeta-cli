@@ -1,6 +1,6 @@
 # Taygeta CLI
 <p align="center">
-<img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/star.png" width="200px" alt="Taygeta Star"/><br>
+<img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/star.jpg" width="300px" alt="Taygeta Star"/><br>
 </p>
 
 Taygeta é uma [interface de linha de comando](https://en.wikipedia.org/wiki/Command-line_interface) 
@@ -11,7 +11,7 @@ capaz de criar planetas, sondas e simular a movimentação / colisão destas por
 
 ## Ferramentas Utilizadas
 
-* [JAVA 18](https://www.java.com/pt-BR/) - Linguagem de programação.
+* [JAVA 18](https://www.java.com/pt-BR/) - Linguagem de programação (JDK 18).
 * [Apache Maven 3.8.6](https://maven.apache.org/) - Gerenciador de dependências.
 * [IntelliJ](https://www.jetbrains.com/idea/) - IDE para desenvolvimento.
 * [Docker](https://www.docker.com/) - Serviço de virtualização.
@@ -33,7 +33,7 @@ Este comando irá gerar um *.jar* de nome `Taygeta-cli-1.0-SNAPSHOT.jar`, para e
 
 ### Docker
 
-Para utilizar este projeto no docker, basta executar o seguinte comando para gerar uma imagem deste projeto:
+Para executar este projeto no docker, basta utilizar o seguinte comando para gerar uma imagem deste projeto:
 
 ```sh
   docker build -t taygeta --build-arg JAR_FILE=Taygeta-cli-1.0-SNAPSHOT .
@@ -58,8 +58,17 @@ Comando | Definição
 `help` ou `?` | Exibir lista de comandos
 `exit`|  Encerrar o programa
 
-#### Exemplos
+#### Exemplos:
 
 Para adicionar um planeta é necessário utilizar o comando `add-planet` e inserir a altura e largura
-do retângulo que representa a área deste planeta utilizando o caractere x como delimitador. (exemplo: `10x10`)
+do retângulo que representa a área deste planeta, utilizando o caractere x como delimitador (exemplo: `10x10`). 
 
+<p align="center">
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-planet.gif" width="400px" alt="Taygeta Star"/><br>
+</p>
+
+Para adicionar uma sonda a um planeta previamente cadastrado é necessário utilizar o comando add-probe, este comando irá solicitar o ID do planeta, coordenada x, coordenada y e a direção inicial da sonda em inglês ou português (NORTE, NORTH, SUL, SOUTH, LESTE, EAST, OESTE, WEST).
+
+<p align="center">
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-probe.gif" width="400px" alt="Taygeta Star"/><br>
+</p>
