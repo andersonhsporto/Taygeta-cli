@@ -64,13 +64,13 @@ Para adicionar um planeta é necessário utilizar o comando `add-planet` e inser
 do retângulo que representa a área deste planeta, utilizando o caractere x como delimitador (exemplo: `10x10`). 
 
 <p align="center">
- <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-planet.gif" width="400px" alt="add-planet"/><br>
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-planet.gif" width="500px" alt="add-planet"/><br>
 </p>
 
 Para adicionar uma sonda a um planeta previamente cadastrado é necessário utilizar o comando `add-probe`, este comando irá solicitar o ID do planeta, coordenada x, coordenada y e o [ponto cardeal](https://pt.wikipedia.org/wiki/Ponto_cardeal) em inglês ou português.
 
 <p align="center">
- <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-probe.gif" width="400px" alt="add-probe"/><br>
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-probe.gif" width="500px" alt="add-probe"/><br>
 </p>
 
 Para mover uma sonda previamente cadastrada é necessário usar o comando `move-probe`, este comando irá solicitar o ID do planeta, ID da sonda que será movimentada e a sequência de movimentos:
@@ -82,27 +82,27 @@ Para mover uma sonda previamente cadastrada é necessário usar o comando `move-
 *Observação: se algum destes movimentos resultar em uma colisão o comando é cancelado.*
 
 <p align="center">
- <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/move-probe.gif" width="400px" alt="move-probe"/><br>
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/move-probe.gif" width="500px" alt="move-probe"/><br>
 </p>
 
 
 Os comandos `list` exibem informações sobre as sondas e planetas cadastrados.
 
 <p align="center">
- <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/list.gif" width="400px" alt="list-probe"/><br>
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/list.gif" width="500px" alt="list-probe"/><br>
 </p>
 
 Utilize o comando `help` ou `?` para exibir uma lista com todos os comandos disponíveis.
 
 <p align="center">
- <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/help.gif" width="400px" alt="help"/><br>
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/help.gif" width="500px" alt="help"/><br>
 </p>
 
 
 Utilize o comando `undo` para desfazer o comando atual e caso queira encerrar a aplicação utilize o comando `exit`.
 
 <p align="center">
- <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/undo.gif" width="400px" alt="undo"/><br>
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/undo.gif" width="500px" alt="undo"/><br>
 </p>
 
 
