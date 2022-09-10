@@ -64,11 +64,27 @@ Para adicionar um planeta é necessário utilizar o comando `add-planet` e inser
 do retângulo que representa a área deste planeta, utilizando o caractere x como delimitador (exemplo: `10x10`). 
 
 <p align="center">
- <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-planet.gif" width="400px" alt="Taygeta Star"/><br>
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-planet.gif" width="400px" alt="add-planet"/><br>
 </p>
 
-Para adicionar uma sonda a um planeta previamente cadastrado é necessário utilizar o comando add-probe, este comando irá solicitar o ID do planeta, coordenada x, coordenada y e a direção inicial da sonda em inglês ou português (NORTE, NORTH, SUL, SOUTH, LESTE, EAST, OESTE, WEST).
+Para adicionar uma sonda a um planeta previamente cadastrado é necessário utilizar o comando `add-probe`, este comando irá solicitar o ID do planeta, coordenada x, coordenada y e o [ponto cardeal](https://pt.wikipedia.org/wiki/Ponto_cardeal) em inglês ou português.
 
 <p align="center">
- <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-probe.gif" width="400px" alt="Taygeta Star"/><br>
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/add-probe.gif" width="400px" alt="add-probe"/><br>
 </p>
+
+Para mover uma sonda previamente cadastrada é necessário usar o comando `move-probe`, este comando irá solicitar o ID do planeta, ID da sonda que será movimentada e a sequência de movimentos:
+
+- `M` -> Mover a sonda uma unidade de area para frente
+- `L` -> Virar a sonda para a esquerda (90 graus)
+- `R` -> Virar a sonda para a direita (90 graus)
+
+
+
+<p align="center">
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/move-probe.gif" width="400px" alt="move-probe"/><br>
+</p>
+
+* Observação: se algum destes movimentos resultar em uma colisão com outra sonda o comando é cancelado.
+
+
