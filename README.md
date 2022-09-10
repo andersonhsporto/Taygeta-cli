@@ -99,13 +99,20 @@ Utilize o comando `help` ou `?` para exibir uma lista com todos os comandos disp
 </p>
 
 
-Utilize o comando `undo` para desfazer o comando atual e caso queira encerrar a aplicação utilize o comando .
+Utilize o comando `undo` para desfazer o comando atual e caso queira encerrar a aplicação utilize o comando `exit`.
 
 <p align="center">
  <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/undo.gif" width="400px" alt="undo"/><br>
 </p>
 
 
+<br>
+<br>
 
+<p align=left> <b>Minhas Informações de contato 📬</b> </p>
+<p align=left>
+<a href="https://github.com/andersonhsporto" target="_blank"><img src="https://img.shields.io/badge/Github-181717?logo=Github&logoColor=white"/></a>  
+<a href="mailto:anderson.higo2@gmail.com" target="_blank"><img src="https://img.shields.io/badge/Gmail-EA4335?logo=Gmail&logoColor=white"/></a> 
+<a href= "https://www.linkedin.com/in/andersonhsporto/"target="_blank"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?logo=linkedin&logoColor=white"/></a> 
 
 
