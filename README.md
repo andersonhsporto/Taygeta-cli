@@ -52,8 +52,8 @@ Comando | Definição
 `add-probe` | Adicionar sonda a um planeta existente
 `move-probe` | Mover sonda existente
 `list all` ou `list total` | Listar todos os planetas e suas respectivas sondas
-`list planets` ou `list planets` | Listar todos os planetas
-`list probes` ou `list probe` | Listar todos as sondas
+`list planets` ou `list planet` | Listar todos os planetas
+`list probes` ou `list probe` | Listar todas as sondas
 `undo` | Desfazer comando atual
 `help` ou `?` | Exibir lista de comandos
 `exit`|  Encerrar o programa
