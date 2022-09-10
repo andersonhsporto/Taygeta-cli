@@ -25,7 +25,7 @@ Para executar o projeto é necessario gerar o artefato *.jar*, uma forma de exec
   mvn package
 ```
 
-Este comando irá gerar um *.jar* de nome ```Taygeta-cli-1.0-SNAPSHOT.jar```, para executar este artefato basta utilizar o comando:
+Este comando irá gerar um *.jar* de nome `Taygeta-cli-1.0-SNAPSHOT.jar`, para executar este artefato basta utilizar o comando:
 
 ```sh
   java -jar Taygeta-cli-1.0-SNAPSHOT.jar
@@ -39,14 +39,11 @@ Para utilizar este projeto no docker, basta executar o seguinte comando para ger
   docker build -t taygeta --build-arg JAR_FILE=Taygeta-cli-1.0-SNAPSHOT .
 ```
 
-Este comando irá gerar uma imagem com o nome ```taygeta```, para visualizar o projeto no container basta utilizar o comando:
+Este comando irá gerar uma imagem com o nome `taygeta`, para visualizar o projeto no container basta utilizar o comando:
 
 ```sh
   docker run -it --rm taygeta
 ```
-
-
-
 
 ### Lista de Comandos
 Comando | Definição
@@ -63,5 +60,6 @@ Comando | Definição
 
 #### Exemplos
 
-Para adicionar um planeta é necessario utilizar o comando `add-planet`
+Para adicionar um planeta é necessario utilizar o comando `add-planet` e inserir a altura e largura 
+do retangulo que representa a area deste planeta utilizando o caractere x como delimitador. Por exemplo: `10x10`
 
