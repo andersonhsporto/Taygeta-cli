@@ -99,7 +99,7 @@ Utilize o comando `help` ou `?` para exibir uma lista com todos os comandos disp
 </p>
 
 
-Utilize o comando `undo` para desfazer o comando atual e caso queira encerrar a aplicação utilize o comando `exit`.
+Utilize o comando `undo` para desfazer o comando atual ou caso queira encerrar a aplicação utilize o comando `exit`.
 
 <p align="center">
  <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/undo.gif" width="500px" alt="undo"/><br>
