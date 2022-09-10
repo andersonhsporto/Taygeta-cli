@@ -19,7 +19,7 @@ capaz de criar planetas, sondas e simular a movimentação / colisão destas por
 
 ## Inicialização
 
-Para executar o projeto é necessario gerar o artefato *.jar*, uma forma de executar essa ação no linux é utilizando o comando:
+Para executar o projeto é necessário gerar o artefato *.jar*, uma forma de executar essa ação no linux é utilizando o comando:
 
 ```sh
   mvn package
@@ -39,7 +39,7 @@ Para executar este projeto no docker, basta utilizar o seguinte comando para ger
   docker build -t taygeta --build-arg JAR_FILE=Taygeta-cli-1.0-SNAPSHOT .
 ```
 
-Este comando irá gerar uma imagem com o nome `taygeta`, para visualizar o projeto no container basta utilizar o comando:
+Este comando irá gerar uma imagem com o nome `taygeta`, para visualizar o projeto no contêiner basta utilizar o comando:
 
 ```sh
   docker run -it --rm taygeta
@@ -75,16 +75,37 @@ Para adicionar uma sonda a um planeta previamente cadastrado é necessário util
 
 Para mover uma sonda previamente cadastrada é necessário usar o comando `move-probe`, este comando irá solicitar o ID do planeta, ID da sonda que será movimentada e a sequência de movimentos:
 
-- `M` -> Mover a sonda uma unidade de area para frente
+- `M` -> Mover a sonda uma unidade de área para frente
 - `L` -> Virar a sonda para a esquerda (90 graus)
 - `R` -> Virar a sonda para a direita (90 graus)
 
-
+*Observação: se algum destes movimentos resultar em uma colisão o comando é cancelado.*
 
 <p align="center">
  <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/move-probe.gif" width="400px" alt="move-probe"/><br>
 </p>
 
-* Observação: se algum destes movimentos resultar em uma colisão com outra sonda o comando é cancelado.
+
+Os comandos `list` exibem informações sobre as sondas e planetas cadastrados.
+
+<p align="center">
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/list.gif" width="400px" alt="list-probe"/><br>
+</p>
+
+Utilize o comando `help` ou `?` para exibir uma lista com todos os comandos disponíveis.
+
+<p align="center">
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/help.gif" width="400px" alt="help"/><br>
+</p>
+
+
+Utilize o comando `undo` para desfazer o comando atual e caso queira encerrar a aplicação utilize o comando .
+
+<p align="center">
+ <img src="https://github.com/andersonhsporto/Taygeta-planet-probe/blob/master/img/undo.gif" width="400px" alt="undo"/><br>
+</p>
+
+
+
 
 
