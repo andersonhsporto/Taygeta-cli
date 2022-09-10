@@ -12,13 +12,41 @@ capaz de criar planetas, sondas e simular a movimentação / colisão destas por
 ## Ferramentas Utilizadas
 
 * [JAVA 18](https://www.java.com/pt-BR/) - Linguagem de programação.
-* [Apache Maven](https://www.java.com/pt-BR/) - Gerenciador de dependências.
+* [Apache Maven 3.8.6](https://maven.apache.org/) - Gerenciador de dependências.
 * [IntelliJ](https://www.jetbrains.com/idea/) - IDE para desenvolvimento.
 * [Docker](https://www.docker.com/) - Serviço de virtualização.
 
 
 ## Inicialização
-Para executar o projeto, utilize as ferramentas descritas na sessão *Ferramentas*.
+
+Para executar o projeto é necessario gerar o artefato *.jar*, uma forma de executar essa ação no linux é utilizando o comando:
+
+```sh
+  mvn package
+```
+
+Este comando irá gerar um *.jar* de nome ```Taygeta-cli-1.0-SNAPSHOT.jar```, para executar este artefato basta utilizar o comando:
+
+```sh
+  java -jar Taygeta-cli-1.0-SNAPSHOT.jar
+```
+
+### Docker
+
+Para utilizar este projeto no docker, basta executar o seguinte comando para gerar uma imagem deste projeto:
+
+```sh
+  docker build -t taygeta --build-arg JAR_FILE=Taygeta-cli-1.0-SNAPSHOT .
+```
+
+Este comando irá gerar uma imagem com o nome ```taygeta```, para visualizar o projeto no container basta utilizar o comando:
+
+```sh
+  docker run -it --rm taygeta
+```
+
+
+
 
 ### Lista de Comandos
 Comando | Definição
@@ -32,4 +60,8 @@ Comando | Definição
 `undo` | Desfazer comando atual
 `help` ou `?` | Exibir lista de comandos
 `exit`|  Encerrar o programa
+
+#### Exemplos
+
+Para adicionar um planeta é necessario utilizar o comando `add-planet`
 
