@@ -58,7 +58,7 @@ Comando | Definição
 `help` ou `?` | Exibir lista de comandos
 `exit`|  Encerrar o programa
 
-#### Exemplos:
+### Exemplos:
 
 Para adicionar um planeta é necessário utilizar o comando `add-planet` e inserir a altura e largura
 do retângulo que representa a área deste planeta, utilizando o caractere x como delimitador (exemplo: `10x10`). 
