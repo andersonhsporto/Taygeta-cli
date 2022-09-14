@@ -2,6 +2,7 @@ package services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import enums.Cardinal;
 import exceptions.UndoCommandException;
 import java.awt.Point;
 import java.util.Optional;
@@ -10,7 +11,6 @@ import models.Probe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import services.MissionControlService.Cardinal;
 
 class MissionControlServiceTest {
 

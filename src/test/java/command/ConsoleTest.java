@@ -2,6 +2,8 @@ package command;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import enums.Cardinal;
 import exceptions.UndoCommandException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -40,7 +42,7 @@ class ConsoleTest {
 
     System.setIn(inputStream);
     try {
-      MissionControlService.Cardinal compass = parseService.probeDirection();
+      Cardinal compass = parseService.probeDirection();
     } catch (UndoCommandException e) {
       assertTrue(true);
     }

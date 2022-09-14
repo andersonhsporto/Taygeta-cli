@@ -2,13 +2,14 @@ package services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import enums.Cardinal;
 import exceptions.UndoCommandException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import services.MissionControlService.Cardinal;
 
 
 class ParseServiceTest {

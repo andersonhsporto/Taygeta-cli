@@ -1,10 +1,10 @@
 package services;
 
+import enums.Cardinal;
 import exceptions.UndoCommandException;
 import java.util.Optional;
 import java.util.Scanner;
 import models.Probe;
-import services.MissionControlService.Cardinal;
 
 public class ParseService {
 
@@ -22,7 +22,7 @@ public class ParseService {
     }
   }
 
-  public static MissionControlService.Cardinal cardinal(String command) {
+  public static Cardinal cardinal(String command) {
     String lowerCaseCommand = command.toLowerCase();
 
     return switch (lowerCaseCommand) {
@@ -42,7 +42,7 @@ public class ParseService {
     return Probe.createDefault(x, y, direction);
   }
 
-  public MissionControlService.Cardinal probeDirection() throws UndoCommandException {
+  public Cardinal probeDirection() throws UndoCommandException {
     Scanner scanner = new Scanner(System.in);
     String command;
 
