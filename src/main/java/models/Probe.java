@@ -1,5 +1,6 @@
 package models;
 
+import enums.Cardinal;
 import java.awt.Point;
 import java.util.Objects;
 import services.MessageService;
@@ -9,19 +10,19 @@ public class Probe {
 
   private final Point point;
 
-  private final MissionControlService.Cardinal cardinal;
+  private final Cardinal cardinal;
 
-  public Probe(int x, int y, MissionControlService.Cardinal cardinal) {
+  public Probe(int x, int y, Cardinal cardinal) {
     this.point = new Point(x, y);
     this.cardinal = cardinal;
   }
 
-  public Probe(Point point, MissionControlService.Cardinal cardinal) {
+  public Probe(Point point, Cardinal cardinal) {
     this.point = point;
     this.cardinal = cardinal;
   }
 
-  public static Probe createDefault(int x, int y, MissionControlService.Cardinal direction) {
+  public static Probe createDefault(int x, int y, Cardinal direction) {
     return new Probe(x, y, direction);
   }
 
@@ -29,7 +30,7 @@ public class Probe {
     return point;
   }
 
-  public MissionControlService.Cardinal getCardinal() {
+  public Cardinal getCardinal() {
     return cardinal;
   }
 

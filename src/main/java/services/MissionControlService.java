@@ -1,5 +1,6 @@
 package services;
 
+import enums.Cardinal;
 import exceptions.UndoCommandException;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -13,13 +14,6 @@ public class MissionControlService {
 
   private final MessageService messageService;
   private final Collection<Planet> planets;
-
-  public enum Cardinal {
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST
-  }
 
   public MissionControlService() {
     this.planets = new ArrayList<>();
