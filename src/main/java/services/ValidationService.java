@@ -1,9 +1,5 @@
 package services;
 
-import java.util.Collection;
-import java.util.Optional;
-import models.Planet;
-
 public class ValidationService {
 
   public static boolean commandInPlanetSizeFormat(String command) {
@@ -40,8 +36,8 @@ public class ValidationService {
   public static boolean planetExistsById(
       String command, MissionControlService missionControlService) {
 
-    int planetId = ParseService.id(command);
-    Collection<Planet> planets = missionControlService.getPlanets();
+    var planetId = ParseService.id(command);
+    var planets = missionControlService.getPlanets();
 
     return planetId >= 0 && planetId < planets.size();
   }
@@ -49,7 +45,7 @@ public class ValidationService {
   public static boolean probeExists(
       Integer planetId, int probeId, MissionControlService missionControlService) {
 
-    Optional<Planet> planet = missionControlService.getPlanetById(planetId);
+    var planet = missionControlService.getPlanetById(planetId);
 
     return planet.filter(value -> probeId >= 0 && probeId < value.getProbes().size()).isPresent();
   }
@@ -59,7 +55,7 @@ public class ValidationService {
   }
 
   public static boolean isValidCardinal(String command) {
-    String lowerCaseCommand = command.toLowerCase();
+    var lowerCaseCommand = command.toLowerCase();
 
     return switch (lowerCaseCommand) {
       case "north", "south", "east", "west", "norte", "sul", "leste", "oeste" -> true;
