@@ -140,15 +140,15 @@ public class MissionControlService {
   public Probe cloneUpdateProbe(
       Probe probe, Planet planet, String sequence) throws UndoCommandException {
 
+    Probe newProbe;
     var newCardinal = probe.getCardinal();
     var newPoint = probe.getPoint();
     var originPoint = probe.getPoint();
-    Probe newProbe;
 
     for (int i = 0; i < sequence.length(); i++) {
       switch (sequence.charAt(i)) {
-        case 'L' -> newCardinal = rotateLeft(newCardinal);
-        case 'R' -> newCardinal = rotateRight(newCardinal);
+        case 'L' -> newCardinal = newCardinal.rotateLeft();
+        case 'R' -> newCardinal = newCardinal.rotateRight();
         case 'M' -> moveForward(newPoint, newCardinal, planet, originPoint);
       }
     }
@@ -198,24 +198,6 @@ public class MissionControlService {
     } else if (point.getX() == 1) {
       point.setLocation(planet.getWidth(), point.getY());
     }
-  }
-
-  public Cardinal rotateLeft(Cardinal cardinal) {
-    return switch (cardinal) {
-      case NORTH -> Cardinal.WEST;
-      case SOUTH -> Cardinal.EAST;
-      case EAST -> Cardinal.NORTH;
-      case WEST -> Cardinal.SOUTH;
-    };
-  }
-
-  public Cardinal rotateRight(Cardinal cardinal) {
-    return switch (cardinal) {
-      case NORTH -> Cardinal.EAST;
-      case SOUTH -> Cardinal.WEST;
-      case EAST -> Cardinal.SOUTH;
-      case WEST -> Cardinal.NORTH;
-    };
   }
 
   public void collision(
