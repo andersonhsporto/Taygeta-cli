@@ -77,14 +77,6 @@ class MessageServiceTest {
   }
 
   @Test
-  @DisplayName("blue() should return blue string")
-  void blue() {
-    String string = "blue";
-
-    assertEquals("\u001B[34mblue\u001B[0m", MessageService.blue(string));
-  }
-
-  @Test
   @DisplayName("blue() should not return red string")
   void blueNotRed() {
     String string = "blue";
@@ -96,7 +88,7 @@ class MessageServiceTest {
   @DisplayName("Test greetings message")
   void testGreetingMessageIsCyanWelcomeToTaygeta() {
     MessageService messageService = new MessageService();
-    String defaultCyanGreetings = "[34mWelcome to Taygeta! CLI version\u001B[0m";
+    String defaultCyanGreetings = "[94mWelcome to Taygeta! CLI version\u001B[0m";
 
     messageService.greetings();
     assertEquals(defaultCyanGreetings, outputStreamCaptor.toString().trim());
