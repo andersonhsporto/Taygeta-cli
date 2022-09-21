@@ -4,7 +4,6 @@ import enums.Cardinal;
 import java.awt.Point;
 import java.util.Objects;
 import services.MessageService;
-import services.MissionControlService;
 
 public class Probe {
 
