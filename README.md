@@ -4,7 +4,8 @@
 </p>
 
 Taygeta é uma [interface de linha de comando](https://en.wikipedia.org/wiki/Command-line_interface) 
-capaz de criar planetas, sondas e simular a movimentação / colisão destas por meio de comandos.
+que implementa uma variação do desafio [Mars Rover](https://code.google.com/archive/p/marsrovertechchallenge/), utilizando a
+linguagem JAVA.
 
 
 
